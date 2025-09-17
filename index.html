@@ -18,7 +18,6 @@
 </head>
 <body>
     <div id="map"></div>
-
     <!-- Overlay -->
     <div id="overlay">
         <div id="overlay-conteudo">
@@ -28,8 +27,11 @@
             </div>
             <p>Encontre pistas de skate perto de você</p>
             <button class="btn btn-primary mb-2" style="background-color: #ffffff00; ">Entrar com Google</button>
-            <button class="btn btn-secondary mb-2" style="background-color: #ffffff00; ">Login Manual</button>
-            <button class="btn btn-outline-light mb-2" style="background-color: #ffffff00;">Explorar sem conta</button>
+            <button id="btnLoginManual" class="btn btn-secondary mb-2" style="background-color: #ffffff00; ">Login Manual</button>
+            <button id="btnExplorar" class="btn btn-outline-light mb-2" style="background-color: #ffffff00;">
+  Explorar sem conta
+</button>
+
         </div>
     </div>
 
@@ -56,6 +58,10 @@
             </div>
         </div>
     </section>
+    <!--Botao para aparecer overley-->
+    <div id="btnAparecer" hidden>
+    <button type="button" class="btn btn-outline-primary" >Logar/Cadastrar</button>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -69,6 +75,7 @@
     }
 </script>
 
-<script src="/js/script.js"></script>
+<script src="/js/map.js" defer></script>
+<script src="/js/script.js" defer></script>
 </body>
 </html>
