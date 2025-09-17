@@ -53,6 +53,41 @@ img{
     border-color: #ffffff;
 }
 
+#loginScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#loginScreen[hidden] {
+    display: none !important;
+}
+
+#loginOverlay {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 32px #00000055;
+    padding: 2rem 2.5rem;
+    min-width: 320px;
+    max-width: 90vw;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#loginContent h2 {
+    color: #fd1a1a;
+    font-weight: bold;
+}
+
 #features {
     position: relative;
     z-index: 5;
@@ -95,3 +130,21 @@ img{
 .button {
     gap: 1rem;
 }
+
+#btnAparecer .btn.btn-outline-primary{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #ffffff25;
+    border-radius: 5px;
+    z-index: 20;
+    color: black;
+}
+#btnAparecer .btn.btn-outline-primary:hover {
+    background-color: #ffffffc7;
+    border-color: #fd1a1a; /* se quiser mudar a borda também */
+    color: rgb(0, 0, 0);       /* se quiser mudar a cor do texto */
+     transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1rem #000000b4;
+}
+
