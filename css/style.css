@@ -43,7 +43,7 @@ img{
 }
 
 .btn{
-    border-color: rgb(255, 153, 37);
+    border-color: #ff9925;
 }
 
 .btn:hover {
@@ -142,9 +142,17 @@ img{
 }
 #btnAparecer .btn.btn-outline-primary:hover {
     background-color: #ffffffc7;
-    border-color: #fd1a1a; /* se quiser mudar a borda também */
-    color: rgb(0, 0, 0);       /* se quiser mudar a cor do texto */
+    border-color: #fd1a1a;
+    color: rgb(0, 0, 0);      
      transform: translateY(-1px);
     box-shadow: 0 0.5rem 1rem #000000b4;
+}
+
+.input-erro {
+    border: 2px solid red;
+    background-color: #ffe6e6; /* opcional: fundo levemente vermelho */
+}
+.input-erro::placeholder {
+    color: red; 
 }
 
