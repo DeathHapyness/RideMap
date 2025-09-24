@@ -1,0 +1,22 @@
+{
+  "name": "ridemap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeathHapyness/RideMap.git"
+  },
+  "author": "Henrique",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeathHapyness/RideMap/issues"
+  },
+  "homepage": "https://github.com/DeathHapyness/RideMap#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
