@@ -1,0 +1,8 @@
+/node/node_modules
+
+*.log
+
+.env
+
+temp/
+dist/
