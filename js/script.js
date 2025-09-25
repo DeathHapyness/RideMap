@@ -111,7 +111,5 @@ if (btnCadastrar) {
     });
 }
 
-function abrirLogin() {
-    alert('Função de login com Google não implementada no momento.');
-}
+
 
