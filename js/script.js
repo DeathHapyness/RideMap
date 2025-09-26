@@ -83,7 +83,6 @@ if (btnEntrar) {
             alert('Preencha todos os campos para entrar!');
             return;
         }
-        // Aqui você pode colocar a lógica de login real
     });
 }
 
