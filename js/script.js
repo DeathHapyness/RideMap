@@ -11,7 +11,7 @@ const loginScreen = document.getElementById('loginScreen');
 btnAparecer.hidden = true;
 
 
-// Esconde overlay, login e features, mostra botão de aparecer
+
 explorarSC.addEventListener('click', () => {
     overley.hidden = true;
     overlay.hidden = true;
@@ -38,7 +38,7 @@ btnLoginManual.addEventListener('click', () => {
     btnAparecer.hidden = true;
 });
 
-// Botão cancelar fecha o modal e volta overlay
+
 document.addEventListener('click', (e) => {
     if (e.target && e.target.id === 'closeLogin') {
         loginContainer.hidden = true;
@@ -49,7 +49,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// funcao para alternar entre login e cadastro
+
 const container = document.getElementById('container');
 const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
@@ -63,30 +63,109 @@ loginBtn.addEventListener('click', () => {
 });
 
 
-// Função para verificar se os campos estão preenchidos
 
-const btnEntrar = document.querySelector('.sign-in form button[type="button"]');
-if (btnEntrar) {
-    btnEntrar.addEventListener('click', function(e) {
-        e.preventDefault();
-        const inputs = document.querySelectorAll('.sign-in form input');
-        let algumVazio = false;
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                algumVazio = true;
-                input.classList.add('input-erro');
-            } else {
-                input.classList.remove('input-erro');
-            }
+
+// Função para verificar se o usuário existe no banco de dados
+async function verificarUsuario(email, senha) {
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, senha })
         });
-        if (algumVazio) {
-            alert('Preencha todos os campos para entrar!');
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Erro ao verificar usuário:', error);
+        return null;
+    }
+}
+
+// Botão de login
+const btnEntrar = document.getElementById('bntEntrar');
+if (btnEntrar) {
+    btnEntrar.addEventListener('click', async function(e) {
+        e.preventDefault();
+        
+        const email = document.querySelector('.sign-in input[type="email"]').value;
+        const senha = document.querySelector('.sign-in input[type="password"]').value;
+        
+        // Validação simples
+        if (!email || !senha) {
+            Swal.fire({
+                title: 'Atenção',
+                text: 'Por favor, preencha todos os campos',
+                icon: 'warning'
+            });
             return;
         }
+
+        // Mostra loading
+        Swal.fire({
+            title: 'Verificando suas credenciais...',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+        
+        // Verifica se o usuário existe no banco
+        const usuarioEncontrado = await verificarUsuario(email, senha);
+        
+        if (!usuarioEncontrado) {
+            Swal.fire({
+                title: 'Erro',
+                text: 'Usuário não encontrado ou senha incorreta. Por favor, verifique suas credenciais ou crie uma conta.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        // Se chegou aqui, o usuário existe e a senha está correta
+        const userData = {
+            id: usuarioEncontrado.id,
+            nome: usuarioEncontrado.nome,
+            email: usuarioEncontrado.email,
+            avatar: usuarioEncontrado.avatar || '/img/default-avatar.png'
+        };
+
+        // Salva usuário
+        localStorage.setItem('user', JSON.stringify(userData));
+        
+        // Esconde elementos de login
+        loginContainer.hidden = true;
+        overlay.hidden = true;
+        features.hidden = true;
+        overley.hidden = true;
+        btnAparecer.hidden = true;
+        
+        // Mostra menu
+        document.querySelector('.hamburger-btn').style.display = 'block';
+        
+        // Atualiza interface
+        document.querySelector('.user-name').textContent = userData.nome;
+        document.querySelector('.user-avatar').src = userData.avatar;
+
+        // Mostra mensagem de sucesso
+        Swal.fire({
+            icon: 'success',
+            title: 'Bem-vindo!',
+            text: `Olá, ${userData.nome}!`,
+            showConfirmButton: false,
+            timer: 1500
+        });
     });
 }
 
-//funcao para verificar campos de cadastro
+
 
 const btnCadastrar = document.querySelector('.sign-up form button[type="button"]');
 if (btnCadastrar) {
@@ -94,6 +173,7 @@ if (btnCadastrar) {
         e.preventDefault();
         const inputs = document.querySelectorAll('.sign-up form input');
         let algumVazio = false;
+
         inputs.forEach(input => {
             if (!input.value.trim()) {
                 algumVazio = true;
@@ -102,13 +182,28 @@ if (btnCadastrar) {
                 input.classList.remove('input-erro');
             }
         });
+
         if (algumVazio) {
-            alert('Preencha todos os campos para se cadastrar!');
+            Alertas.validacaoFormulario(['Nome', 'Email', 'Senha']);
             return;
         }
-        // Aqui você pode colocar a lógica de cadastro real
+
+        Alertas.carregando('Criando sua conta...');
+        
+        setTimeout(() => {
+            Alertas.fecharCarregando();
+            Alertas.sucesso('Conta criada!', 'Sua conta foi criada com sucesso. Faça login para continuar.');
+            container.classList.remove("active");
+        }, 1500);
     });
 }
 
-
-
+function loadUserProfile() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        document.querySelector('.user-name').textContent = user.nome;
+        if (user.avatar) {
+            document.querySelector('.user-avatar').src = user.avatar;
+        }
+    }
+}
