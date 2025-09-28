@@ -33,7 +33,7 @@
         
         <!-- Informações do Usuário -->
         <div class="user-info">
-            <img src="/img/default-avatar.png" alt="Avatar" class="user-avatar">
+            <img src="/img/default-avatar.png" alt="Avatar" class="usar-avatar">
             <div class="user-name">Carregando...</div>
         </div>
 
@@ -166,6 +166,23 @@
         </div>
     </div>
 
+ <!-- Interface de visualização de perfil -->
+  <!--Terminar de mexer nisso nao esta funcionando,interface de usuario nao aparece-->
+<div class="Perfil card p-3" id="perfilContainer" style="max-width: 300px; display: none;">
+    <div class="text-center mb-3">
+        <img id="perfilAvatar" src="/img/default-avatar.png" class="rounded-circle" alt="Avatar" width="100" height="100">
+        <input type="file" id="perfilAvatarInput" accept="image/*" style="display: none;">
+        <button class="btn btn-sm btn-outline-primary mt-2" id="btnTrocarAvatar">Trocar Foto</button>
+    </div>
+    <div class="mb-2">
+        <label for="perfilNome" class="form-label">Nome/Apelido</label>
+        <input type="text" class="form-control" id="perfilNome" value="Usuário">
+    </div>
+    <button class="btn btn-primary w-100" id="btnSalvarPerfil">Salvar Alterações</button>
+</div>
+<!------------------------------------------------------------------>
+
+    <!-- Mapa -->
     <div id="map"></div>
     <!-- Overlay inicial -->
     <div id="overlay">
@@ -302,7 +319,6 @@
     <!-- SweetAlert2 CSS and JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/alertas.js" defer></script>
     <script src="/js/map.js" defer></script>
     <script src="/js/script.js" defer></script>
     <script src="/js/dashboard.js" defer></script>

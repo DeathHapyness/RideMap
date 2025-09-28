@@ -98,10 +98,8 @@ function showMySpots() {
 }
 
 function showAddSpot() {
-    // Pegar o modal do Bootstrap
     const modalAdicionarPista = new bootstrap.Modal(document.getElementById('addSpotModal'));
     
-    // configuracoes do Select2 na interface de adicionar pista
     $('#spotState').select2({
         dropdownParent: $('#addSpotModal'),
         placeholder: 'Selecione o estado...',
@@ -180,8 +178,31 @@ function showAddSpot() {
     });
 }
 
+//logica de vizualizacao do perfil
 function showProfile() {
-    Alertas.carregando('Carregando perfil...');
+    const perfilContainer = document.getElementById('perfilContainer');
+    if (!perfilContainer) return;
+
+    overlay.hidden = true;
+    features.hidden = true;
+    btnAparecer.hidden = false;
+
+    perfilContainer.style.display = 'block';
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        document.getElementById('perfilNome').value = user.nome;
+        document.getElementById('perfilAvatar').src = user.avatar || '/img/default-avatar.png';
+    }
+}
+
+function hideProfile() {
+    perfilContainer.style.display = 'none';
+    overlay.hidden = false;
+    features.hidden = false;
+    btnAparecer.hidden = true;
+}
+
     
     setTimeout(() => {
         Alertas.fecharCarregando();
@@ -204,7 +225,7 @@ function showProfile() {
             Alertas.erro('Erro', 'Não foi possível carregar as informações do perfil');
         }
     }, 800);
-}
+
 
 function enviarNovaPista() {
     const nome = document.getElementById('spotName').value;

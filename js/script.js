@@ -1,4 +1,3 @@
-
 const explorarSC = document.getElementById('btnExplorar');
 const overley = document.getElementById('overlay-conteudo');
 const overlay = document.getElementById('overlay');
@@ -6,11 +5,8 @@ const features = document.getElementById('features');
 const btnAparecer = document.getElementById('btnAparecer');
 const loginScreen = document.getElementById('loginScreen');
 
-
 //nao mexer,se retirado o botao de reaparecer overley quebra 
 btnAparecer.hidden = true;
-
-
 
 explorarSC.addEventListener('click', () => {
     overley.hidden = true;
@@ -38,7 +34,6 @@ btnLoginManual.addEventListener('click', () => {
     btnAparecer.hidden = true;
 });
 
-
 document.addEventListener('click', (e) => {
     if (e.target && e.target.id === 'closeLogin') {
         loginContainer.hidden = true;
@@ -48,7 +43,6 @@ document.addEventListener('click', (e) => {
         btnAparecer.hidden = true;
     }
 });
-
 
 const container = document.getElementById('container');
 const registerBtn = document.getElementById('register');
@@ -61,9 +55,6 @@ registerBtn.addEventListener('click', () => {
 loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
-
-
-
 
 // Função para verificar se o usuário existe no banco de dados
 async function verificarUsuario(email, senha) {
@@ -105,24 +96,14 @@ if (btnEntrar) {
             });
             return;
         }
-
-        // Mostra loading
-        Swal.fire({
-            title: 'Verificando suas credenciais...',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
         
         // Verifica se o usuário existe no banco
         const usuarioEncontrado = await verificarUsuario(email, senha);
         
-        if (!usuarioEncontrado) {
+        if (!usuarioEncontrado || usuarioEncontrado.error) {
             Swal.fire({
                 title: 'Erro',
-                text: 'Usuário não encontrado ou senha incorreta. Por favor, verifique suas credenciais ou crie uma conta.',
+                text: 'Usuário não encontrado ou senha incorreta.',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
@@ -148,11 +129,14 @@ if (btnEntrar) {
         btnAparecer.hidden = true;
         
         // Mostra menu
-        document.querySelector('.hamburger-btn').style.display = 'block';
+        const hamburgerBtn = document.querySelector('.hamburger-btn');
+        if (hamburgerBtn) hamburgerBtn.style.display = 'block';
         
         // Atualiza interface
-        document.querySelector('.user-name').textContent = userData.nome;
-        document.querySelector('.user-avatar').src = userData.avatar;
+        const userName = document.querySelector('.user-name');
+        const userAvatar = document.querySelector('.user-avatar');
+        if (userName) userName.textContent = userData.nome;
+        if (userAvatar) userAvatar.src = userData.avatar;
 
         // Mostra mensagem de sucesso
         Swal.fire({
@@ -164,8 +148,6 @@ if (btnEntrar) {
         });
     });
 }
-
-
 
 const btnCadastrar = document.querySelector('.sign-up form button[type="button"]');
 if (btnCadastrar) {
@@ -184,15 +166,31 @@ if (btnCadastrar) {
         });
 
         if (algumVazio) {
-            Alertas.validacaoFormulario(['Nome', 'Email', 'Senha']);
+            Swal.fire({
+                title: 'Atenção',
+                text: 'Por favor, preencha todos os campos: Nome, Email e Senha',
+                icon: 'warning'
+            });
             return;
         }
 
-        Alertas.carregando('Criando sua conta...');
+        // Mostra loading
+        Swal.fire({
+            title: 'Criando sua conta...',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
         
         setTimeout(() => {
-            Alertas.fecharCarregando();
-            Alertas.sucesso('Conta criada!', 'Sua conta foi criada com sucesso. Faça login para continuar.');
+            Swal.fire({
+                icon: 'success',
+                title: 'Conta criada!',
+                text: 'Sua conta foi criada com sucesso. Faça login para continuar.',
+                confirmButtonText: 'OK'
+            });
             container.classList.remove("active");
         }, 1500);
     });
@@ -201,9 +199,40 @@ if (btnCadastrar) {
 function loadUserProfile() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-        document.querySelector('.user-name').textContent = user.nome;
-        if (user.avatar) {
-            document.querySelector('.user-avatar').src = user.avatar;
-        }
+        const userName = document.querySelector('.user-name');
+        const userAvatar = document.querySelector('.user-avatar');
+        if (userName) userName.textContent = user.nome;
+        if (user.avatar && userAvatar) userAvatar.src = user.avatar;
     }
+}
+
+//logica de vizualizacao do perfil
+function showProfile() {
+    const perfilContainer = document.getElementById('perfilContainer');
+    if (!perfilContainer) return;
+
+    // Esconde overlay ou seções principais
+    overlay.hidden = true;
+    features.hidden = true;
+    btnAparecer.hidden = false;
+
+    // Mostra o perfil
+    perfilContainer.style.display = 'block';
+
+    // Carrega dados do usuário do localStorage
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        const perfilNome = document.getElementById('perfilNome');
+        const perfilAvatar = document.getElementById('perfilAvatar');
+        if (perfilNome) perfilNome.value = user.nome;
+        if (perfilAvatar) perfilAvatar.src = user.avatar || '/img/default-avatar.png';
+    }
+}
+
+function hideProfile() {
+    const perfilContainer = document.getElementById('perfilContainer');
+    if (perfilContainer) perfilContainer.style.display = 'none';
+    overlay.hidden = false;
+    features.hidden = false;
+    btnAparecer.hidden = true;
 }

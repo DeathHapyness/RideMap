@@ -2,10 +2,3 @@ node_modules/
 
 *.log
 
-.env
-
-temp/
-dist/
-
-/db
-/routes
