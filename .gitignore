@@ -1,4 +1,10 @@
 node_modules/
-
 *.log
+*.npmrc
 
+# Database backups
+*_backup.sql
+*.sql.bak
+*.sql.backup
+
+db/
