@@ -1,32 +1,70 @@
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session');
+const exphbs = require('express-handlebars');
 const path = require('path');
-const authRoutes = require('./routes/auth');
+const routes = require('./routes');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+// Configuração do Handlebars
+app.engine('hbs', exphbs.engine({
+    defaultLayout: 'main',
+    extname: '.hbs',
+    partialsDir: path.join(__dirname, 'view/partials')
+}));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'view'));
 
 // Configuração do CORS
 app.use(cors());
 
-app.use(express.static(path.join(__dirname)));
+// Configuração da sessão
+app.use(session({
+    secret: 'seu-segredo-aqui',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: process.env.NODE_ENV === 'production' }
+}));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+// Middleware para parsear JSON e formulários
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Servir arquivos estáticos
+app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Middleware para disponibilizar dados do usuário para todas as views
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    next();
 });
 
-app.use('/api', authRoutes);
+// Rotas
+app.use('/', routes);
 
+// Tratamento de erros
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).json({ 
-        error: 'Algo deu errado!' 
+    
+    if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+        return res.status(500).json({ error: 'Algo deu errado!' });
+    }
+    
+    res.status(500).render('error', {
+        title: 'Erro - RideMap',
+        message: 'Algo deu errado!'
     });
 });
 
-// Porta do servidor
-const PORT = process.env.PORT || 3000;
+// Rota 404 para páginas não encontradas
+app.use((req, res) => {
+    res.status(404).render('404', {
+        title: '404 - Página não encontrada'
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
