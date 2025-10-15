@@ -1,0 +1,103 @@
+<div class="modal fade modal-adicionar-pista" id="addSpotModal" tabindex="-1" aria-labelledby="addSpotModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-fullscreen-lg-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSpotModalLabel">Adicionar Nova Pista</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addSpotForm">
+                    <div class="mb-3">
+                        <label for="spotName" class="form-label">Nome da Pista</label>
+                        <input type="text" class="form-control" id="spotName" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="spotCity" class="form-label">Cidade</label>
+                            <input type="text" class="form-control" id="spotCity" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="spotState" class="form-label">Estado</label>
+                            <select class="form-select" id="spotState" required>
+                                <option value="">Selecione...</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                                <option value="outros">OUTRO PAIS</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="spotType" class="form-label">Tipo</label>
+                            <select class="form-select" id="spotType" required>
+                                <option value="">Selecione...</option>
+                                <option value="skate">Skate</option>
+                                <option value="patins">Patins</option>
+                                <option value="ambos">Ambos</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="spotDifficulty" class="form-label">Dificuldade</label>
+                            <select class="form-select" id="spotDifficulty" required>
+                                <option value="">Selecione...</option>
+                                <option value="facil">Fácil</option>
+                                <option value="medio">Médio</option>
+                                <option value="dificil">Difícil</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="spotDescription" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="spotDescription" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Localização</label>
+                        <p class="text-muted">Clique no mapa para selecionar a localização da pista</p>
+                        <div id="mapaPicker" style="height: 300px; margin-bottom: 15px; border-radius: 8px;"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="spotLatitude" placeholder="Latitude" readonly required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="spotLongitude" placeholder="Longitude" readonly required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="spotPhotos" class="form-label">Fotos</label>
+                        <input type="file" class="form-control" id="spotPhotos" multiple accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="enviarNovaPista()">Adicionar Pista</button>
+            </div>
+        </div>
+    </div>
+</div>

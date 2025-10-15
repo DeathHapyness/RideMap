@@ -1,0 +1,38 @@
+<!-- Botão Hamburger (inicialmente escondido) -->
+<button class="hamburger-btn" style="display: none;">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- Menu Lateral -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <img src="/static/img/png_c0jcq.png" alt="RideMap Logo">
+        <h4>RideMap</h4>
+    </div>
+    
+    <!-- Informações do Usuário -->
+    <div class="user-info">
+        <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/static/img/default-avatar.jpg{{/if}}" alt="Avatar" class="usar-avatar">
+        <div class="user-name">{{user.nome}}</div>
+    </div>
+
+    <!-- Itens do Menu -->
+    <div class="menu-items">
+        <a href="#" class="menu-item" onclick="showMySpots()">
+            <i class="fas fa-map-marker-alt"></i>
+            Minhas Pistas
+        </a>
+        <a href="#" class="menu-item" onclick="showAddSpot()">
+            <i class="fas fa-plus-circle"></i>
+            Adicionar Pista
+        </a>
+        <a href="#" class="menu-item" onclick="showProfile()">
+            <i class="fas fa-user"></i>
+            Perfil
+        </a>
+        <a href="#" class="menu-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            Sair
+        </a>
+    </div>
+</div>
