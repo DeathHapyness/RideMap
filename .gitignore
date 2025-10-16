@@ -6,6 +6,5 @@ node_modules/
 *_backup.sql
 *.sql.bak
 *.sql.backup
-*.env
 
 db/
