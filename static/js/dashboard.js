@@ -1,19 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    
+    if (!user) {
+        window.location.href = '/login';
+        return;
+    }
+    
     const hamburgerBtn = document.querySelector('.hamburger-btn');
+    if (hamburgerBtn) {
+        hamburgerBtn.style.display = 'block';
+        hamburgerBtn.style.visibility = 'visible';
+        hamburgerBtn.style.opacity = '1';
+    }
+    
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.querySelector('.overlay-menu');
     const logoutBtn = document.getElementById('logoutBtn');
     let touchStartX = 0;
     let touchEndX = 0;
 
-    // Função para alternar o menu
     function toggleMenu() {
         sidebar.classList.toggle('active');
         overlay.classList.toggle('active');
         hamburgerBtn.classList.toggle('active');
     }
 
-    // Função para fechar o menu
     function closeMenu() {
         sidebar.classList.remove('active');
         overlay.classList.remove('active');
@@ -38,52 +49,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (Math.abs(swipeDistance) > swipeThreshold) {
             if (swipeDistance > 0 && !sidebar.classList.contains('active')) {
-                
                 toggleMenu();
             } else if (swipeDistance < 0 && sidebar.classList.contains('active')) {
-    
                 closeMenu();
             }
         }
     }
 
-    // botao para sair 
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
-
             localStorage.removeItem('user');
-            
-            const hamburgerBtn = document.querySelector('.hamburger-btn');
-            if (hamburgerBtn) hamburgerBtn.style.display = 'none';
-            
-            const sidebar = document.querySelector('.sidebar');
-            if (sidebar) sidebar.classList.remove('active');
-            
-            const overlayMenu = document.querySelector('.overlay-menu');
-            if (overlayMenu) overlayMenu.classList.remove('active');
-            
-            // Mostrar elementos da interface inicial
-            const overlay = document.getElementById('overlay');
-            if (overlay) overlay.style.display = 'block';
-            
-            const features = document.getElementById('features');
-            if (features) features.style.display = 'block';
-            
-            const overlayContent = document.getElementById('overlay-conteudo');
-            if (overlayContent) overlayContent.hidden = false;
-            
-            window.location.reload();
+            window.location.href = '/logout';
         });
     }
+
+    loadUserProfile();
 });
 
-// Funções do usuário
 function loadUserProfile() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-        document.querySelector('.user-name').textContent = user.nome;
-        if (user.avatar) {
-            document.querySelector('.user-avatar').src = user.avatar;
+        const userName = document.querySelector('.user-name');
+        const userAvatar = document.querySelector('.user-avatar');
+        if (userName) userName.textContent = user.nome;
+        if (userAvatar && user.avatar) {
+            userAvatar.src = user.avatar;
         }
     }
 }
@@ -119,7 +109,6 @@ function showAddSpot() {
     });
     
     function inicializarMapaPicker() {
-        // comeca mostrando no brasil
         const mapaPicker = L.map('mapaPicker').setView([-15.7801, -47.9292], 4);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -146,7 +135,6 @@ function showAddSpot() {
         }, 100);
     }
 
-    // exibir o modal
     modalAdicionarPista.show();
 
     document.getElementById('addSpotModal').addEventListener('shown.bs.modal', function() {
@@ -178,54 +166,40 @@ function showAddSpot() {
     });
 }
 
-//logica de vizualizacao do perfil
 function showProfile() {
     const perfilContainer = document.getElementById('perfilContainer');
     if (!perfilContainer) return;
 
-    overlay.hidden = true;
-    features.hidden = true;
-    btnAparecer.hidden = false;
+    const overlay = document.getElementById('overlay');
+    const features = document.getElementById('features');
+    const btnAparecer = document.getElementById('btnAparecer');
+
+    if (overlay) overlay.hidden = true;
+    if (features) features.hidden = true;
+    if (btnAparecer) btnAparecer.hidden = false;
 
     perfilContainer.style.display = 'block';
 
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-        document.getElementById('perfilNome').value = user.nome;
-        document.getElementById('perfilAvatar').src = user.avatar || '/img/default-avatar.png';
+        const perfilNome = document.getElementById('perfilNome');
+        const perfilAvatar = document.getElementById('perfilAvatar');
+        if (perfilNome) perfilNome.value = user.nome;
+        if (perfilAvatar) perfilAvatar.src = user.avatar || '/img/default-avatar.png';
     }
 }
 
 function hideProfile() {
-    perfilContainer.style.display = 'none';
-    overlay.hidden = false;
-    features.hidden = false;
-    btnAparecer.hidden = true;
+    const perfilContainer = document.getElementById('perfilContainer');
+    const overlay = document.getElementById('overlay');
+    const features = document.getElementById('features');
+    const btnAparecer = document.getElementById('btnAparecer');
+
+    if (perfilContainer) perfilContainer.style.display = 'none';
+    if (overlay) overlay.hidden = false;
+    if (features) features.hidden = false;
+    if (btnAparecer) btnAparecer.hidden = true;
 }
-
-    
-    setTimeout(() => {
-        Alertas.fecharCarregando();
-        const usuario = JSON.parse(localStorage.getItem('user'));
-        
-        if (usuario) {
-            Swal.fire({
-                title: 'Seu Perfil',
-                html: `
-                    <div class="text-center">
-                        <img src="${usuario.avatar}" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 15px;">
-                        <h3>${usuario.nome}</h3>
-                        <p>${usuario.email}</p>
-                    </div>
-                `,
-                ...configPadrao,
-                confirmButtonText: 'Fechar'
-            });
-        } else {
-            Alertas.erro('Erro', 'Não foi possível carregar as informações do perfil');
-        }
-    }, 800);
-
 
 function enviarNovaPista() {
     const nome = document.getElementById('spotName').value;
@@ -238,7 +212,6 @@ function enviarNovaPista() {
     const longitude = document.getElementById('spotLongitude').value;
     const fotos = document.getElementById('spotPhotos').files;
 
-    // Lista de campos vazios
     const camposVazios = [];
     if (!nome) camposVazios.push('Nome da Pista');
     if (!cidade) camposVazios.push('Cidade');
@@ -253,7 +226,6 @@ function enviarNovaPista() {
         return;
     }
 
-    // Criar objeto com dados da pista
     const dadosPista = {
         nome: nome,
         cidade: cidade,
@@ -268,9 +240,6 @@ function enviarNovaPista() {
 
     console.log('Dados da nova pista:', dadosPista);
     
-   
-    // terminar de codar para enviar ao backend,apenas simulação por no momento
-    // Mostrar loading
     Alertas.carregando('Salvando nova pista...');
 
     setTimeout(() => {
@@ -284,7 +253,3 @@ function enviarNovaPista() {
         });
     }, 1500);
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    loadUserProfile();
-});
