@@ -1,0 +1,48 @@
+<!-- Overlay inicial -->
+<div id="overlay">
+    <div id="overlay-conteudo">
+        <div class="d-flex align-items-center gap-0.5 justify-content-center mb-3">
+            <h1 class="mb-0">RideMap</h1>
+            <img src="/static/img/png_c0jcq.png" alt="Logo RideMap" style="height: 70px; width: auto;">
+        </div>
+        <p>Encontre pistas de skate perto de você</p>
+        <button id="btnLoginManual" class="btn btn-secondary mb-2" style="background-color: #ffffff00;">Login Manual</button>
+        <button id="btnExplorar" class="btn btn-outline-light mb-2" style="background-color: #ffffff00;">
+            Explorar sem conta
+        </button>
+    </div>
+</div>
+
+<section id="features" class="container py-5">
+    <h2 class="text-center mb-4">O que o RideMap faz ?</h2>
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="feature-card p-4 shadow rounded">
+                <h4>Mapa Interativo</h4>
+                <p>Veja todas as pistas de skate em tempo real.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card p-4 shadow rounded">
+                <h4>Login Rápido</h4>
+                <p>Entre com Google ou login manual para salvar suas pistas.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card p-4 shadow rounded">
+                <h4>Favoritar Pistas</h4>
+                <p>Salve suas pistas favoritas e explore a qualquer hora.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{> login-modal}}
+
+<!-- Mapa -->
+<div id="map"></div>
+
+<!--Botao para aparecer overlay-->
+<div id="btnAparecer" hidden>
+    <button type="button" class="btn btn-outline-primary">Logar/Cadastrar</button>
+</div>

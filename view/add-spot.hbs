@@ -1,0 +1,203 @@
+{{> sidebar}}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Adicionar Nova Pista</h4>
+                </div>
+                <div class="card-body">
+                    <form id="addSpotForm">
+                        <div class="mb-3">
+                            <label for="spotName" class="form-label">Nome da Pista</label>
+                            <input type="text" class="form-control" id="spotName" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="spotCity" class="form-label">Cidade</label>
+                                <input type="text" class="form-control" id="spotCity" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="spotState" class="form-label">Estado</label>
+                                <select class="form-select" id="spotState" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="AC">AC</option>
+                                    <option value="AL">AL</option>
+                                    <option value="AP">AP</option>
+                                    <option value="AM">AM</option>
+                                    <option value="BA">BA</option>
+                                    <option value="CE">CE</option>
+                                    <option value="DF">DF</option>
+                                    <option value="ES">ES</option>
+                                    <option value="GO">GO</option>
+                                    <option value="MA">MA</option>
+                                    <option value="MT">MT</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MG">MG</option>
+                                    <option value="PA">PA</option>
+                                    <option value="PB">PB</option>
+                                    <option value="PR">PR</option>
+                                    <option value="PE">PE</option>
+                                    <option value="PI">PI</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="RN">RN</option>
+                                    <option value="RS">RS</option>
+                                    <option value="RO">RO</option>
+                                    <option value="RR">RR</option>
+                                    <option value="SC">SC</option>
+                                    <option value="SP">SP</option>
+                                    <option value="SE">SE</option>
+                                    <option value="TO">TO</option>
+                                    <option value="outros">OUTRO PAIS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="spotType" class="form-label">Tipo</label>
+                                <select class="form-select" id="spotType" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="skate">Skate</option>
+                                    <option value="patins">Patins</option>
+                                    <option value="ambos">Ambos</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="spotDifficulty" class="form-label">Dificuldade</label>
+                                <select class="form-select" id="spotDifficulty" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="facil">Fácil</option>
+                                    <option value="medio">Médio</option>
+                                    <option value="dificil">Difícil</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="spotDescription" class="form-label">Descrição</label>
+                            <textarea class="form-control" id="spotDescription" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="spotPhotos" class="form-label">Fotos</label>
+                            <input type="file" class="form-control" id="spotPhotos" multiple accept="image/*">
+                            <div id="photoPreview" class="mt-2 d-flex flex-wrap gap-2"></div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus-circle me-2"></i>Adicionar Pista
+                            </button>
+                            <a href="/dashboard" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Voltar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Localização</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Clique no mapa para selecionar a localização da pista</p>
+                    <div id="mapaPicker" style="height: 400px; border-radius: 8px;"></div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="spotLatitude" class="form-label">Latitude</label>
+                            <input type="text" class="form-control" id="spotLatitude" readonly required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="spotLongitude" class="form-label">Longitude</label>
+                            <input type="text" class="form-control" id="spotLongitude" readonly required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Preview de fotos
+    const spotPhotos = document.getElementById('spotPhotos');
+    const photoPreview = document.getElementById('photoPreview');
+
+    spotPhotos.addEventListener('change', function(e) {
+        photoPreview.innerHTML = '';
+        
+        Array.from(e.target.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const div = document.createElement('div');
+                div.style.width = '100px';
+                div.style.height = '100px';
+                div.style.backgroundImage = `url(${e.target.result})`;
+                div.style.backgroundSize = 'cover';
+                div.style.backgroundPosition = 'center';
+                div.style.borderRadius = '8px';
+                photoPreview.appendChild(div);
+            }
+            reader.readAsDataURL(file);
+        });
+    });
+
+    // Inicialização do mapa
+    const map = L.map('mapaPicker').setView([-23.5505, -46.6333], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+    }).addTo(map);
+
+    let marker;
+
+    map.on('click', function(e) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+        document.getElementById('spotLatitude').value = e.latlng.lat.toFixed(6);
+        document.getElementById('spotLongitude').value = e.latlng.lng.toFixed(6);
+    });
+
+    // Envio do formulário
+    const addSpotForm = document.getElementById('addSpotForm');
+    addSpotForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('name', document.getElementById('spotName').value);
+        formData.append('city', document.getElementById('spotCity').value);
+        formData.append('state', document.getElementById('spotState').value);
+        formData.append('type', document.getElementById('spotType').value);
+        formData.append('difficulty', document.getElementById('spotDifficulty').value);
+        formData.append('description', document.getElementById('spotDescription').value);
+        formData.append('latitude', document.getElementById('spotLatitude').value);
+        formData.append('longitude', document.getElementById('spotLongitude').value);
+
+        const files = document.getElementById('spotPhotos').files;
+        for (let i = 0; i < files.length; i++) {
+            formData.append('photos', files[i]);
+        }
+
+        try {
+            const response = await fetch('/spots', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                Swal.fire('Sucesso', 'Pista adicionada com sucesso!', 'success')
+                    .then(() => {
+                        window.location.href = '/dashboard';
+                    });
+            } else {
+                throw new Error(data.error || 'Erro ao adicionar pista');
+            }
+        } catch (error) {
+            Swal.fire('Erro', error.message, 'error');
+        }
+    });
+});
+</script>
