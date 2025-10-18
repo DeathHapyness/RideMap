@@ -1,21 +1,18 @@
-//TERMINAR DE CONFIGURAR BANCO DE DADOS COM SUAS DEPENDENCIAS  
 require('dotenv').config();
 const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
+// Criando pool de conexões para melhor performance
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Erro ao conectar ao banco de dados:', err);
-    return;
-  }
-  console.log('Conexão bem-sucedida ao banco de dados MySQL!');
-});
+// Convertendo para promises para usar async/await
+const promisePool = pool.promise();
 
-module.exports = connection;
-
+module.exports = promisePool;
