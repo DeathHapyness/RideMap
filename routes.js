@@ -44,10 +44,20 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  const hash = await bcrypt.hash(req.body.senha, 10);
-  await pool.query('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)', 
-    [req.body.nome, req.body.email, hash]);
-  res.redirect('/login');
+  try {
+    const [existing] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [req.body.email]);
+    if (existing.length > 0) {
+      return res.status(400).json({ error: 'Email já cadastrado' });
+    }
+    const hash = await bcrypt.hash(req.body.senha, 10);
+    await pool.query('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)', 
+      [req.body.nome, req.body.email, hash]);
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao criar conta' });
+  }
 });
 
 router.get('/logout', (req, res) => {
