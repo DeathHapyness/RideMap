@@ -42,6 +42,10 @@
     <!-- Scripts Custom -->
     <script src="/static/js/map.js" defer></script>
     <script src="/static/js/script.js" defer></script>
+    
+    {{!-- Carrega dashboard.js APENAS se estiver na página do dashboard --}}
+    {{#if isDashboard}}
     <script src="/static/js/dashboard.js" defer></script>
+    {{/if}}
 </body>
 </html>
