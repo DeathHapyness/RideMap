@@ -28,24 +28,19 @@ app.use(session({
     cookie: { secure: process.env.NODE_ENV === 'production' }
 }));
 
-// Middleware para parsear JSON e formulários
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Servir arquivos estáticos
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Middleware para disponibilizar dados do usuário para todas as views
 app.use((req, res, next) => {
     res.locals.user = req.session.user;
     next();
 });
 
-// Rotas
 app.use('/', routes);
 
-// Tratamento de erros
 app.use((err, req, res, next) => {
     console.error(err.stack);
     
@@ -59,7 +54,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Rota 404 para páginas não encontradas
+// Rota 404 DEVE SER A ÚLTIMA!
 app.use((req, res) => {
     res.status(404).render('404', {
         title: '404 - Página não encontrada'
