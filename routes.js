@@ -3,9 +3,11 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const pool = require('./db/config');
 
+//**deixar sempre para redirecionar para '/' ao invés de '/login' para evitar loops
+
 function isAuthenticated(req, res, next) {
   if (req.session.user) return next();
-  res.redirect('/login');
+  res.redirect('/'); // ← MUDE AQUI
 }
 
 router.get('/', (req, res) => {
@@ -14,7 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/login', (req, res) => {
   if (req.session.user) return res.redirect('/dashboard');
-  res.render('login', { title: 'Login - RideMap' });
+  res.redirect('/'); // redireciona para home
 });
 
 router.post('/login', async (req, res) => {
@@ -33,14 +35,16 @@ router.post('/login', async (req, res) => {
 
     req.session.user = user;
     res.json(user);
-} catch (error) {
+  } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro no servidor' });
   }
 });
 
+// MUDE register para renderizar 'home' também (já que você usa modal)
 router.get('/register', (req, res) => {
-  res.render('register', { title: 'Registro - RideMap' });
+  if (req.session.user) return res.redirect('/dashboard');
+  res.render('home', { title: 'Registro - RideMap', showRegisterModal: true });
 });
 
 router.post('/register', async (req, res) => {
@@ -66,7 +70,10 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/dashboard', isAuthenticated, (req, res) => {
-  res.render('dashboard', { title: 'Dashboard - RideMap' });
+  res.render('dashboard', { 
+    title: 'Dashboard - RideMap',
+    isDashboard: true
+  });
 });
 
 router.get('/spots', async (req, res) => {
