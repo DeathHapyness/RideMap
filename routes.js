@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const pool = require('./db/config');
+const upload = require('./config/multer');
 
 //**deixar sempre para redirecionar para '/' ao invés de '/login' para evitar loops
 
@@ -41,7 +42,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// MUDE register para renderizar 'home' também (já que você usa modal)
 router.get('/register', (req, res) => {
   if (req.session.user) return res.redirect('/dashboard');
   res.render('home', { title: 'Registro - RideMap', showRegisterModal: true });
@@ -76,32 +76,101 @@ router.get('/dashboard', isAuthenticated, (req, res) => {
   });
 });
 
-router.get('/spots', async (req, res) => {
-  const [spots] = await pool.query('SELECT * FROM pistas WHERE ativa = 1');
-  res.render('spots', { title: 'Pistas - RideMap', spots });
-});
-
-router.get('/add-spot', isAuthenticated, (req, res) => {
-  res.render('add-spot', { title: 'Adicionar Pista - RideMap' });
-});
-
-router.post('/spots', isAuthenticated, async (req, res) => {
-  await pool.query(
-    'INSERT INTO pistas (nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [req.body.nome, req.body.cidade, req.body.estado, req.body.tipo, req.body.dificuldade, req.body.descricao, req.body.latitude, req.body.longitude]
-  );
-  res.redirect('/spots');
-});
-
-router.get('/spot/:id', async (req, res) => {
-  const [spots] = await pool.query('SELECT * FROM pistas WHERE id = ?', [req.params.id]);
-  if (!spots[0]) return res.redirect('/spots');
-  res.render('spot', { title: spots[0].nome + ' - RideMap', spot: spots[0] });
-});
-
 router.get('/api/spots', async (req, res) => {
   const [spots] = await pool.query('SELECT * FROM pistas WHERE ativa = 1');
   res.json(spots);
 });
 
+router.post('/update-avatar', isAuthenticated, upload.single('avatar'), async (req, res) => {
+    try {
+        const userId = req.session.user.id;
+        const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+        
+        await pool.query(
+            'UPDATE usuarios SET avatar_url = ? WHERE id = ?',
+            [avatarUrl, userId]
+        );
+        
+        res.json({ 
+            success: true, 
+            avatar_url: avatarUrl 
+        });
+        
+    } catch (error) {
+        console.error('Erro ao atualizar avatar:', error);
+        res.status(500).json({ 
+            success: false,
+            error: 'Erro ao atualizar avatar' 
+        });
+    }
+});
+
+router.post('/update-profile', isAuthenticated, async (req, res) => {
+    try {
+        const userId = req.session.user.id;
+        const novoNome = req.body.nome;
+        
+        if (!novoNome || novoNome.trim() === '') {
+            return res.status(400).json({
+                success: false,
+                error: 'Não pode deixar vazio! Por favor preencha com seu nome ou apelido'
+            });
+        }
+        
+        await pool.query(
+            'UPDATE usuarios SET nome = ? WHERE id = ?',
+            [novoNome, userId]
+        );
+        
+        req.session.user.nome = novoNome;
+        
+        res.json({
+            success: true,
+            nome: novoNome
+        });
+        
+    } catch (error) {
+        console.error('Erro ao atualizar perfil:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Erro ao atualizar perfil'
+        });
+    }
+});
+
 module.exports = router;
+
+//*Rota para envio de foto de perfil de user */
+router.post('/update-profile', isAuthenticated, async (req, res) => {
+    try {
+        const userId = req.session.user.id;
+        const novoNome = req.body.nome;
+        
+        if (!novoNome || novoNome.trim() === '') {
+            return res.status(400).json({
+                success: false,
+                error: 'Não pode deixar vazio! Por favor preencha com seu nome ou apelido'
+            });
+        }
+        
+        //ATUALIZA o banco
+        await pool.query(
+            'UPDATE usuarios SET nome = ? WHERE id = ?',
+            [novoNome, userId]
+        );
+        
+        req.session.user.nome = novoNome;
+        
+        res.json({
+            success: true,
+            nome: novoNome
+        });
+        
+    } catch (error) {
+        console.error('Erro ao atualizar perfil:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Erro ao atualizar perfil'
+        });
+    }
+});
