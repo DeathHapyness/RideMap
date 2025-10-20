@@ -63,6 +63,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    const btnSalvarPerfil = document.getElementById('btnSalvarPerfil');
+    if (btnSalvarPerfil) {
+        btnSalvarPerfil.addEventListener('click', salvarPerfil);
+    }
+
     loadUserProfile();
 });
 
@@ -168,37 +173,113 @@ function showAddSpot() {
 
 function showProfile() {
     const perfilContainer = document.getElementById('perfilContainer');
-    if (!perfilContainer) return;
-
-    const overlay = document.getElementById('overlay');
-    const features = document.getElementById('features');
-    const btnAparecer = document.getElementById('btnAparecer');
-
-    if (overlay) overlay.hidden = true;
-    if (features) features.hidden = true;
-    if (btnAparecer) btnAparecer.hidden = false;
+    const perfilOverlay = document.getElementById('perfilOverlay');
+    
+    if (!perfilContainer) {
+        console.error('perfilContainer não encontrado!');
+        return;
+    }
 
     perfilContainer.style.display = 'block';
+    if (perfilOverlay) perfilOverlay.style.display = 'block';
 
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
         const perfilNome = document.getElementById('perfilNome');
         const perfilAvatar = document.getElementById('perfilAvatar');
+        
         if (perfilNome) perfilNome.value = user.nome;
-        if (perfilAvatar) perfilAvatar.src = user.avatar || '/img/default-avatar.png';
+        if (perfilAvatar) perfilAvatar.src = user.avatar || '/static/img/default-avatar.png';
     }
 }
 
 function hideProfile() {
     const perfilContainer = document.getElementById('perfilContainer');
-    const overlay = document.getElementById('overlay');
-    const features = document.getElementById('features');
-    const btnAparecer = document.getElementById('btnAparecer');
+    const perfilOverlay = document.getElementById('perfilOverlay');
 
     if (perfilContainer) perfilContainer.style.display = 'none';
-    if (overlay) overlay.hidden = false;
-    if (features) features.hidden = false;
-    if (btnAparecer) btnAparecer.hidden = true;
+    if (perfilOverlay) perfilOverlay.style.display = 'none';
+}
+
+async function uploadAvatar(input) {
+    if (!input.files || !input.files[0]) return;
+    
+    const file = input.files[0];
+    
+    if (file.size > 5 * 1024 * 1024) {
+        alert('Arquivo muito grande! Máximo 5MB.');
+        return;
+    }
+    
+    if (!file.type.startsWith('image/')) {
+        alert('Por favor, selecione uma imagem!');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('avatar', file);
+    
+    try {
+        const response = await fetch('/update-avatar', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            document.getElementById('perfilAvatar').src = data.avatar_url + '?t=' + Date.now();
+            
+            const user = JSON.parse(localStorage.getItem('user'));
+            user.avatar = data.avatar_url;
+            localStorage.setItem('user', JSON.stringify(user));
+            
+            alert('Foto atualizada com sucesso!');
+        } else {
+            alert('Erro ao atualizar foto: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao enviar foto!');
+    }
+}
+
+async function salvarPerfil() {
+    const novoNome = document.getElementById('perfilNome').value;
+    
+    if (!novoNome || novoNome.trim() === '') {
+        alert('Por favor, preencha o nome!');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/update-profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nome: novoNome
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            user.nome = novoNome;
+            localStorage.setItem('user', JSON.stringify(user));
+            
+            alert('Nome atualizado com sucesso!');
+            hideProfile();
+        } else {
+            alert('Erro: ' + data.error);
+        }
+        
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao salvar!');
+    }
 }
 
 function enviarNovaPista() {
