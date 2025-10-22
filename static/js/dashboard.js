@@ -233,6 +233,11 @@ async function uploadAvatar(input) {
             const user = JSON.parse(localStorage.getItem('user'));
             user.avatar = data.avatar_url;
             localStorage.setItem('user', JSON.stringify(user));
+
+            const userAvatar = document.querySelector('.user-avatar');
+            if (userAvatar) {
+                userAvatar.src = data.avatar_url + '?t=' + Date.now();
+            }
             
             alert('Foto atualizada com sucesso!');
         } else {
@@ -270,6 +275,9 @@ async function salvarPerfil() {
             user.nome = novoNome;
             localStorage.setItem('user', JSON.stringify(user));
             
+            const userName = document.querySelector('.user-name');
+            if (userName) userName.textContent = novoNome;
+
             alert('Nome atualizado com sucesso!');
             hideProfile();
         } else {
@@ -282,7 +290,7 @@ async function salvarPerfil() {
     }
 }
 
-function enviarNovaPista() {
+async function enviarNovaPista() {
     const nome = document.getElementById('spotName').value;
     const cidade = document.getElementById('spotCity').value;
     const estado = document.getElementById('spotState').value;
@@ -291,7 +299,6 @@ function enviarNovaPista() {
     const descricao = document.getElementById('spotDescription').value;
     const latitude = document.getElementById('spotLatitude').value;
     const longitude = document.getElementById('spotLongitude').value;
-    const fotos = document.getElementById('spotPhotos').files;
 
     const camposVazios = [];
     if (!nome) camposVazios.push('Nome da Pista');
@@ -306,31 +313,44 @@ function enviarNovaPista() {
         Alertas.validacaoFormulario(camposVazios);
         return;
     }
-
-    const dadosPista = {
-        nome: nome,
-        cidade: cidade,
-        estado: estado,
-        tipo: tipo,
-        dificuldade: dificuldade,
-        descricao: descricao,
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
-        usuario_id: JSON.parse(localStorage.getItem('user')).id
-    };
-
-    console.log('Dados da nova pista:', dadosPista);
     
     Alertas.carregando('Salvando nova pista...');
 
-    setTimeout(() => {
-        Alertas.fecharCarregando();
-        Alertas.sucesso('Pista adicionada!', 'A pista foi adicionada com sucesso.')
-        .then(() => {
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addSpotModal'));
-            modal.hide();
-            document.getElementById('addSpotForm').reset();
-            Alertas.toast('A pista já está disponível no mapa!', 'success');
+    try {
+        const response = await fetch('/api/pistas/criar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nome: nome,
+                cidade: cidade,
+                estado: estado,
+                tipo: tipo,
+                dificuldade: dificuldade,
+                descricao: descricao,
+                latitude: parseFloat(latitude),
+                longitude: parseFloat(longitude)
+            })
         });
-    }, 1500);
+
+        const data = await response.json();
+        
+        Alertas.fecharCarregando();
+        
+        if (data.success) {
+            Alertas.sucesso('Pista enviada para análise!', 'Você será notificado quando for aprovada.')
+            .then(() => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addSpotModal'));
+                modal.hide();
+                document.getElementById('addSpotForm').reset();
+            });
+        } else {
+            Alertas.erro('Erro ao enviar pista', data.error);
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        Alertas.fecharCarregando();
+        Alertas.erro('Erro!', 'Não foi possível enviar a pista.');
+    }
 }
