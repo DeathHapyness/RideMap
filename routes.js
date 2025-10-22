@@ -1,14 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const pool = require('./db/config');
 const upload = require('./config/multer');
+const pool = require('./db/config');
+
+//**Verifica se esta logado */
+function isAuthenticated(req, res, next) {
+  if (req.session.user) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+//* Verifica se é ADMIN
+function isAdmin(req, res, next) {
+  if (req.session.user && req.session.user.role === 'admin') {
+    return next();
+  }
+  res.status(403).json({ error: 'Acesso negado! Apenas administradores.' });
+}
 
 //**deixar sempre para redirecionar para '/' ao invés de '/login' para evitar loops
 
 function isAuthenticated(req, res, next) {
   if (req.session.user) return next();
-  res.redirect('/'); // ← MUDE AQUI
+  res.redirect('/');
 }
 
 router.get('/', (req, res) => {
@@ -29,10 +45,12 @@ router.post('/login', async (req, res) => {
     if (!match) return res.status(401).json({ error: 'Senha incorreta' });
 
     const user = {
-      id: rows[0].id,
-      nome: rows[0].nome,
-      email: rows[0].email
-    };
+  id: rows[0].id,
+  nome: rows[0].nome,
+  email: rows[0].email,
+  avatar: rows[0].avatar,
+  role: rows[0].role  
+};
 
     req.session.user = user;
     res.json(user);
@@ -138,8 +156,6 @@ router.post('/update-profile', isAuthenticated, async (req, res) => {
     }
 });
 
-module.exports = router;
-
 //*Rota para envio de foto de perfil de user */
 router.post('/update-profile', isAuthenticated, async (req, res) => {
     try {
@@ -174,3 +190,121 @@ router.post('/update-profile', isAuthenticated, async (req, res) => {
         });
     }
 });
+
+function isAuthenticated(req, res, next) {
+  if (req.session.user) { 
+    return next(); 
+  }
+  res.redirect('/login'); 
+}
+
+function isAdmin(req, res, next) {
+  if (req.session.user && req.session.role === 'admin') {
+    return next();
+  }
+  res.status(403).send('Acesso negado, administrador apenas.');
+}
+
+// ========== ROTAS DE ADMIN ==========
+
+router.get('/admin/dashboard', isAuthenticated, isAdmin, (req, res) => {
+  res.render('admin-dashboard', { 
+    title: 'Painel Admin - RideMap',
+    user: req.session.user
+  });
+});
+
+//* Buscar pistas pendentes (API) fazer api
+router.get('/api/admin/pistas-pendentes', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const [pistas] = await pool.query(`
+      SELECT p.*, u.nome as usuario_nome 
+      FROM pistas p
+      JOIN usuarios u ON p.usuario_id = u.id
+      WHERE p.status = 'pendente'
+      ORDER BY p.data_criacao DESC
+    `);
+    res.json(pistas);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar pistas' });
+  }
+});
+
+router.post('/api/admin/aprovar-pista/:id', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const pistaId = req.params.id;
+    const adminId = req.session.user.id;
+    
+    const [pista] = await pool.query('SELECT usuario_id FROM pistas WHERE id = ?', [pistaId]);
+    if (!pista[0]) {
+      return res.status(404).json({ error: 'Pista não encontrada' });
+    }
+    
+    await pool.query(
+      'UPDATE pistas SET status = ?, moderador_id = ?, data_moderacao = NOW() WHERE id = ?',
+      ['aprovada', adminId, pistaId]
+    );
+    
+    await pool.query(
+      'INSERT INTO notificacoes (usuario_id, tipo, mensagem) VALUES (?, ?, ?)',
+      [pista[0].usuario_id, 'pista_aprovada', '✅ Sua pista foi aprovada e já está visível no mapa!']
+    );
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao aprovar pista' });
+  }
+});
+
+router.post('/api/admin/rejeitar-pista/:id', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const pistaId = req.params.id;
+    const adminId = req.session.user.id;
+    const motivo = req.body.motivo;
+    
+    if (!motivo || motivo.trim() === '') {
+      return res.status(400).json({ error: 'Motivo é obrigatório' });
+    }
+    
+    const [pista] = await pool.query('SELECT usuario_id FROM pistas WHERE id = ?', [pistaId]);
+    if (!pista[0]) {
+      return res.status(404).json({ error: 'Pista não encontrada' });
+    }
+    
+    await pool.query(
+      'UPDATE pistas SET status = ?, motivo_rejeicao = ?, moderador_id = ?, data_moderacao = NOW() WHERE id = ?',
+      ['rejeitada', motivo, adminId, pistaId]
+    );
+    
+    await pool.query(
+      'INSERT INTO notificacoes (usuario_id, tipo, mensagem) VALUES (?, ?, ?)',
+      [pista[0].usuario_id, 'pista_rejeitada', `❌ Sua pista foi rejeitada. Motivo: ${motivo}`]
+    );
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao rejeitar pista' });
+  }
+});
+
+router.post('/api/pistas/criar', isAuthenticated, async (req, res) => {
+  try {
+    const { nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude } = req.body;
+    const usuarioId = req.session.user.id;
+
+    await pool.query(
+      'INSERT INTO pistas (nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude, usuario_id, status, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())',
+      [nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude, usuarioId, 'pendente']
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao criar pista' });
+  } 
+});
+
+module.exports = router;
