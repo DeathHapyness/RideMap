@@ -616,7 +616,7 @@ Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
   <tr>
     <td align="center">
       <a href="https://github.com/DeathHapyness">
-        <img src="/static/img/(8) Instagram.jpg" width="100px;" alt="Foto do Henrique"/><br>
+        <img src="https://github.com/DeathHapyness.png" width="100px;" alt="Foto do Henrique"/><br>
         <sub>
           <b>Henrique</b>
         </sub>
@@ -624,9 +624,9 @@ Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
     </td>
     <td align="center">
       <a href="https://github.com/izlzy">
-        <img src="https://github.com/izlzy.png" width="100px;" alt="Foto do Joao"/>
+        <img src="https://github.com/izlzy.png" width="100px;" alt="Foto do João"/><br>
         <sub>
-          <b>Joao</b>
+          <b>João</b>
         </sub>
       </a>
     </td>
