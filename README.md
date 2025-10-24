@@ -635,7 +635,7 @@ Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 - 💼 LinkedIn: [seu-linkedin](https://linkedin.com/in/seu-linkedin)
 - 📧 Email: henrique.dev2@gmail.com
-- 🐙 GitHub: [@seu-usuario](https://github.com/DeathHapyness)
+- 🐙 GitHub: [@DeathHapyness](https://github.com/DeathHapyness)
 
 ---
 
