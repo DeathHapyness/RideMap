@@ -624,9 +624,9 @@ Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
     </td>
     <td align="center">
       <a href="https://github.com/izlzy">
-        <img src="/static/img/foto_jao.jpeg" width="100px;" alt="Foto do Joao"/><br>
+        <img src="/static/img/foto_jao.jpg" width="100px;" alt="Foto do Joao"/><br>
         <sub>
-          <b>Nome do Dev 2</b>
+          <b>Joao</b>
         </sub>
       </a>
     </td>
