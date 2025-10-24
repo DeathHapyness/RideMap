@@ -444,7 +444,7 @@ O RideMap implementa múltiplas camadas de segurança:
 
 ## 🗺️ Roadmap
 
-<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="100%">
+<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="100px">
 
 ### ✅ Concluído
 
@@ -621,7 +621,7 @@ Veja a licença completa: [LICENSE](LICENSE)
 
 ## 🙏 Agradecimentos
 
-<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="100%">
+<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="100">
 
 - 🛹 Comunidade de skatistas que inspirou este projeto
 - 🗺️ [Leaflet.js](https://leafletjs.com/) pelo mapa interativo
