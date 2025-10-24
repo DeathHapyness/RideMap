@@ -588,7 +588,7 @@ To use this project commercially (resell, integrate in paid product, etc.), **co
 
 📧 **Email:** henrique.dev2@gmail.com
 
-See full license: [LICENSE](LICENSE)
+See the full license: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ---
 
