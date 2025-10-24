@@ -616,9 +616,17 @@ Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
   <tr>
     <td align="center">
       <a href="https://github.com/DeathHapyness">
-        <img src="/static/img/(8) Instagram.html" width="100px;" alt="Foto do Henrique"/><br>
+        <img src="/static/img/(8) Instagram.jpg" width="100px;" alt="Foto do Henrique"/><br>
         <sub>
           <b>Henrique</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/izlzy">
+        <img src="/static/img/foto_jao.jpeg" width="100px;" alt="Foto do Joao"/><br>
+        <sub>
+          <b>Nome do Dev 2</b>
         </sub>
       </a>
     </td>
