@@ -1,12 +1,39 @@
-<div class="Perfil card p-3" id="perfilContainer" style="max-width: 300px; display: none;">
+{{!-- Overlay de fundo --}}
+<div id="perfilOverlay" onclick="hideProfile()"></div>
+
+{{!-- Modal do perfil --}}
+<div class="card p-4" id="perfilContainer">
+    {{!-- Botão fechar --}}
+    <button class="btn-fechar-perfil" onclick="hideProfile()" title="Fechar" aria-label="Fechar">
+        ×
+    </button>
+    
     <div class="text-center mb-3">
-        <img id="perfilAvatar" src="{{#if user.avatar}}{{user.avatar}}{{else}}/static/img/default-avatar.jpg{{/if}}" class="rounded-circle" alt="Avatar" width="100" height="100">
-        <input type="file" id="perfilAvatarInput" accept="image/*" style="display: none;">
-        <button class="btn btn-sm btn-outline-primary mt-2" id="btnTrocarAvatar">Trocar Foto</button>
+        <img id="perfilAvatar" 
+             src="{{#if user.avatar}}{{user.avatar}}{{else}}/static/img/default-avatar.png{{/if}}" 
+             class="rounded-circle" 
+             alt="Avatar"
+             onclick="document.getElementById('perfilAvatarInput').click()"
+             title="Clique para trocar a foto">
+        
+        <form id="formAvatar" enctype="multipart/form-data">
+            <input type="file" 
+                   id="perfilAvatarInput" 
+                   name="avatar"
+                   accept="image/*" 
+                   style="display: none;"
+                   onchange="uploadAvatar(this)">
+        </form>
+        
+        <div class="mt-2">
+            <small class="text-muted">Clique na foto para trocar</small>
+        </div>
     </div>
-    <div class="mb-2">
+    
+    <div class="mb-3">
         <label for="perfilNome" class="form-label">Nome/Apelido</label>
-        <input type="text" class="form-control" id="perfilNome" value="{{user.nome}}">
+        <input type="text" class="form-control" id="perfilNome" value="{{#if user.nome}}{{user.nome}}{{/if}}">
     </div>
+    
     <button class="btn btn-primary w-100" id="btnSalvarPerfil">Salvar Alterações</button>
 </div>
