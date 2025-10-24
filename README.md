@@ -11,6 +11,8 @@
 [![MySQL](https://img.shields.io/badge/mysql-8.0-blue?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange?style=for-the-badge)](LICENSE)
 
+**Idiomas:** 🇧🇷 **Português** | [🇺🇸 English](README_EN.md)
+
 <p align="center">
   <a href="#-sobre-o-projeto">Sobre</a> •
   <a href="#-funcionalidades">Funcionalidades</a> •
@@ -20,7 +22,7 @@
   <a href="#-licença">Licença</a>
 </p>
 
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="800">
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
 
 </div>
 
@@ -444,7 +446,9 @@ O RideMap implementa múltiplas camadas de segurança:
 
 ## 🗺️ Roadmap
 
-<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="100%">
+<div align="center">
+<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="600">
+</div>
 
 ### ✅ Concluído
 
@@ -621,7 +625,9 @@ Veja a licença completa: [LICENSE](LICENSE)
 
 ## 🙏 Agradecimentos
 
-<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="100%">
+<div align="center">
+<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="600">
+</div>
 
 - 🛹 Comunidade de skatistas que inspirou este projeto
 - 🗺️ [Leaflet.js](https://leafletjs.com/) pelo mapa interativo
@@ -647,7 +653,7 @@ Documentação:           ████████░░  80%
 
 <div align="center">
 
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="800">
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
 
 ### ⭐ Se este projeto te ajudou, deixe uma estrela!
 
