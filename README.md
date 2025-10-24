@@ -615,8 +615,8 @@ Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/seu-usuario">
-        <img src="https://github.com/seu-usuario.png" width="100px;" alt="Foto do Henrique"/><br>
+      <a href="https://github.com/DeathHapyness">
+        <img src="/static/img/(8) Instagram.html" width="100px;" alt="Foto do Henrique"/><br>
         <sub>
           <b>Henrique</b>
         </sub>
@@ -627,7 +627,7 @@ Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 - 💼 LinkedIn: [seu-linkedin](https://linkedin.com/in/seu-linkedin)
 - 📧 Email: henrique.dev2@gmail.com
-- 🐙 GitHub: [@seu-usuario](https://github.com/seu-usuario)
+- 🐙 GitHub: [@seu-usuario](https://github.com/DeathHapyness)
 
 ---
 
