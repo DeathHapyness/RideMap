@@ -1,3 +1,46 @@
+// Define o objeto Alertas ANTES de tudo
+const Alertas = {
+    carregando: (texto) => {
+        Swal.fire({
+            title: texto,
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+    },
+    fecharCarregando: () => {
+        Swal.close();
+    },
+    sucesso: (titulo, texto) => {
+        return Swal.fire({
+            icon: 'success',
+            title: titulo,
+            text: texto
+        });
+    },
+    erro: (titulo, texto) => {
+        Swal.fire({
+            icon: 'error',
+            title: titulo,
+            text: texto
+        });
+    },
+    info: (titulo, texto) => {
+        Swal.fire({
+            icon: 'info',
+            title: titulo,
+            text: texto
+        });
+    },
+    validacaoFormulario: (campos) => {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos obrigatórios',
+            html: 'Preencha: ' + campos.join(', ')
+        });
+    }
+};
+
+// AGORA sim vem o DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
     const user = JSON.parse(localStorage.getItem('user'));
     
@@ -352,5 +395,112 @@ async function enviarNovaPista() {
         console.error('Erro:', error);
         Alertas.fecharCarregando();
         Alertas.erro('Erro!', 'Não foi possível enviar a pista.');
+    }
+}
+
+let ultimoTotal = 0;
+
+async function verificarNotificacoes() {
+    try {
+        const response = await fetch('/api/notificacoes/count');
+        const data = await response.json();
+        
+        const badge = document.querySelector('.badge-notificacoes');
+        
+        if (data.total > 0) {
+            badge.style.display = 'inline-block';
+            badge.textContent = data.total;
+        } else {
+            badge.style.display = 'none';
+        }
+        
+        if (data.total > ultimoTotal && ultimoTotal !== 0) {
+            alert('📬 Nova notificação!');
+        }
+        
+        ultimoTotal = data.total;
+        
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+setInterval(verificarNotificacoes, 5000);
+verificarNotificacoes();
+
+function toggleNotificacoes() {
+    const dropdown = document.getElementById('notificacoesDropdown');
+    
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+        dropdown.style.display = 'block';
+        carregarNotificacoes(); // ← ADICIONADO
+    } else {
+        dropdown.style.display = 'none';
+    }
+}
+
+function fecharNotificacoes() {
+    const dropdown = document.getElementById('notificacoesDropdown');
+    dropdown.style.display = 'none';
+}
+
+async function carregarNotificacoes() {
+    try {
+        const response = await fetch('/api/notificacoes');
+        const notificacoes = await response.json();
+        
+        const lista = document.getElementById('notificacoesLista');
+        
+        if (notificacoes.length === 0) {
+            lista.innerHTML = '<p class="text-center text-muted">Nenhuma notificação</p>';
+            return;
+        }
+        
+        let html = '';
+        notificacoes.forEach(notif => {
+            const icone = notif.tipo === 'pista_aprovada' ? '✅' : '❌';
+            const classe = notif.lida ? '' : 'nao-lida';
+            
+            html += `
+                <div class="notificacao-item ${classe}" onclick="marcarComoLida(${notif.id})">
+                    <div style="font-size: 1.2rem;">${icone}</div>
+                    <div style="flex: 1;">
+                        <p style="margin: 0;">${notif.mensagem}</p>
+                        <small class="text-muted">${formatarData(notif.data_criacao)}</small>
+                    </div>
+                </div>
+            `;
+        });
+        
+        lista.innerHTML = html;
+        
+    } catch (error) {
+        console.error('Erro:', error);
+        document.getElementById('notificacoesLista').innerHTML = '<p class="text-center text-danger">Erro ao carregar</p>';
+    }
+}
+
+function formatarData(data) {
+    const agora = new Date();
+    const dataNotif = new Date(data);
+    const diff = Math.floor((agora - dataNotif) / 1000);
+    
+    if (diff < 60) return 'Agora';
+    if (diff < 3600) return `${Math.floor(diff / 60)} min atrás`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h atrás`;
+    return `${Math.floor(diff / 86400)} dias atrás`;
+}
+
+async function marcarComoLida(id) {
+    try {
+        await fetch(`/api/notificacoes/marcar-lida/${id}`, {
+            method: 'POST'
+        });
+        
+        verificarNotificacoes();
+        carregarNotificacoes();
+        
+    } catch (error) {
+        console.error('Erro:', error);
     }
 }
