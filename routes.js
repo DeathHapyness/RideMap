@@ -90,12 +90,16 @@ router.get('/logout', (req, res) => {
 router.get('/dashboard', isAuthenticated, (req, res) => {
   res.render('dashboard', { 
     title: 'Dashboard - RideMap',
-    isDashboard: true
+    isDashboard: true,
+    user: {
+      ...req.session.user,
+      isAdmin: req.session.user.role === 'admin'
+    }
   });
 });
 
 router.get('/api/spots', async (req, res) => {
-  const [spots] = await pool.query('SELECT * FROM pistas WHERE ativa = 1');
+  const [spots] = await pool.query('SELECT * FROM pistas WHERE status = ?', ['aprovada']);
   res.json(spots);
 });
 
@@ -198,11 +202,14 @@ function isAuthenticated(req, res, next) {
   res.redirect('/login'); 
 }
 
+//! nunca mexer nesta poha se nao explode tudo
 function isAdmin(req, res, next) {
-  if (req.session.user && req.session.role === 'admin') {
+  console.log('usuario logado no momento:', req.session.user);
+  
+  if (req.session.user && req.session.user.role === 'admin') {
     return next();
   }
-  res.status(403).send('Acesso negado, administrador apenas.');
+  res.status(403).json({ error: 'Acesso negado! Apenas administradores.' });
 }
 
 // ========== ROTAS DE ADMIN ==========
@@ -305,6 +312,51 @@ router.post('/api/pistas/criar', isAuthenticated, async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Erro ao criar pista' });
   } 
+});
+
+//**Logica de notificacoes para usuarios */
+
+router.get('/api/notificacoes/count', isAuthenticated, async (req, res) => {
+  try {
+    const usuarioId = req.session.user.id;
+    const [resultado] = await pool.query(
+      'SELECT COUNT(*) as total FROM notificacoes WHERE usuario_id = ? AND lida = ?',
+      [usuarioId, 0]
+    );
+    res.json({ total: resultado[0].total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar notificações' });
+  }
+});
+
+router.get('/api/notificacoes', isAuthenticated, async (req, res) => {
+  try {
+    const usuarioId = req.session.user.id;
+    const [notificacoes] = await pool.query(
+      'SELECT * FROM notificacoes WHERE usuario_id = ? ORDER BY data_criacao DESC',
+      [usuarioId]
+    );
+    res.json(notificacoes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar notificações' });
+  }
+});
+
+router.post('/api/notificacoes/marcar-lida/:id', isAuthenticated, async (req, res) => {
+  try {
+    const notificacoesId = req.params.id;
+    const usuarioId = req.session.user.id;
+    await pool.query(
+      'UPDATE notificacoes SET lida = ? WHERE id = ? AND usuario_id = ?',
+      [1, notificacoesId ,usuarioId]
+    );
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao marcar notificações como lidas' });
+  }
 });
 
 module.exports = router;
