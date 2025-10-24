@@ -613,7 +613,7 @@ Veja a licença completa: [LICENSE](LICENSE)
   </tr>
 </table>
 
-📧 **Contato:** henrique.dev2@gmail.com
+📧 **Contato:** henrique.dev2@proton.me
 
 </div>
 
