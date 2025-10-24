@@ -126,15 +126,56 @@ function loadUserProfile() {
     }
 }
 
-function showMySpots() {
-    Alertas.carregando('Carregando suas pistas...');
-    
-    setTimeout(() => {
-        Alertas.fecharCarregando();
-        Alertas.info('Nenhuma pista encontrada', 'Você ainda não adicionou nenhuma pista.');
-    }, 1000);
+async function showMySpots() {
+    const modal = new bootstrap.Modal(document.getElementById('minhasPistasModal'));
+    modal.show();
+        const lista = document.getElementById('minhasPistasLista');
+    lista.innerHTML = '<p class="text-center">Carregando...</p>';
+    try {
+        const response = await fetch('/api/minhas-pistas');
+        const pistas = await response.json();
+        if (pistas.length === 0) {
+            lista.innerHTML = '<p class="text-center text-muted">Você ainda não enviou nenhuma pista.</p>';
+            return;
+        }
+        let html = '';
+        pistas.forEach(pista => {
+          pistas.forEach(pista => {
+    let badge = '';
+    if (pista.status === 'pendente') {
+        badge = '<span class="badge bg-warning">⏳ Pendente</span>';
+    } else if (pista.status === 'aprovada') {
+        badge = '<span class="badge bg-success">✅ Aprovada</span>';
+    } else {
+        badge = '<span class="badge bg-danger">❌ Rejeitada</span>';
+    }
+    html += `
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>${pista.nome} ${badge}</h5>
+                        <p><strong>📍 Local:</strong> ${pista.cidade}, ${pista.estado}</p>
+                        <p><strong>🎯 Tipo:</strong> ${pista.tipo} | <strong>📊 Dificuldade:</strong> ${pista.dificuldade}</p>
+                        <p>${pista.descricao}</p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <small class="text-muted">Enviada em: ${new Date(pista.data_criacao).toLocaleDateString()}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+});
+        });
+        
+        lista.innerHTML = html;
+        
+    } catch (error) {
+        console.error('Erro:', error);
+        lista.innerHTML = '<p class="text-center text-danger">Erro ao carregar suas pistas.</p>';
+    }
 }
-
 function showAddSpot() {
     const modalAdicionarPista = new bootstrap.Modal(document.getElementById('addSpotModal'));
     
