@@ -1,189 +1,26 @@
-# 🛹 RideMap
-
-> Plataforma colaborativa para skatistas encontrarem e compartilharem pistas de skate pelo Brasil
-
-![Badge](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![Badge](https://img.shields.io/badge/license-MIT-blue)
-
-## 📖 Sobre o Projeto
-
-RideMap é uma aplicação web que conecta skatistas, permitindo descobrir novas pistas, avaliar locais e construir uma comunidade em torno do skate. Com sistema de moderação e notificações em tempo real, garantimos conteúdo de qualidade para todos os usuários.
-
-## ✨ Funcionalidades
-
-### Para Usuários
-- 🗺️ Mapa interativo com pistas de skate
-- ➕ Adicionar novas pistas com localização precisa
-- 📍 Visualizar detalhes (tipo, dificuldade, descrição)
-- 🔔 Sistema de notificações em tempo real
-- 👤 Perfil personalizável com avatar
-
-### Para Administradores
-- ✅ Sistema de moderação de pistas
-- 📊 Painel administrativo
-- 🚫 Aprovar ou rejeitar pistas com justificativa
-- 👥 Gerenciamento de usuários
-
-## 🚀 Tecnologias
-
-**Frontend:**
-- HTML5, CSS3, JavaScript (ES6+)
-- Handlebars (Template Engine)
-- Bootstrap 5
-- Leaflet.js (Mapas)
-- SweetAlert2 (Alertas)
-- Select2 (Dropdowns)
-
-**Backend:**
-- Node.js
-- Express.js
-- MySQL 8.0
-- bcrypt (Criptografia)
-- express-session (Sessões)
-
-## 📦 Instalação
-
-### Pré-requisitos
-- Node.js 16+
-- MySQL 8.0+
-- Git
-
-### Passos
-
-1. Clone o repositório
-```bash
-git clone https://github.com/seu-usuario/ridemap.git
-cd ridemap
-```
-
-2. Instale as dependências
-```bash
-npm install
-```
-
-3. Configure o banco de dados
-```sql
-CREATE DATABASE ridemap;
-```
-
-4. Configure as variáveis de ambiente
-```bash
-cp .env.example .env
-# Edite o .env com suas credenciais
-```
-
-5. Execute as migrations (SQL)
-```bash
-# Execute os scripts em db/migrations/
-mysql -u seu_usuario -p ridemap < db/setup.sql
-```
-
-6. Inicie o servidor
-```bash
-npm start
-```
-
-7. Acesse no navegador
-```
-http://localhost:3000
-```
-
-## 🎯 Como Usar
-
-### Criar uma conta
-1. Acesse `/register`
-2. Preencha nome, email e senha
-3. Faça login
-
-### Adicionar uma pista
-1. Clique em "Adicionar Pista"
-2. Preencha os dados
-3. Clique no mapa para definir localização
-4. Aguarde aprovação do admin
-
-### Aprovar pistas (Admin)
-1. Acesse `/admin/dashboard`
-2. Veja pistas pendentes
-3. Aprove ou rejeite com justificativa
-
-## 📸 Screenshots
-
-[Adicione screenshots aqui]
-
-## 🗺️ Roadmap
-
-- [x] Sistema de autenticação
-- [x] Mapa interativo
-- [x] Sistema de moderação
-- [x] Notificações em tempo real
-- [ ] Upload de fotos nas pistas
-- [ ] Sistema de avaliações
-- [ ] Filtros avançados
-- [ ] Rotas/trilhas de skate
-- [ ] Aplicativo mobile
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Siga os passos:
-
-1. Fork o projeto
-2. Crie sua branch (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona MinhaFeature'`)
-4. Push para a branch (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## 👨‍💻 Autor
-
-**Henrique**
-
-- GitHub: [@DeathHapyness](https://github.com/seu-usuario)
-- Email: henrique.dev2@gmail.com
-
----
-
-⭐ Se este projeto te ajudou, deixe uma estrela!
-
-🛹 Feito com ❤️ por skatistas, para skatistas
-
-💡 DICAS EXTRAS:
-Adicione badges:
-
-Mostrar Imagem
-Mostrar Imagem
-
-Crie um .env.example:
-envDB_HOST=localhost
-DB_USER=ridemap
-DB_PASSWORD=sua_senha
-DB_NAME=ridemap
-SESSION_SECRET=seu_secret_aqui
-PORT=3000
-Tire screenshots:
-
-Página inicial
-Dashboard
-Painel admin
-Sistema de notificações
-
-
-Quer que eu crie um README completo específico pro seu projeto com todas as informações corretas? 🚀Tentar novamenteHfaca algo mais completo e tudo de uma forma que eu possa apenas copiar e colarmarkdown# 🛹 RideMap
-
 <div align="center">
 
-![RideMap Logo](https://via.placeholder.com/800x200/667eea/ffffff?text=RideMap+-+Encontre+as+Melhores+Pistas+de+Skate)
+# 🛹 RideMap
+
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&duration=2800&pause=2000&color=667EEA&center=true&vCenter=true&width=940&lines=Encontre+as+Melhores+Pistas+de+Skate;Plataforma+Colaborativa+para+Skatistas;Construa+sua+Comunidade!" alt="Typing SVG" />
 
 **Plataforma colaborativa para skatistas encontrarem e compartilharem pistas de skate pelo Brasil**
 
-[![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)](https://github.com/seu-usuario/ridemap)
-[![Node](https://img.shields.io/badge/node-16+-green)](https://nodejs.org)
-[![MySQL](https://img.shields.io/badge/mysql-8.0-blue)](https://www.mysql.com)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow?style=for-the-badge)](https://github.com/DeathHapyness/ridemap)
+[![Node](https://img.shields.io/badge/node-16+-green?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
+[![MySQL](https://img.shields.io/badge/mysql-8.0-blue?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com)
+[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange?style=for-the-badge)](LICENSE)
 
-[Demo](#) • [Documentação](#instalação) • [Reportar Bug](https://github.com/seu-usuario/ridemap/issues)
+<p align="center">
+  <a href="#-sobre-o-projeto">Sobre</a> •
+  <a href="#-funcionalidades">Funcionalidades</a> •
+  <a href="#-tecnologias">Tecnologias</a> •
+  <a href="#-instalação">Instalação</a> •
+  <a href="#-como-usar">Como Usar</a> •
+  <a href="#-licença">Licença</a>
+</p>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="800">
 
 </div>
 
@@ -191,83 +28,152 @@ Quer que eu crie um README completo específico pro seu projeto com todas as inf
 
 ## 📖 Sobre o Projeto
 
+<img align="right" src="https://user-images.githubusercontent.com/74038190/212748842-9fcbad5b-6173-4175-8a61-521f3dbb7514.gif" width="250">
+
 **RideMap** é uma aplicação web full-stack que conecta a comunidade de skatistas, permitindo descobrir novas pistas, compartilhar locais e construir um mapa colaborativo de spots pelo Brasil. 
 
 Com sistema de moderação robusto, notificações em tempo real e interface intuitiva, o RideMap garante conteúdo de qualidade e experiência profissional para todos os usuários.
 
-### 🎯 Problema que resolve
+<br clear="right"/>
 
-Skatistas frequentemente enfrentam dificuldade em:
-- Encontrar novas pistas na sua região
-- Saber detalhes sobre dificuldade e tipo de pista
-- Compartilhar descobertas com a comunidade
-- Ter informações confiáveis sobre os spots
+### 🎯 Problema que Resolve
 
-### 💡 Solução
+<table>
+<tr>
+<td width="50%">
 
-Uma plataforma centralizada onde a própria comunidade cadastra, avalia e mantém atualizado um mapa completo de pistas, com sistema de moderação para garantir qualidade.
+**Desafios dos Skatistas:**
+- 🔍 Dificuldade em encontrar novas pistas
+- ❓ Falta de informações sobre dificuldade
+- 🤝 Ausência de plataforma para compartilhar
+- ⚠️ Informações não confiáveis sobre spots
+
+</td>
+<td width="50%">
+
+**Nossa Solução:**
+- 🗺️ Mapa centralizado e interativo
+- 📊 Informações detalhadas e verificadas
+- 👥 Comunidade ativa e engajada
+- ✅ Sistema de moderação de qualidade
+
+</td>
+</tr>
+</table>
 
 ---
 
 ## ✨ Funcionalidades
 
-### 👤 Para Usuários Comuns
+<details open>
+<summary><b>👤 Para Usuários Comuns</b></summary>
+<br>
 
-- 🗺️ **Mapa Interativo** - Visualize todas as pistas aprovadas em um mapa usando Leaflet.js
-- ➕ **Adicionar Pistas** - Cadastre novos spots com:
-  - Nome e descrição
+- 🗺️ **Mapa Interativo**
+  - Visualize todas as pistas aprovadas usando Leaflet.js
+  - Interface responsiva e fácil de usar
+  
+- ➕ **Adicionar Pistas**
+  - Nome e descrição detalhada
   - Localização precisa (clique no mapa)
-  - Tipo (skate, patins ou ambos)
+  - Tipo: skate, patins ou ambos
   - Nível de dificuldade (fácil, médio, difícil)
   - Cidade e estado
-- 🔔 **Notificações em Tempo Real** - Receba alertas quando:
-  - Sua pista for aprovada
-  - Sua pista for rejeitada (com motivo)
-  - Badge mostra número de notificações não lidas
+  
+- 🔔 **Notificações em Tempo Real**
+  - Alertas quando sua pista for aprovada
+  - Notificação de rejeição com motivo
+  - Badge mostra notificações não lidas
   - Atualização automática a cada 5 segundos
-- 👤 **Perfil Personalizável** - Avatar customizável e informações pessoais
-- 📍 **Visualizar Detalhes** - Veja informações completas de cada pista
+  
+- 👤 **Perfil Personalizável**
+  - Avatar customizável
+  - Informações pessoais editáveis
+  
+- 📍 **Visualizar Detalhes**
+  - Informações completas de cada pista
+  - Sistema de avaliações (em breve)
 
-### 🛡️ Para Administradores
+</details>
 
-- ✅ **Sistema de Moderação** - Painel completo para análise de pistas
-- 📊 **Dashboard Administrativo** - Estatísticas e métricas em tempo real
-- 🎯 **Aprovar/Rejeitar Pistas** - Com justificativa obrigatória em caso de rejeição
-- 🔔 **Notificações Automáticas** - Sistema envia feedback automático aos usuários
-- 👥 **Gerenciamento de Usuários** - Controle de permissões e roles
-- 📈 **Métricas** - Acompanhe total de pistas aprovadas, rejeitadas e pendentes
+<details>
+<summary><b>🛡️ Para Administradores</b></summary>
+<br>
+
+- ✅ **Sistema de Moderação**
+  - Painel completo para análise de pistas
+  - Interface intuitiva de aprovação/rejeição
+  
+- 📊 **Dashboard Administrativo**
+  - Estatísticas em tempo real
+  - Métricas de engajamento
+  
+- 🎯 **Aprovar/Rejeitar Pistas**
+  - Justificativa obrigatória em rejeições
+  - Histórico de moderações
+  
+- 🔔 **Notificações Automáticas**
+  - Sistema envia feedback automático
+  - Comunicação transparente com usuários
+  
+- 👥 **Gerenciamento de Usuários**
+  - Controle de permissões e roles
+  - Sistema anti-spam
+  
+- 📈 **Métricas Detalhadas**
+  - Total de pistas aprovadas/rejeitadas/pendentes
+  - Análise de crescimento da plataforma
+
+</details>
 
 ---
 
 ## 🚀 Tecnologias Utilizadas
 
+<div align="center">
+
 ### Frontend
-```
-HTML5, CSS3, JavaScript (ES6+)
-├── Handlebars        # Template engine
-├── Bootstrap 5       # Framework CSS
-├── Leaflet.js        # Mapas interativos
-├── SweetAlert2       # Alertas e modais
-├── Select2           # Dropdowns avançados
-└── Font Awesome      # Ícones
-```
+
+<img src="https://skillicons.dev/icons?i=html,css,js,bootstrap" alt="Frontend Stack" />
+
+| Tecnologia | Descrição |
+|------------|-----------|
+| ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) | Estrutura da aplicação |
+| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) | Estilização customizada |
+| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) | Lógica do cliente |
+| ![Bootstrap](https://img.shields.io/badge/Bootstrap_5-7952B3?style=flat&logo=bootstrap&logoColor=white) | Framework CSS |
+| ![Leaflet](https://img.shields.io/badge/Leaflet-199900?style=flat&logo=leaflet&logoColor=white) | Mapas interativos |
+| ![Handlebars](https://img.shields.io/badge/Handlebars-000000?style=flat&logo=handlebarsdotjs&logoColor=white) | Template engine |
 
 ### Backend
-```
-Node.js + Express.js
-├── MySQL 8.0              # Banco de dados
-├── mysql2                 # Driver MySQL com promises
-├── bcrypt                 # Criptografia de senhas
-├── express-session        # Gerenciamento de sessões
-├── multer                 # Upload de arquivos
-└── dotenv                 # Variáveis de ambiente
-```
 
-### Arquitetura
-- **Padrão MVC** - Separação de responsabilidades
-- **REST API** - Endpoints RESTful para comunicação
-- **Session-based Auth** - Autenticação por sessão
-- **Role-based Access Control** - Controle de permissões por roles
+<img src="https://skillicons.dev/icons?i=nodejs,express,mysql" alt="Backend Stack" />
+
+| Tecnologia | Descrição |
+|------------|-----------|
+| ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white) | Ambiente de execução |
+| ![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white) | Framework web |
+| ![MySQL](https://img.shields.io/badge/MySQL_8.0-4479A1?style=flat&logo=mysql&logoColor=white) | Banco de dados |
+| ![bcrypt](https://img.shields.io/badge/bcrypt-003A70?style=flat) | Criptografia de senhas |
+
+</div>
+
+### 🏗️ Arquitetura
+
+```
+┌─────────────────────────────────────────────┐
+│          Padrão MVC Completo                │
+├─────────────────────────────────────────────┤
+│  ┌─────────┐  ┌────────┐  ┌──────────┐     │
+│  │  Model  │  │  View  │  │Controller│     │
+│  └─────────┘  └────────┘  └──────────┘     │
+├─────────────────────────────────────────────┤
+│  • REST API                                 │
+│  • Session-based Authentication             │
+│  • Role-based Access Control (RBAC)         │
+│  • Real-time Notifications                  │
+└─────────────────────────────────────────────┘
+```
 
 ---
 
@@ -275,20 +181,41 @@ Node.js + Express.js
 
 ### Pré-requisitos
 
-Certifique-se de ter instalado:
-- [Node.js](https://nodejs.org/) 16 ou superior
-- [MySQL](https://www.mysql.com/) 8.0 ou superior
-- [Git](https://git-scm.com/)
+<table>
+<tr>
+<td>
 
-### Passo a Passo
+```bash
+📌 Node.js 16+
+📌 MySQL 8.0+
+📌 Git
+```
+
+</td>
+<td>
+
+[![Node](https://img.shields.io/badge/Download-Node.js-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+[![MySQL](https://img.shields.io/badge/Download-MySQL-blue?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Git](https://img.shields.io/badge/Download-Git-orange?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
+
+</td>
+</tr>
+</table>
+
+### 🚀 Passo a Passo
+
+<details open>
+<summary><b>Clique para expandir as instruções</b></summary>
 
 #### 1️⃣ Clone o repositório
+
 ```bash
-git clone https://github.com/seu-usuario/ridemap.git
+git clone https://github.com/DeathHapyness/ridemap.git
 cd ridemap
 ```
 
 #### 2️⃣ Instale as dependências
+
 ```bash
 npm install
 ```
@@ -347,32 +274,16 @@ CREATE TABLE notificacoes (
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
-
--- Criação da tabela usuarios_banidos (futura implementação)
-CREATE TABLE usuarios_banidos (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    usuario_id INT NOT NULL,
-    admin_id INT NOT NULL,
-    motivo TEXT NOT NULL,
-    data_banimento DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_expiracao DATETIME,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (admin_id) REFERENCES usuarios(id)
-);
-
--- Criar primeiro usuário admin (ALTERE A SENHA!)
-INSERT INTO usuarios (nome, email, senha, role) 
-VALUES ('Admin', 'admin@ridemap.com', '$2b$10$exemplo_hash_bcrypt', 'admin');
 ```
 
 #### 4️⃣ Configure as variáveis de ambiente
 
-Crie um arquivo `.env` na raiz do projeto:
+Crie um arquivo `.env`:
 ```bash
 touch .env
 ```
 
-Adicione o seguinte conteúdo (ajuste com suas credenciais):
+Adicione o conteúdo:
 ```env
 # Banco de Dados
 DB_HOST=localhost
@@ -391,124 +302,152 @@ NODE_ENV=development
 ```
 
 #### 5️⃣ Inicie o servidor
-```bash
-npm start
-```
 
-Ou para desenvolvimento com auto-reload:
 ```bash
+# Modo produção
+npm start
+
+# Modo desenvolvimento (com auto-reload)
 npm run dev
 ```
 
 #### 6️⃣ Acesse a aplicação
 
-Abra seu navegador em:
-```
-http://localhost:3000
-```
+🌐 Abra seu navegador em: **http://localhost:3000**
+
+</details>
 
 ---
 
 ## 🎮 Como Usar
 
-### Para Usuários
+### 📱 Para Usuários
 
-#### 1. Criar uma conta
+<table>
+<tr>
+<td width="50%">
+
+#### 1️⃣ Criar uma Conta
 1. Acesse `http://localhost:3000`
-2. Clique em "Criar Conta"
+2. Clique em **"Criar Conta"**
 3. Preencha nome, email e senha
 4. Faça login com suas credenciais
 
-#### 2. Adicionar uma pista
-1. No dashboard, clique em "Adicionar Pista"
+#### 2️⃣ Adicionar uma Pista
+1. No dashboard, clique em **"Adicionar Pista"**
 2. Preencha as informações:
    - Nome da pista
    - Cidade e Estado
-   - Tipo (skate, patins ou ambos)
-   - Dificuldade (fácil, médio ou difícil)
+   - Tipo e Dificuldade
    - Descrição detalhada
-3. Clique no mapa para marcar a localização exata
-4. Clique em "Salvar"
-5. Aguarde a aprovação do administrador
-6. Você receberá uma notificação quando for aprovada ou rejeitada
+3. **Clique no mapa** para localização
+4. Clique em **"Salvar"**
+5. Aguarde aprovação do admin
 
-#### 3. Ver notificações
-1. O ícone de sino 🔔 mostra quantas notificações você tem
-2. Clique no sino para abrir o dropdown
-3. Clique em uma notificação para marcá-la como lida
+</td>
+<td width="50%">
 
-#### 4. Editar perfil
-1. Clique em "Perfil" no menu lateral
-2. Altere seu nome ou avatar
-3. Clique em "Salvar Alterações"
+#### 3️⃣ Ver Notificações
+1. Ícone de sino 🔔 mostra suas notificações
+2. Clique para abrir o dropdown
+3. Clique na notificação para marcar como lida
 
-### Para Administradores
+#### 4️⃣ Editar Perfil
+1. Clique em **"Perfil"** no menu
+2. Altere nome ou avatar
+3. Clique em **"Salvar Alterações"**
 
-#### 1. Acessar painel admin
-1. Faça login com uma conta admin
-2. Clique em "Administração" no menu lateral
+</td>
+</tr>
+</table>
+
+### 🛡️ Para Administradores
+
+<details>
+<summary><b>Instruções de Moderação</b></summary>
+
+#### 1️⃣ Acessar Painel Admin
+1. Faça login com conta admin
+2. Clique em **"Administração"**
 3. Acesse `http://localhost:3000/admin/dashboard`
 
-#### 2. Moderar pistas
-1. Veja a lista de "Pistas Aguardando Moderação"
-2. Analise os detalhes de cada pista
-3. Clique em "Aprovar" para liberar no mapa
-4. Ou clique em "Rejeitar" e informe o motivo
-5. O usuário receberá notificação automaticamente
+#### 2️⃣ Moderar Pistas
+1. Veja lista de **"Pistas Aguardando Moderação"**
+2. Analise os detalhes
+3. Clique em **"Aprovar"** ou **"Rejeitar"**
+4. Em caso de rejeição, informe o motivo
+5. Usuário receberá notificação automática
+
+</details>
 
 ---
 
 ## 📁 Estrutura do Projeto
+
 ```
 ridemap/
-├── config/
-│   └── multer.js           # Configuração upload de arquivos
-├── db/
+├── 📁 config/
+│   └── multer.js           # Upload de arquivos
+├── 📁 db/
 │   └── config.js           # Conexão MySQL
-├── public/
-│   ├── css/
+├── 📁 public/
+│   ├── 📁 css/
 │   │   ├── style.css       # Estilos globais
-│   │   └── dashboard.css   # Estilos do dashboard
-│   ├── js/
-│   │   ├── dashboard.js    # Lógica do dashboard
-│   │   ├── admin.js        # Lógica do painel admin
+│   │   └── dashboard.css   # Estilos dashboard
+│   ├── 📁 js/
+│   │   ├── dashboard.js    # Lógica dashboard
+│   │   ├── admin.js        # Lógica admin
 │   │   └── map.js          # Lógica do mapa
-│   └── img/                # Imagens estáticas
-├── views/
-│   ├── partials/
+│   └── 📁 img/             # Imagens estáticas
+├── 📁 views/
+│   ├── 📁 partials/
 │   │   ├── sidebar.hbs     # Menu lateral
-│   │   ├── profile-view.hbs # Modal de perfil
-│   │   └── add-spot-modal.hbs # Modal adicionar pista
+│   │   ├── profile-view.hbs
+│   │   └── add-spot-modal.hbs
 │   ├── home.hbs            # Página inicial
-│   ├── dashboard.hbs       # Dashboard do usuário
-│   └── admin-dashboard.hbs # Painel administrativo
-├── routes.js               # Todas as rotas da aplicação
-├── server.js               # Arquivo principal do servidor
-├── .env                    # Variáveis de ambiente (não commitado)
-├── .gitignore              # Arquivos ignorados pelo Git
-├── package.json            # Dependências do projeto
-└── README.md               # Este arquivo
+│   ├── dashboard.hbs       # Dashboard usuário
+│   └── admin-dashboard.hbs # Painel admin
+├── 📄 routes.js            # Rotas da aplicação
+├── 📄 server.js            # Servidor principal
+├── 📄 .env                 # Variáveis ambiente
+├── 📄 .gitignore
+├── 📄 package.json
+└── 📄 README.md
 ```
 
 ---
 
 ## 🔐 Segurança
 
-O RideMap implementa diversas camadas de segurança:
+O RideMap implementa múltiplas camadas de segurança:
 
-- ✅ **Senhas criptografadas** com bcrypt (salt rounds: 10)
-- ✅ **Sessões seguras** com express-session
-- ✅ **Validação de inputs** no frontend e backend
-- ✅ **Proteção contra SQL Injection** usando prepared statements
-- ✅ **Controle de acesso** baseado em roles (user/admin)
-- ✅ **Variáveis sensíveis** em arquivo .env (não versionado)
-- ✅ **CSRF protection** em formulários críticos
+<table>
+<tr>
+<td>
+
+- ✅ **Senhas criptografadas** (bcrypt)
+- ✅ **Sessões seguras** (express-session)
+- ✅ **Validação de inputs**
+
+</td>
+<td>
+
+- ✅ **Proteção SQL Injection**
+- ✅ **Controle de acesso (RBAC)**
+- ✅ **Variáveis sensíveis** (.env)
+
+</td>
+</tr>
+</table>
 
 ---
 
 ## 🗺️ Roadmap
 
+<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="100%">
+
 ### ✅ Concluído
+
 - [x] Sistema de autenticação completo
 - [x] Mapa interativo com Leaflet
 - [x] CRUD de pistas
@@ -519,12 +458,14 @@ O RideMap implementa diversas camadas de segurança:
 - [x] Sistema de roles (user/admin)
 
 ### 🚧 Em Desenvolvimento
+
 - [ ] Upload de múltiplas fotos por pista
 - [ ] Sistema de avaliações (estrelas/comentários)
 - [ ] "Minhas Pistas" - ver pistas enviadas
 - [ ] Editar pista rejeitada
 
 ### 📋 Planejado
+
 - [ ] Filtros avançados (tipo, dificuldade, distância)
 - [ ] Sistema de favoritos
 - [ ] Compartilhamento social
@@ -540,44 +481,47 @@ O RideMap implementa diversas camadas de segurança:
 
 ## 🤝 Contribuindo
 
-Contribuições são muito bem-vindas! Este projeto segue o padrão de código aberto.
+<img align="right" src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="200">
 
-### Como contribuir
+Contribuições são muito bem-vindas! Este projeto segue o padrão de código aberto para uso não-comercial.
+
+### Como Contribuir
 
 1. **Fork** o projeto
-2. Crie uma **branch** para sua feature (`git checkout -b feature/MinhaFeature`)
+2. Crie uma **branch** (`git checkout -b feature/MinhaFeature`)
 3. **Commit** suas mudanças (`git commit -m 'Adiciona MinhaFeature'`)
 4. **Push** para a branch (`git push origin feature/MinhaFeature`)
 5. Abra um **Pull Request**
 
-### Diretrizes
+### 📋 Diretrizes
 
-- Siga o padrão de código existente
-- Escreva mensagens de commit claras
-- Comente código complexo
-- Teste suas mudanças antes de enviar
-- Atualize a documentação se necessário
+- ✅ Siga o padrão de código existente
+- ✅ Escreva mensagens de commit claras
+- ✅ Comente código complexo
+- ✅ Teste suas mudanças
+- ✅ Atualize a documentação
 
-### Reportar Bugs
+### 🐛 Reportar Bugs
 
-Encontrou um bug? Abra uma [issue](https://github.com/seu-usuario/ridemap/issues) com:
+Abra uma [issue](https://github.com/DeathHapyness/ridemap/issues) com:
 - Descrição clara do problema
 - Passos para reproduzir
 - Comportamento esperado vs atual
 - Screenshots (se aplicável)
-- Ambiente (SO, navegador, versão Node)
+- Ambiente (SO, navegador, versão)
 
 ---
 
 ## 📝 Scripts Disponíveis
+
 ```bash
 # Instalar dependências
 npm install
 
-# Iniciar servidor de desenvolvimento
+# Servidor de desenvolvimento (com auto-reload)
 npm run dev
 
-# Iniciar servidor de produção
+# Servidor de produção
 npm start
 
 # Verificar erros de código
@@ -589,67 +533,106 @@ npm run format
 
 ---
 
-## 🐛 Problemas Conhecidos
-
-- Upload de fotos ainda não implementado nas pistas
-- Sistema de avaliações em desenvolvimento
-- Notificações não persistem após logout (por design)
-
----
-
 ## 📄 Licença
 
-Este projeto está sob a licença **MIT**. Isso significa que você pode:
+<div align="center">
 
-- ✅ Usar comercialmente
-- ✅ Modificar
-- ✅ Distribuir
-- ✅ Uso privado
+### Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
 
-Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+[![CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-orange.svg?style=for-the-badge)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+</div>
+
+Este projeto está licenciado sob **CC BY-NC-SA 4.0**. Isso significa:
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### ✅ Você Pode
+
+- 🔄 **Compartilhar** - Copiar e redistribuir
+- 🔧 **Adaptar** - Modificar e criar obras derivadas
+- 📚 **Usar para fins educacionais**
+- 👨‍💻 **Usar para projetos pessoais**
+
+</td>
+<td width="50%" valign="top">
+
+### ⚠️ Condições
+
+- 📝 **Atribuição** - Dar crédito apropriado
+- 🚫 **Não Comercial** - Sem uso comercial
+- 🔄 **Compartilha Igual** - Mesma licença
+- ⚖️ **Sem garantias** - Fornecido "como está"
+
+</td>
+</tr>
+</table>
+
+### 💼 Uso Comercial
+
+Para usar este projeto comercialmente (revender, integrar em produto pago, etc.), **entre em contato**:
+
+📧 **Email:** henrique.dev2@gmail.com
+
+Veja a licença completa: [LICENSE](LICENSE)
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
+
+<div align="center">
 
 <table>
   <tr>
     <td align="center">
       <a href="https://github.com/DeathHapyness">
-        <img src="https://github.com/DeathHapyness.png" width="100px;" alt="Foto do Henrique"/><br>
+        <img src="https://github.com/DeathHapyness.png" width="120px;" style="border-radius: 50%;" alt="Foto do Henrique"/><br>
         <sub>
           <b>Henrique</b>
         </sub>
       </a>
+      <br>
+      <a href="https://github.com/DeathHapyness">
+        <img src="https://img.shields.io/badge/-GitHub-181717?style=flat&logo=github" alt="GitHub">
+      </a>
     </td>
     <td align="center">
       <a href="https://github.com/izlzy">
-        <img src="https://github.com/izlzy.png" width="100px;" alt="Foto do João"/><br>
+        <img src="https://github.com/izlzy.png" width="120px;" style="border-radius: 50%;" alt="Foto do João"/><br>
         <sub>
           <b>João</b>
         </sub>
+      </a>
+      <br>
+      <a href="https://github.com/izlzy">
+        <img src="https://img.shields.io/badge/-GitHub-181717?style=flat&logo=github" alt="GitHub">
       </a>
     </td>
   </tr>
 </table>
 
-- 💼 LinkedIn: [seu-linkedin](https://linkedin.com/in/seu-linkedin)
-- 📧 Email: henrique.dev2@gmail.com
-- 🐙 GitHub: [@seu-usuario](https://github.com/DeathHapyness)
+📧 **Contato:** henrique.dev2@gmail.com
+
+</div>
 
 ---
 
 ## 🙏 Agradecimentos
 
-- Comunidade de skatistas que inspirou este projeto
-- [Leaflet.js](https://leafletjs.com/) pelo mapa interativo
-- [Bootstrap](https://getbootstrap.com/) pelo framework CSS
-- [SweetAlert2](https://sweetalert2.github.io/) pelos alertas bonitos
-- Todos os contribuidores futuros
+<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="100%">
+
+- 🛹 Comunidade de skatistas que inspirou este projeto
+- 🗺️ [Leaflet.js](https://leafletjs.com/) pelo mapa interativo
+- 🎨 [Bootstrap](https://getbootstrap.com/) pelo framework CSS
+- 💫 [SweetAlert2](https://sweetalert2.github.io/) pelos alertas bonitos
+- 🤝 Todos os contribuidores futuros
 
 ---
 
 ## 📊 Status do Projeto
+
 ```
 Progresso Geral: ████████░░ 80%
 
@@ -664,27 +647,16 @@ Documentação:           ████████░░  80%
 
 <div align="center">
 
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="800">
+
 ### ⭐ Se este projeto te ajudou, deixe uma estrela!
 
 ### 🛹 Feito com ❤️ por skatistas, para skatistas
 
+[![GitHub Stars](https://img.shields.io/github/stars/DeathHapyness/ridemap?style=social)](https://github.com/DeathHapyness/ridemap/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/DeathHapyness/ridemap?style=social)](https://github.com/DeathHapyness/ridemap/network/members)
+[![GitHub Watchers](https://img.shields.io/github/watchers/DeathHapyness/ridemap?style=social)](https://github.com/DeathHapyness/ridemap/watchers)
+
 **[⬆ Voltar ao topo](#-ridemap)**
 
 </div>
-
-📝 Arquivo .env.example
-Crie também um arquivo .env.example:
-env# Database Configuration
-DB_HOST=localhost
-DB_USER=seu_usuario
-DB_PASSWORD=sua_senha
-DB_NAME=ridemap
-
-# Server Configuration
-PORT=3000
-
-# Session Secret (generate a random string)
-SESSION_SECRET=seu_secret_aqui_mude_isso
-
-# Environment
-NODE_ENV=development
