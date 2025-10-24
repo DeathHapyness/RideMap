@@ -7,6 +7,22 @@
 {{!-- Modal Adicionar Pista --}}
 {{> add-spot-modal}}
 
+<!-- Modal Minhas Pistas -->
+<div class="modal" id="minhasPistasModal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5> Minhas Pistas</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      
+      <div class="modal-body" id="minhasPistasLista">
+        <p class="text-center">Carregando...</p>
+      </div>s
+    </div>
+  </div>
+</div>
+
 {{!-- Interface de visualização de perfil --}}
 {{> profile-view}}
 
