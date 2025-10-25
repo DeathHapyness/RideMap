@@ -9,11 +9,20 @@
     <link rel="stylesheet" href="/static/css/admin-dashboard.css">
 </head>
 <body>
-    <div class="admin-container">
-        <div class="admin-header">
-            <h1><i class="fas fa-shield-alt"></i> Painel Administrativo - RideMap</h1>
-            <p class="mb-0">Olá, <strong>{{user.nome}}</strong> | <a  class="botao-voltar" href="/dashboard">Voltar ao Dashboard</a> | <a href="/logout">Sair</a></p>
-        </div>
+   <div class="admin-header">
+    <div class="admin-header-content">
+        <h1><i class="fas fa-shield-alt"></i> Painel Administrativo - RideMap</h1>
+        <p>Olá, <strong>{{user.nome}}</strong></p>
+    </div>
+    <div class="admin-header-actions">
+        <a href="/dashboard" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+        </a>
+        <a href="/logout" class="btn-sair">
+            <i class="fas fa-sign-out-alt"></i> Sair
+        </a>
+    </div>
+</div>
 
 <!-- Criar boxes para mostrar numeros de aprovacao e rejeicao de pista -->
 
