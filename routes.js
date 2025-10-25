@@ -20,24 +20,23 @@ function isAdmin(req, res, next) {
   res.status(403).json({ error: 'Acesso negado! Apenas administradores.' });
 }
 
-//**deixar sempre para redirecionar para '/' ao invés de '/login' para evitar loops
-
-function isAuthenticated(req, res, next) {
-  if (req.session.user) return next();
-  res.redirect('/');
-}
-
 router.get('/', (req, res) => {
   res.render('home', { title: 'RideMap' });
 });
 
 router.get('/login', (req, res) => {
   if (req.session.user) return res.redirect('/dashboard');
-  res.redirect('/'); // redireciona para home
+  res.redirect('/');
 });
 
 router.post('/login', async (req, res) => {
   try {
+    // VALIDAÇÃO DE EMAIL
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(req.body.email)) {
+      return res.status(400).json({ error: 'Email inválido' });
+    }
+
     const [rows] = await pool.query('SELECT * FROM usuarios WHERE email = ?', [req.body.email]);
     if (!rows[0]) return res.status(401).json({ error: 'Usuário não encontrado' });
 
@@ -45,12 +44,12 @@ router.post('/login', async (req, res) => {
     if (!match) return res.status(401).json({ error: 'Senha incorreta' });
 
     const user = {
-  id: rows[0].id,
-  nome: rows[0].nome,
-  email: rows[0].email,
-  avatar: rows[0].avatar,
-  role: rows[0].role  
-};
+      id: rows[0].id,
+      nome: rows[0].nome,
+      email: rows[0].email,
+      avatar: rows[0].avatar,
+      role: rows[0].role  
+    };
 
     req.session.user = user;
     res.json(user);
@@ -67,13 +66,41 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-    const [existing] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [req.body.email]);
+    const { nome, email, senha } = req.body;
+
+    //! Adicionado REGEX para validação, nao mexer!!!
+    
+    //valida formato do email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)*$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Email inválido,tente novamente por favor' });
+    }
+    
+    //  valida nome permite apenas letras e espacos
+    const nomeRegex = /^[a-záàâãéèêíïóôõöúçñ\s]{3,50}$/i;
+    if (!nomeRegex.test(nome)) {
+      return res.status(400).json({ error: 'Nome deve ter 3-50 caracteres (apenas letras)' });
+    }
+    
+    // valida senha com mínimo 8 caracteres, 1 maiúscula, 1 minúscula, 1 número
+    const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!senhaRegex.test(senha)) {
+      return res.status(400).json({ 
+        error: 'Senha deve ter no mínimo 8 caracteres, 1 maiúscula, 1 minúscula e 1 número' 
+      });
+    }
+
+    // Verifica se email já existe
+    const [existing] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [email]);
     if (existing.length > 0) {
       return res.status(400).json({ error: 'Email já cadastrado' });
     }
-    const hash = await bcrypt.hash(req.body.senha, 10);
+
+    // Hash da senha e limite de caracteres 
+    const hash = await bcrypt.hash(senha, 15);
+
     await pool.query('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)', 
-      [req.body.nome, req.body.email, hash]);
+      [nome, email, hash]);
     
     res.json({ success: true });
   } catch (error) {
@@ -132,11 +159,11 @@ router.post('/update-profile', isAuthenticated, async (req, res) => {
         const userId = req.session.user.id;
         const novoNome = req.body.nome;
         
-        if (!novoNome || novoNome.trim() === '') {
-            return res.status(400).json({
-                success: false,
-                error: 'Não pode deixar vazio! Por favor preencha com seu nome ou apelido'
-            });
+        const nomeRegex = /^[a-záàâãéèêíïóôõöúçñ\s]{3,50}$/i;
+        if (!nomeRegex.test(novoNome)) {
+          return res.status(400).json({ 
+            error: 'Nome deve ter 3-50 caracteres (apenas letras)' 
+          });
         }
         
         await pool.query(
@@ -159,58 +186,6 @@ router.post('/update-profile', isAuthenticated, async (req, res) => {
         });
     }
 });
-
-//*Rota para envio de foto de perfil de user */
-router.post('/update-profile', isAuthenticated, async (req, res) => {
-    try {
-        const userId = req.session.user.id;
-        const novoNome = req.body.nome;
-        
-        if (!novoNome || novoNome.trim() === '') {
-            return res.status(400).json({
-                success: false,
-                error: 'Não pode deixar vazio! Por favor preencha com seu nome ou apelido'
-            });
-        }
-        
-        //ATUALIZA o banco
-        await pool.query(
-            'UPDATE usuarios SET nome = ? WHERE id = ?',
-            [novoNome, userId]
-        );
-        
-        req.session.user.nome = novoNome;
-        
-        res.json({
-            success: true,
-            nome: novoNome
-        });
-        
-    } catch (error) {
-        console.error('Erro ao atualizar perfil:', error);
-        res.status(500).json({
-            success: false,
-            error: 'Erro ao atualizar perfil'
-        });
-    }
-});
-
-function isAuthenticated(req, res, next) {
-  if (req.session.user) { 
-    return next(); 
-  }
-  res.redirect('/login'); 
-}
-
-//! nunca mexer nesta poha se nao explode tudo
-function isAdmin(req, res, next) {
-  console.log('usuario logado no momento:', req.session.user);
-  
-  if (req.session.user && req.session.user.role === 'admin') {
-    return next();
-  }
-  res.status(403).json({ error: 'Acesso negado! Apenas administradores.' });
-}
 
 // ========== ROTAS DE ADMIN ==========
 
@@ -221,7 +196,6 @@ router.get('/admin/dashboard', isAuthenticated, isAdmin, (req, res) => {
   });
 });
 
-//* Buscar pistas pendentes (API) fazer api
 router.get('/api/admin/pistas-pendentes', isAuthenticated, isAdmin, async (req, res) => {
   try {
     const [pistas] = await pool.query(`
@@ -358,5 +332,21 @@ router.post('/api/notificacoes/marcar-lida/:id', isAuthenticated, async (req, re
     res.status(500).json({ error: 'Erro ao marcar notificações como lidas' });
   }
 });
+
+//* Rota para exibir pitas de usuarios (minhas pistas)
+router.get('/api/minhas-pistas', isAuthenticated, async (req, res) => {
+  try {
+    const usuarioId = req.session.user.id;
+    const [pistas] = await pool.query(
+      'SELECT * FROM pistas WHERE usuario_id = ? ORDER BY data_criacao DESC',
+      [usuarioId]
+    );
+    res.json(pistas);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar suas pistas' });
+  }
+});
+
 
 module.exports = router;
