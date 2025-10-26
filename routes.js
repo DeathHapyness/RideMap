@@ -9,6 +9,13 @@ function isAuthenticated(req, res, next) {
   if (req.session.user) {
     return next();
   }
+  
+  // Se for requisição API, retorna JSON
+  if (req.xhr || req.headers.accept.indexOf('json') > -1 || req.path.startsWith('/api/')) {
+    return res.status(401).json({ error: 'Não autenticado' });
+  }
+  
+  // Se for página, redireciona
   res.redirect('/login');
 }
 
@@ -47,7 +54,7 @@ router.post('/login', async (req, res) => {
       id: rows[0].id,
       nome: rows[0].nome,
       email: rows[0].email,
-      avatar: rows[0].avatar,
+      avatar: rows[0].avatar_url,
       role: rows[0].role  
     };
 
@@ -346,6 +353,57 @@ router.get('/api/minhas-pistas', isAuthenticated, async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Erro ao buscar suas pistas' });
   }
+});
+
+//! Rota para email nao mexer 
+
+const { enviarEmailRecuperacao } = require('./email');
+const crypto = require('crypto');
+
+router.post('/recuperar-senha', async (req, res) => {
+   console.log('Rota /recuperar-senha chamada!');
+    console.log('Email recebido:', req.body.email);
+    try {
+        const { email } = req.body;
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Email inválido' });
+        }
+        
+        const [usuario] = await pool.query(
+            'SELECT id FROM usuarios WHERE email = ?', 
+            [email]
+        );
+        
+        if (!usuario[0]) {
+            return res.json({ 
+                success: true, 
+                message: 'Email enviado, você receberá instruções de como recuperar sua senha.' 
+            });
+        }
+        
+        // Gera token único
+        const token = crypto.randomBytes(32).toString('hex');
+        const expiracao = new Date(Date.now() + 3600000); 
+        
+        await pool.query(
+            'UPDATE usuarios SET reset_token = ?, reset_expira = ? WHERE email = ?',
+            [token, expiracao, email]
+        );
+        
+        // Envia email
+        await enviarEmailRecuperacao(email, token);
+        
+        res.json({ 
+            success: true, 
+            message: 'Email enviado! Verifique sua caixa de entrada.' 
+        });
+        
+    } catch (error) {
+        console.error('Erro:', error);
+        res.status(500).json({ error: 'Erro ao processar solicitação' });
+    }
 });
 
 
