@@ -1,39 +1,60 @@
-{{!-- Overlay de fundo --}}
-<div id="perfilOverlay" onclick="hideProfile()"></div>
-
-{{!-- Modal do perfil --}}
-<div class="card p-4" id="perfilContainer">
-    {{!-- Botão fechar --}}
-    <button class="btn-fechar-perfil" onclick="hideProfile()" title="Fechar" aria-label="Fechar">
-        ×
-    </button>
+<div class="profile-modal-content">
+    <button class="btn-fechar-perfil" onclick="fecharPerfil()">&times;</button>
     
-    <div class="text-center mb-3">
+    <div class="text-center mb-4">
         <img id="perfilAvatar" 
-             src="{{#if user.avatar}}{{user.avatar}}{{else}}/static/img/default-avatar.png{{/if}}" 
-             class="rounded-circle" 
-             alt="Avatar"
-             onclick="document.getElementById('perfilAvatarInput').click()"
-             title="Clique para trocar a foto">
-        
-        <form id="formAvatar" enctype="multipart/form-data">
-            <input type="file" 
-                   id="perfilAvatarInput" 
-                   name="avatar"
-                   accept="image/*" 
-                   style="display: none;"
-                   onchange="uploadAvatar(this)">
-        </form>
-        
-        <div class="mt-2">
-            <small class="text-muted">Clique na foto para trocar</small>
+     src="/static/img/default-avatar.png"
+     class="rounded-circle mb-3" 
+     alt="Avatar" 
+     style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #ff9800;">
+        <div>
+            <input type="file" id="perfilAvatarInput" accept="image/*" style="display: none;">
+            <button class="btn btn-sm btn-outline-primary" id="btnTrocarAvatar">
+                <i class="fas fa-camera me-2"></i>Trocar Foto
+            </button>
         </div>
     </div>
-    
-    <div class="mb-3">
-        <label for="perfilNome" class="form-label">Nome/Apelido</label>
-        <input type="text" class="form-control" id="perfilNome" value="{{#if user.nome}}{{user.nome}}{{/if}}">
-    </div>
-    
-    <button class="btn btn-primary w-100" id="btnSalvarPerfil">Salvar Alterações</button>
+
+    <form id="profileForm">
+        <div class="mb-3">
+            <label for="perfilNome" class="form-label">Nome/Apelido</label>
+            <input type="text" class="form-control" id="perfilNome" value="{{user.nome}}">
+        </div>
+        <div class="mb-3">
+            <label for="perfilEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="perfilEmail" value="{{user.email}}" readonly>
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-2"></i>Salvar Alterações
+            </button>
+        </div>
+    </form>
+
+    <hr class="my-4">
+
+    <h5 class="mb-3">Alterar Senha</h5>
+    <form id="passwordForm">
+        <div class="mb-3">
+            <label for="senhaAtual" class="form-label">Senha Atual</label>
+            <input type="password" class="form-control" id="senhaAtual">
+        </div>
+        <div class="mb-3">
+            <label for="novaSenha" class="form-label">Nova Senha</label>
+            <input type="password" class="form-control" id="novaSenha" minlength="8">
+        </div>
+        <div class="mb-3">
+            <label for="confirmarSenha" class="form-label">Confirmar Nova Senha</label>
+            <input type="password" class="form-control" id="confirmarSenha">
+        </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-key me-2"></i>Alterar Senha
+            </button>
+        </div>
+    </form>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="static/js/profile-view.js"></script>
