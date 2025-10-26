@@ -263,9 +263,17 @@ function showProfile() {
         console.error('perfilContainer não encontrado!');
         return;
     }
-
+    
+    // Remove display inline e adiciona classe
     perfilContainer.style.display = 'block';
-    if (perfilOverlay) perfilOverlay.style.display = 'block';
+    perfilContainer.style.opacity = '1';
+    perfilContainer.style.visibility = 'visible';
+    
+    if (perfilOverlay) {
+        perfilOverlay.style.display = 'block';
+        perfilOverlay.style.opacity = '1';
+        perfilOverlay.style.visibility = 'visible';
+    }
 
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
@@ -273,9 +281,32 @@ function showProfile() {
         const perfilAvatar = document.getElementById('perfilAvatar');
         
         if (perfilNome) perfilNome.value = user.nome;
-        if (perfilAvatar) perfilAvatar.src = user.avatar || '/static/img/default-avatar.png';
+        
+        if (perfilAvatar) {
+            perfilAvatar.src = user.avatar || '/static/img/default-avatar.png';
+        };
+    };
+};
+
+function fecharPerfil() {
+    const perfilContainer = document.getElementById('perfilContainer');
+    const perfilOverlay = document.getElementById('perfilOverlay');
+    
+    if (perfilContainer) {
+        perfilContainer.style.display = 'none';
+    }
+    
+    if (perfilOverlay) {
+        perfilOverlay.style.display = 'none';
     }
 }
+
+// Salva usuário no localStorage quando a página carrega
+document.addEventListener('DOMContentLoaded', function() {
+    if (userFromSession.nome) {
+        localStorage.setItem('user', JSON.stringify(userFromSession));
+    }
+});
 
 function hideProfile() {
     const perfilContainer = document.getElementById('perfilContainer');
@@ -312,16 +343,14 @@ async function uploadAvatar(input) {
         const data = await response.json();
         
         if (data.success) {
-            document.getElementById('perfilAvatar').src = data.avatar_url + '?t=' + Date.now();
-            
+            console.log(data);
+            console.log(document.getElementById('perfilAvatar'));
+            document.getElementById('perfilAvatar').src = data.avatar_url;
+            document.getElementById('fotosPerfil').src = data.avatar_url;
             const user = JSON.parse(localStorage.getItem('user'));
             user.avatar = data.avatar_url;
             localStorage.setItem('user', JSON.stringify(user));
-
-            const userAvatar = document.querySelector('.user-avatar');
-            if (userAvatar) {
-                userAvatar.src = data.avatar_url + '?t=' + Date.now();
-            }
+            console.log(document.querySelector('.user-avatar'));
             
             alert('Foto atualizada com sucesso!');
         } else {
