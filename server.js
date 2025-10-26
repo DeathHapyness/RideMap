@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
@@ -12,8 +13,20 @@ const PORT = process.env.PORT || 3000;
 app.engine('hbs', exphbs.engine({
     defaultLayout: 'main',
     extname: '.hbs',
-    partialsDir: path.join(__dirname, 'view/partials')
+    partialsDir: path.join(__dirname, 'view/partials'),
+    helpers: {
+        formatDate: function(date) {
+            if (!date) return '';
+            const d = new Date(date);
+            return d.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+    }
 }));
+console.log('✅ Helper formatDate registrado!');
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'view'));
 
@@ -64,3 +77,4 @@ app.use((req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
+
