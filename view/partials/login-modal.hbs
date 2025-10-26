@@ -42,7 +42,7 @@
                     <span>ou use seu e-mail e senha</span>
                     <input type="email" placeholder="Email" id="loginEmail">
                     <input type="password" placeholder="Senha" id="loginPassword">
-                    <a href="#">Esqueceu sua senha?</a>
+                   <a href="#" data-bs-toggle="modal" data-bs-target="#modalRecuperarSenha">Esqueceu sua senha?</a>
                     <button type="button" id="bntEntrar" class="btn btn-outline-light mb-2" style="border-color: #00000048;" onclick="handleLogin()">Entrar</button>
                     <button type="button" id="closeLogin" class="btn btn-outline-light mb-2" style="border-color: #00000048;">Cancelar</button>
                 </form>
@@ -63,4 +63,65 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal Recuperar Senha -->
+<div class="modal fade modal-recuperar" id="modalRecuperarSenha" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-key me-2"></i>
+                    Recuperar Senha
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            
+            <div class="modal-body">
+                
+                <div class="icone-centro">
+                    <i class="fas fa-lock"></i>
+                </div>
+
+                <p class="texto-descricao">
+                    Digite seu email cadastrado e enviaremos um link para redefinir sua senha.
+                </p>
+
+                <div class="alert-sucesso" id="alertSucesso" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Email enviado!</strong> Verifique sua caixa de entrada.
+                </div>
+
+                <form id="formRecuperarSenha">
+                    <div class="mb-3">
+                        <label for="emailRecuperar" class="form-label">
+                            <i class="fas fa-envelope me-1"></i>
+                            Email
+                        </label>
+                        <input 
+                            type="email" 
+                            class="form-control" 
+                            id="emailRecuperar" 
+                            placeholder="seu@email.com"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-enviar">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        Enviar Link de Recuperação
+                    </button>
+
+                    <button type="button" class="btn btn-voltar" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Voltar ao Login
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="static/js/recuperar-senha.js"></script>
 </div>
