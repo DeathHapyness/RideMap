@@ -23,8 +23,23 @@
   </div>
 </div>
 
-{{!-- Interface de visualização de perfil --}}
-{{> profile-view}}
+<!-- Overlay do perfil -->
+<div id="perfilOverlay" style="display: none;"></div>
+
+<!-- Container do perfil -->
+<div id="perfilContainer" style="display: none;">
+    {{> profile-view}}
+</div>
+
+<script>
+// Salva usuário no localStorage
+const userFromSession = {
+    nome: '{{user.nome}}',
+    email: '{{user.email}}',
+    avatar: '{{#if user.avatar_url}}{{user.avatar_url}}{{else}}/static/img/default-avatar.png{{/if}}'
+};
+localStorage.setItem('user', JSON.stringify(userFromSession));
+</script>
 
 {{!-- Mapa --}}
 <div id="map"></div>
