@@ -1,5 +1,5 @@
 const map = L.map('map', { minZoom: 4.5 });
-map.setView([33.987164, -118.475601], 20);
+map.setView([-23.5505, -46.6333], 7);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 20,
@@ -13,31 +13,30 @@ const meuIcone = L.icon({
     popupAnchor: [0, -32]
 });
 
-const pistas = [
-    { lat: 33.987164, lng: -118.475601, desc: "Venice Beach Skatepark - Los Angeles, EUA" },
-    { lat: 41.5878, lng: -93.6166, desc: "Lauridsen Skatepark - Iowa, EUA" },
-    { lat: 48.858844, lng: 2.294351, desc: "Le Dôme Skatepark - Paris, França" },
-    { lat: -23.561684, lng: -46.655981, desc: "Pista do Ibirapuera - São Paulo, Brasil" },
-    { lat: -33.8688, lng: 151.2093, desc: "Bondi Skatepark - Sydney, Austrália" },
-    { lat: 35.6895, lng: 139.6917, desc: "Murasaki Park Tokyo - Japão" },
-    { lat: 51.5074, lng: -0.1278, desc: "Southbank Skate Space - Londres, Reino Unido" },
-    { lat: 40.4168, lng: -3.7038, desc: "Skatepark Madrid Rio - Espanha" },
-    { lat: 55.7558, lng: 37.6173, desc: "Gorky Park Skatepark - Moscou, Rússia" },
-    { lat: 52.5200, lng: 13.4050, desc: "Skatehalle Berlin - Alemanha" }
-];
-
-for (let i = 0; i < pistas.length; i++) {
-    L.marker([pistas[i].lat, pistas[i].lng], { icon: meuIcone }).addTo(map);
-    const popupzinho = L.popup();
-    popupzinho.setContent(pistas[i].desc);
-    L.marker([pistas[i].lat, pistas[i].lng], { icon: meuIcone }).bindPopup(popupzinho).addTo(map);
+async function carregarPistas() {
+    try {
+        const response = await fetch('/api/spots');
+        const pistas = await response.json();
+        
+        pistas.forEach(pista => {
+            const popupContent = `
+                <div style="min-width: 200px;">
+                    <h5>${pista.nome}</h5>
+                    <p><strong>📍</strong> ${pista.cidade}, ${pista.estado}</p>
+                    <p><strong>🎯</strong> ${pista.tipo}</p>
+                    <p><strong>📊</strong> ${pista.dificuldade}</p>
+                    <p><strong>Descricao:</strong>${pista.descricao || ''}</p>
+                </div>
+            `;
+            
+            L.marker([pista.latitude, pista.longitude], { icon: meuIcone })
+                .bindPopup(popupContent)
+                .addTo(map);
+        });
+        
+    } catch (error) {
+        console.error('Erro ao carregar pistas:', error);
+    }
 }
 
-for (let j = 0; j < pistas.length; j++) {
-    const lat = pistas[j].lat;
-    const lng = pistas[j].lng;
-    const desc = pistas[j].desc;
-    const marker = L.marker([lat, lng], { icon: meuIcone });
-    map.addLayer(marker);
-    marker.bindPopup(desc);
-}
+carregarPistas();
