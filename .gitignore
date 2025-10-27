@@ -1,13 +1,21 @@
-node_modules/
-*.log
-*.npmrc
+# Variáveis de ambiente (CRÍTICO!)
+.env
+.env.*
+*.env
 
-# Database backups
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# Lock
+package-lock.json
+
+# Uploads
+uploads/
+
+# Backups DB
 *_backup.sql
 *.sql.bak
-*.sql.backup
-
-db/
-
-*.env
-uplouds/
+db/backups/
