@@ -150,7 +150,7 @@ img{
 
 .input-erro {
     border: 2px solid red;
-    background-color: #ffe6e6; /* opcional: fundo levemente vermelho */
+    background-color: #ffe6e6; 
 }
 .input-erro::placeholder {
     color: red; 
