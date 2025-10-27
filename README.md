@@ -22,7 +22,7 @@
   <a href="#-licença">Licença</a>
 </p>
 
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100">
 
 </div>
 
@@ -726,7 +726,7 @@ Veja a licença completa: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses
 ## 🙏 Agradecimentos
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="600">
+<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="100">
 </div>
 
 - 🛹 Comunidade de skatistas que inspirou este projeto
