@@ -1,9 +1,9 @@
 const cloudinary = require('cloudinary').v2;
 
-cloudinary.config({ 
-    cloud_name: 'dbc3taeez', 
-    api_key: '648372779119397', 
-    api_secret: 'sua_api_secret_aqui' // Pega no dashboard do Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 module.exports = cloudinary;
