@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const upload = require('./config/multer');
 const pool = require('./db/config');
+const cloudinary = require('./config/cloudinary');
 
 //**Verifica se esta logado */
 function isAuthenticated(req, res, next) {
@@ -406,5 +407,6 @@ router.post('/recuperar-senha', async (req, res) => {
     }
 });
 
+//* ====== Configuragacao cloudinary =======
 
 module.exports = router;
