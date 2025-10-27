@@ -40,7 +40,6 @@ const Alertas = {
     }
 };
 
-// AGORA sim vem o DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
     const user = JSON.parse(localStorage.getItem('user'));
     
@@ -301,7 +300,6 @@ function fecharPerfil() {
     }
 }
 
-// Salva usuário no localStorage quando a página carrega
 document.addEventListener('DOMContentLoaded', function() {
     if (userFromSession.nome) {
         localStorage.setItem('user', JSON.stringify(userFromSession));
