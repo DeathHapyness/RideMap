@@ -3,10 +3,10 @@
     
     <div class="text-center mb-4">
         <img id="perfilAvatar" 
-     src="/static/img/default-avatar.png"
-     class="rounded-circle mb-3" 
-     alt="Avatar" 
-     style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #ff9800;">
+            src="/static/img/default-avatar.png"
+            class="rounded-circle mb-3" 
+            alt="Avatar" 
+            style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #ff9800;">
         <div>
             <input type="file" id="perfilAvatarInput" accept="image/*" style="display: none;">
             <button class="btn btn-sm btn-outline-primary" id="btnTrocarAvatar">
@@ -54,6 +54,22 @@
             </button>
         </div>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarHeader = document.querySelector('.sidebar-header');
+            if (sidebarHeader) {
+                const logoImg = sidebarHeader.querySelector('img');
+                
+                if (logoImg) {
+                    const logoWrapper = document.createElement('div');
+                    logoWrapper.className = 'logo-ridemap-wrapper';
+                    logoImg.parentNode.insertBefore(logoWrapper, logoImg);
+                    logoWrapper.appendChild(logoImg);
+                    logoImg.classList.add('logo-ridemap-animated');
+                }
+            }
+        });
+</script>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
