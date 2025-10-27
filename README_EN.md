@@ -87,10 +87,16 @@ With a robust moderation system, real-time notifications, and an intuitive inter
   - Rejection notification with reason
   - Badge shows unread notifications
   - Auto-update every 5 seconds
+  - Modern design with orange gradients
   
 - 👤 **Customizable Profile**
-  - Custom avatar
+  - Custom avatar with Cloudinary upload
+  - Image upload with automatic validation
+  - Smart resizing (300x300px)
+  - Auto-crop focusing on face
   - Editable personal information
+  - Secure password change
+  - Modern and responsive modal
   
 - 📍 **View Details**
   - Complete information for each park
@@ -146,10 +152,12 @@ With a robust moderation system, real-time notifications, and an intuitive inter
 | ![Bootstrap](https://img.shields.io/badge/Bootstrap_5-7952B3?style=flat&logo=bootstrap&logoColor=white) | CSS framework |
 | ![Leaflet](https://img.shields.io/badge/Leaflet-199900?style=flat&logo=leaflet&logoColor=white) | Interactive maps |
 | ![Handlebars](https://img.shields.io/badge/Handlebars-000000?style=flat&logo=handlebarsdotjs&logoColor=white) | Template engine |
+| ![Animate.css](https://img.shields.io/badge/Animate.css-FF6B35?style=flat) | CSS Animations |
+| ![SweetAlert2](https://img.shields.io/badge/SweetAlert2-7952B3?style=flat) | Beautiful alerts |
 
 ### Backend
 
-<img src="https://skillicons.dev/icons?i=nodejs,express,mysql" alt="Backend Stack" />
+<img src="https://skillicons.dev/icons?i=nodejs,express,mysql,cloudinary" alt="Backend Stack" />
 
 | Technology | Description |
 |------------|-------------|
@@ -157,6 +165,8 @@ With a robust moderation system, real-time notifications, and an intuitive inter
 | ![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white) | Web framework |
 | ![MySQL](https://img.shields.io/badge/MySQL_8.0-4479A1?style=flat&logo=mysql&logoColor=white) | Database |
 | ![bcrypt](https://img.shields.io/badge/bcrypt-003A70?style=flat) | Password encryption |
+| ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=flat&logo=cloudinary&logoColor=white) | Image upload |
+| ![Multer](https://img.shields.io/badge/Multer-FF6B35?style=flat) | File processing |
 
 </div>
 
@@ -174,8 +184,62 @@ With a robust moderation system, real-time notifications, and an intuitive inter
 │  • Session-based Authentication             │
 │  • Role-based Access Control (RBAC)         │
 │  • Real-time Notifications                  │
+│  • Cloud Image Storage (Cloudinary)         │
+│  • Responsive Design with Animations        │
 └─────────────────────────────────────────────┘
 ```
+
+---
+
+## 🎨 Interface Updates
+
+### 🆕 Modern Design with Orange Gradients
+
+RideMap now features a completely renewed interface:
+
+- **🎨 Color Palette**
+  - Vibrant orange gradients (#FF6B35 → #F7931E)
+  - Consistent theme across the application
+  - Smooth and professional hover effects
+  
+- **✨ Integrated Animations**
+  - RideMap logo with continuous gradient animation
+  - Shine effect passing through text
+  - Smooth bounce on hover
+  - Light pulse around the logo
+  
+- **📱 Enhanced Sidebar**
+  - Modern orange gradient background
+  - Menu items with hover effects
+  - Aligned and organized icons
+  - Custom scrollbar
+  
+- **🔔 Renovated Notification System**
+  - Animated badge with pulse effect
+  - Dropdown with orange header
+  - Smooth opening animation
+  - Interactive hover items
+
+### 🖼️ Avatar Upload System
+
+- **☁️ Cloudinary Integration**
+  - Direct cloud upload
+  - Automatically optimized images
+  - Smart resizing (300x300px)
+  - Auto-crop focusing on face
+  - Secure and permanent URLs
+  
+- **✅ Automatic Validations**
+  - 5MB limit per image
+  - Only image formats accepted
+  - Instant visual feedback
+  - User-friendly error handling
+  
+- **🎯 User Experience**
+  - Instant image preview
+  - Animated loading during upload
+  - Visual success confirmation
+  - Responsive modern modal
 
 ---
 
@@ -191,6 +255,7 @@ With a robust moderation system, real-time notifications, and an intuitive inter
 📌 Node.js 16+
 📌 MySQL 8.0+
 📌 Git
+📌 Cloudinary Account (free)
 ```
 
 </td>
@@ -199,6 +264,7 @@ With a robust moderation system, real-time notifications, and an intuitive inter
 [![Node](https://img.shields.io/badge/Download-Node.js-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![MySQL](https://img.shields.io/badge/Download-MySQL-blue?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Git](https://img.shields.io/badge/Download-Git-orange?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
+[![Cloudinary](https://img.shields.io/badge/Sign_Up-Cloudinary-3448C5?style=for-the-badge&logo=cloudinary)](https://cloudinary.com/)
 
 </td>
 </tr>
@@ -234,13 +300,15 @@ Execute the commands:
 CREATE DATABASE ridemap CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE ridemap;
 
--- Users table
+-- Users table (UPDATED)
 CREATE TABLE usuarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     avatar VARCHAR(255),
+    avatar_url VARCHAR(500),
+    avatar_public_id VARCHAR(255),
     role VARCHAR(20) DEFAULT 'user',
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_email (email),
@@ -304,72 +372,83 @@ DB_NAME=ridemap
 # Server
 PORT=3000
 
-# Session (generate a secure random string)
-SESSION_SECRET=your_super_secure_secret_here_123456
+# Sessions
+SESSION_SECRET=your_super_secret_here_12345
 
-# Environment
-NODE_ENV=development
+# Cloudinary (NEW)
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-#### 5️⃣ Start the server
+#### 5️⃣ Configure Cloudinary
 
+1. Go to [cloudinary.com](https://cloudinary.com/) and create a free account
+2. On Dashboard, copy:
+   - **Cloud Name**
+   - **API Key**
+   - **API Secret**
+3. Paste this information in the `.env` file
+
+#### 6️⃣ Start the server
+
+Development:
 ```bash
-# Production mode
-npm start
-
-# Development mode (with auto-reload)
 npm run dev
 ```
 
-#### 6️⃣ Access the application
+Production:
+```bash
+npm start
+```
 
-🌐 Open your browser at: **http://localhost:3000**
+#### 7️⃣ Access the application
+
+Open your browser at:
+```
+http://localhost:3000
+```
 
 </details>
 
 ---
 
-## 🎮 How to Use
+## 📖 How to Use
 
-### 📱 For Users
+### 👤 For Users
 
-<table>
-<tr>
-<td width="50%">
+<details open>
+<summary><b>User Instructions</b></summary>
 
-#### 1️⃣ Create an Account
-1. Go to `http://localhost:3000`
-2. Click on **"Sign Up"**
-3. Fill in name, email, and password
-4. Login with your credentials
+#### 1️⃣ Create Account
+1. Go to `http://localhost:3000/cadastro`
+2. Fill in: **Name**, **Email** and **Password**
+3. Click **"Sign Up"**
 
-#### 2️⃣ Add a Park
-1. On dashboard, click **"Add Park"**
-2. Fill in the information:
-   - Park name
-   - City and State
-   - Type and Difficulty
-   - Detailed description
-3. **Click on the map** for location
-4. Click **"Save"**
-5. Wait for admin approval
+#### 2️⃣ Customize Profile
+1. Log in to your account
+2. Click on **profile** icon in sidebar
+3. Click **"Change Photo"**
+4. Select an image (max. 5MB)
+5. Wait for upload (automatic processing)
+6. Your photo will be optimized and saved in cloud
+7. Edit name and other information
+8. Click **"Save Changes"**
 
-</td>
-<td width="50%">
+#### 3️⃣ Add Park
+1. On map, click **"Add Spot"**
+2. Fill all required fields
+3. **Click on map** to mark location
+4. Click **"Submit for Approval"**
+5. Wait for approval/rejection notification
 
-#### 3️⃣ View Notifications
-1. Bell icon 🔔 shows your notifications
-2. Click to open dropdown
-3. Click notification to mark as read
+#### 4️⃣ View Notifications
+1. Click on **bell** icon 🔔
+2. Badge shows number of unread
+3. Click to mark as read
+4. Automatic updates every 5s
 
-#### 4️⃣ Edit Profile
-1. Click **"Profile"** in menu
-2. Change name or avatar
-3. Click **"Save Changes"**
-
-</td>
-</tr>
-</table>
+</details>
 
 ### 🛡️ For Administrators
 
@@ -397,29 +476,34 @@ npm run dev
 ```
 ridemap/
 ├── 📁 config/
+│   ├── cloudinary.js       # Cloudinary config (NEW)
 │   └── multer.js           # File upload config
 ├── 📁 db/
 │   └── config.js           # MySQL connection
 ├── 📁 public/
 │   ├── 📁 css/
-│   │   ├── style.css       # Global styles
+│   │   ├── style.css       # Global styles (UPDATED)
+│   │   ├── sidebar.css     # Menu styles (NEW)
+│   │   ├── profile.css     # Profile styles (NEW)
 │   │   └── dashboard.css   # Dashboard styles
 │   ├── 📁 js/
 │   │   ├── dashboard.js    # Dashboard logic
 │   │   ├── admin.js        # Admin logic
+│   │   ├── profile-view.js # Profile logic (NEW)
 │   │   └── map.js          # Map logic
-│   └── 📁 img/             # Static images
+│   └── 📁 img/
+│       └── default-avatar.png  # Default avatar (NEW)
 ├── 📁 views/
 │   ├── 📁 partials/
-│   │   ├── sidebar.hbs     # Side menu
-│   │   ├── profile-view.hbs
+│   │   ├── sidebar.hbs     # Side menu (UPDATED)
+│   │   ├── profile-view.hbs # Profile modal (NEW)
 │   │   └── add-spot-modal.hbs
 │   ├── home.hbs            # Home page
 │   ├── dashboard.hbs       # User dashboard
 │   └── admin-dashboard.hbs # Admin panel
-├── 📄 routes.js            # Application routes
+├── 📄 routes.js            # Application routes (UPDATED)
 ├── 📄 server.js            # Main server
-├── 📄 .env                 # Environment variables
+├── 📄 .env                 # Environment variables (UPDATED)
 ├── 📄 .gitignore
 ├── 📄 package.json
 └── 📄 README.md
@@ -438,6 +522,7 @@ RideMap implements multiple security layers:
 - ✅ **Encrypted passwords** (bcrypt)
 - ✅ **Secure sessions** (express-session)
 - ✅ **Input validation**
+- ✅ **Secure upload** (Cloudinary)
 
 </td>
 <td>
@@ -445,6 +530,7 @@ RideMap implements multiple security layers:
 - ✅ **SQL Injection protection**
 - ✅ **Access control (RBAC)**
 - ✅ **Sensitive variables** (.env)
+- ✅ **File validation** (type/size)
 
 </td>
 </tr>
@@ -455,7 +541,7 @@ RideMap implements multiple security layers:
 ## 🗺️ Roadmap
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="100">
+<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="600">
 </div>
 
 ### ✅ Completed
@@ -466,8 +552,12 @@ RideMap implements multiple security layers:
 - [x] Moderation system
 - [x] Real-time notifications
 - [x] Administrative panel
-- [x] Avatar upload
+- [x] Avatar upload with Cloudinary ✨ **NEW**
 - [x] Role system (user/admin)
+- [x] Modern interface with gradients ✨ **NEW**
+- [x] Logo animations ✨ **NEW**
+- [x] Responsive profile modal ✨ **NEW**
+- [x] Enhanced notification system ✨ **NEW**
 
 ### 🚧 In Development
 
@@ -475,6 +565,7 @@ RideMap implements multiple security layers:
 - [ ] Rating system (stars/comments)
 - [ ] "My Parks" - view submitted parks
 - [ ] Edit rejected parks
+- [ ] Interactive image cropper
 
 ### 📋 Planned
 
@@ -488,6 +579,7 @@ RideMap implements multiple security layers:
 - [ ] Offline mode
 - [ ] Social media integration
 - [ ] Gamification (badges, rankings)
+- [ ] Dark mode
 
 ---
 
@@ -588,7 +680,7 @@ To use this project commercially (resell, integrate in paid product, etc.), **co
 
 📧 **Email:** henrique.dev2@gmail.com
 
-See the full license: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+See full license: [LICENSE](LICENSE)
 
 ---
 
@@ -634,13 +726,15 @@ See the full license: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-
 ## 🙏 Acknowledgments
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="100">
+<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="600">
 </div>
 
 - 🛹 Skater community that inspired this project
 - 🗺️ [Leaflet.js](https://leafletjs.com/) for interactive maps
 - 🎨 [Bootstrap](https://getbootstrap.com/) for CSS framework
 - 💫 [SweetAlert2](https://sweetalert2.github.io/) for beautiful alerts
+- ☁️ [Cloudinary](https://cloudinary.com/) for image storage
+- ✨ [Animate.css](https://animate.style/) for animations
 - 🤝 All future contributors
 
 ---
@@ -648,13 +742,14 @@ See the full license: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-
 ## 📊 Project Status
 
 ```
-Overall Progress: ████████░░ 80%
+Overall Progress: █████████░ 85%
 
 Core Features:      ██████████ 100%
-Frontend:           ████████░░  85%
-Backend:            █████████░  90%
+Frontend:           █████████░  90%
+Backend:            █████████░  92%
+Image Upload:       ██████████ 100% ✨
 Tests:              ██░░░░░░░░  20%
-Documentation:      ████████░░  80%
+Documentation:      █████████░  85%
 ```
 
 ---
