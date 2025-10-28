@@ -170,6 +170,10 @@ img{
     padding: 24px 30px;
 }
 
+.modal-recuperar h5 {
+    color: white;
+}
+
 .modal-recuperar .btn-close {
     filter: invert(1);
 }
