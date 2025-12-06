@@ -296,6 +296,28 @@ router.post('/api/pistas/criar', isAuthenticated, async (req, res) => {
   } 
 });
 
+//TODO: Rota para listar usuarios ativos para admin terminar isso 
+router.get('/api/admin/usuarios-ativos', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const [usuarios] = await pool.query(`
+      SELECT 
+        id,
+        nome,
+        email,
+        role,
+        data_criacao
+      FROM usuarios
+      WHERE ativo = TRUE
+      ORDER BY data_criacao DESC
+    `);
+    
+    res.json(usuarios);
+  } catch (error) {
+    console.error('Erro ao buscar usuários ativos:', error);
+    res.status(500).json({ error: 'Erro ao buscar usuários ativos' });
+  }
+});
+
 //**Logica de notificacoes para usuarios */
 
 router.get('/api/notificacoes/count', isAuthenticated, async (req, res) => {
