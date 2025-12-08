@@ -480,32 +480,49 @@ ridemap/
 │   └── multer.js           # Upload de arquivos
 ├── 📁 db/
 │   └── config.js           # Conexão MySQL
-├── 📁 public/
+├── 📁 static/
 │   ├── 📁 css/
-│   │   ├── style.css       # Estilos globais (ATUALIZADO)
+│   │   ├── style.css       # Estilo principal (ATUALIZADO)
 │   │   ├── sidebar.css     # Estilos do menu (NOVO)
 │   │   ├── profile.css     # Estilos do perfil (NOVO)
-│   │   └── dashboard.css   # Estilos dashboard
+│   │   ├── profile.css     # Estilo global (Novo e Atualizado)
+│   │   ├── admin-dashboard.css # Estilo do painel de administracao
+│   │   ├── login.css       # Estilo do dashboard de login
+│   │   ├── dashboard.css   # Estilo do dashboard lateral principal
+│   │   ├── adicionar-pista.css #Estilo interface de adicao de pistas (Atualizado)
+│   │   └── dashboard-perfil.css # Estilos dashboard
 │   ├── 📁 js/
 │   │   ├── dashboard.js    # Lógica dashboard
 │   │   ├── admin.js        # Lógica admin
 │   │   ├── profile-view.js # Lógica do perfil (NOVO)
+│   │   ├── script.js       # Lógica de animacoes basicas
+│   │   ├── recuperacao-senha.js # Lógica de recuperacao de senha com email 
 │   │   └── map.js          # Lógica do mapa
 │   └── 📁 img/
-│       └── default-avatar.png  # Avatar padrão (NOVO)
+│   │   ├──png_c0jcq.png        # Logo principal
+│   │   ├──wheel(1).png         # Logo da aba navegador
+│   │   └── default-avatar.png  # Avatar padrão (NOVO)
 ├── 📁 views/
+│   ├── 📁 layouts/
+│   │   └── main.hbs #Armazena todos os links necessarios 
 │   ├── 📁 partials/
 │   │   ├── sidebar.hbs     # Menu lateral (ATUALIZADO)
 │   │   ├── profile-view.hbs # Modal de perfil (NOVO)
+│   │   ├── login-modal.hbs  # Modal de login 
 │   │   └── add-spot-modal.hbs
+│   ├── 404.hbs             # Página de erro 404
+│   ├── add-spot.hbs        # Página de adicao de pista
 │   ├── home.hbs            # Página inicial
 │   ├── dashboard.hbs       # Dashboard usuário
-│   └── admin-dashboard.hbs # Painel admin
+│   ├── error.hbs           # Página de erros inesperados
+│   └── admin-dashboard.hbs # Painel admin e administrcao
 ├── 📄 routes.js            # Rotas da aplicação (ATUALIZADO)
 ├── 📄 server.js            # Servidor principal
+├── 📄 email.js            # Parte responsael por envio de email
 ├── 📄 .env                 # Variáveis ambiente (ATUALIZADO)
 ├── 📄 .gitignore
 ├── 📄 package.json
+├── 📄 README_EN.md
 └── 📄 README.md
 ```
 
@@ -558,12 +575,12 @@ O RideMap implementa múltiplas camadas de segurança:
 - [x] Animações no logo ✨ **NOVO**
 - [x] Modal de perfil responsivo ✨ **NOVO**
 - [x] Sistema de notificações aprimorado ✨ **NOVO**
+- [x] "Minhas Pistas" - ver pistas enviadas ✨ **NOVO**
 
 ### 🚧 Em Desenvolvimento
 
 - [ ] Upload de múltiplas fotos por pista
 - [ ] Sistema de avaliações (estrelas/comentários)
-- [ ] "Minhas Pistas" - ver pistas enviadas
 - [ ] Editar pista rejeitada
 - [ ] Cropper de imagem interativo
 
