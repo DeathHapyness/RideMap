@@ -1,9 +1,10 @@
+-- Active: 1765162864743@@127.0.0.1@3306@mysql
 -- =========================================
 -- CRIAR BANCO DE DADOS
 -- =========================================
 
-DROP DATABASE IF EXISTS ridemap;
-CREATE DATABASE ridemap CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+--DROP DATABASE IF EXISTS ridemap;
+--CREATE DATABASE ridemap CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE ridemap;
 
 -- =========================================
