@@ -1,0 +1,20 @@
+:root {
+  --bg-primary: white;
+  --bg-secondary: #f8f9fa;
+  --bg-muted: #fafafa;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #e2e8f0;
+  --card-bg: white;
+  --input-bg: #ffffff;
+  --orange-start: #FF6B35;
+  --orange-end: #F7931E;
+  --orange-variant: #ff9800;
+  --orange: #FF6B35;
+  --orange-glow: rgba(255, 107, 53, 0.3);
+  --orange-glow-strong: rgba(255, 107, 53, 0.6);
+  --input-error: #dc3545;
+  --input-success: #28a745;
+  --gradient-orange: linear-gradient(135deg, var(--orange-start) 0%, var(--orange-variant) 100%);
+  --box-shadow:rgba(0, 0, 0, 0.1);
+}
