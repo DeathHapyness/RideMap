@@ -476,38 +476,55 @@ http://localhost:3000
 ```
 ridemap/
 ├── 📁 config/
-│   ├── cloudinary.js       # Cloudinary config (NEW)
-│   └── multer.js           # File upload config
+│   ├── cloudinary.js       # Cloudinary Configuration (NEW)
+│   └── multer.js           # File Upload
 ├── 📁 db/
-│   └── config.js           # MySQL connection
-├── 📁 public/
+│   └── config.js           # MySQL Connection
+├── 📁 static/
 │   ├── 📁 css/
-│   │   ├── style.css       # Global styles (UPDATED)
-│   │   ├── sidebar.css     # Menu styles (NEW)
-│   │   ├── profile.css     # Profile styles (NEW)
-│   │   └── dashboard.css   # Dashboard styles
+│   │   ├── style.css       # Main Style (UPDATED)
+│   │   ├── sidebar.css     # Menu Styles (NEW)
+│   │   ├── profile.css     # Profile Styles (NEW)
+│   │   ├── profile.css     # Global Style (New and Updated)
+│   │   ├── admin-dashboard.css # Admin Panel Style
+│   │   ├── login.css       # Login Dashboard Style
+│   │   ├── dashboard.css   # Main Sidebar Dashboard Style
+│   │   ├── adicionar-pista.css # Spot Addition Interface Style (Updated)
+│   │   └── dashboard-perfil.css # Dashboard Styles
 │   ├── 📁 js/
-│   │   ├── dashboard.js    # Dashboard logic
-│   │   ├── admin.js        # Admin logic
-│   │   ├── profile-view.js # Profile logic (NEW)
-│   │   └── map.js          # Map logic
+│   │   ├── dashboard.js    # Dashboard Logic
+│   │   ├── admin.js        # Admin Logic
+│   │   ├── profile-view.js # Profile Logic (NEW)
+│   │   ├── script.js       # Basic Animation Logic
+│   │   ├── recuperacao-senha.js # Password Recovery Logic with Email
+│   │   └── map.js          # Map Logic
 │   └── 📁 img/
-│       └── default-avatar.png  # Default avatar (NEW)
+│       ├── png_c0jcq.png        # Main Logo
+│       ├── wheel(1).png         # Browser Tab Logo
+│       └── default-avatar.png  # Default Avatar (NEW)
 ├── 📁 views/
+│   ├── 📁 layouts/
+│   │   └── main.hbs        # Stores All Necessary Links
 │   ├── 📁 partials/
-│   │   ├── sidebar.hbs     # Side menu (UPDATED)
-│   │   ├── profile-view.hbs # Profile modal (NEW)
-│   │   └── add-spot-modal.hbs
-│   ├── home.hbs            # Home page
-│   ├── dashboard.hbs       # User dashboard
-│   └── admin-dashboard.hbs # Admin panel
-├── 📄 routes.js            # Application routes (UPDATED)
-├── 📄 server.js            # Main server
-├── 📄 .env                 # Environment variables (UPDATED)
+│   │   ├── sidebar.hbs     # Sidebar Menu (UPDATED)
+│   │   ├── profile-view.hbs # Profile Modal (NEW)
+│   │   ├── login-modal.hbs  # Login Modal
+│   │   └── add-spot-modal.hbs # Add Spot Modal
+│   ├── 404.hbs             # 404 Error Page
+│   ├── add-spot.hbs        # Add Spot Page
+│   ├── home.hbs            # Home Page
+│   ├── dashboard.hbs       # User Dashboard
+│   ├── error.hbs           # Unexpected Errors Page
+│   └── admin-dashboard.hbs # Admin Panel and Administration
+├── 📄 routes.js            # Application Routes (UPDATED)
+├── 📄 server.js            # Main Server
+├── 📄 email.js             # Responsible for Email Sending
+├── 📄 .env                 # Environment Variables (UPDATED)
 ├── 📄 .gitignore
 ├── 📄 package.json
+├── 📄 README_EN.md
 └── 📄 README.md
-```
+```  
 
 ---
 
