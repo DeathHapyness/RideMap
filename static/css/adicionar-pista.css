@@ -15,16 +15,16 @@
     border: none;
     display: flex;
     flex-direction: column;
-    background: #fafafa;
+    background: --bg-muted;
 }
 
 .modal-adicionar-pista .modal-header {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff9800 100%);
-    color: white;
+    background: --gradient-orange;
+    color: --bg-primary;
     border-bottom: none;
     padding: 24px 30px;
     flex-shrink: 0;
-    box-shadow: 0 2px 10px rgba(255, 107, 53, 0.2);
+    box-shadow: 0 2px 10px --orange-glow;
 }
 
 .modal-adicionar-pista .modal-title {
@@ -53,27 +53,27 @@
 
 .modal-adicionar-pista .form-label {
     font-weight: 500;
-    color: #2d3748;
+    color: --text-primary;
     margin-bottom: 8px;
     font-size: 0.95rem;
 }
 
 .modal-adicionar-pista .form-control,
 .modal-adicionar-pista .form-select {
-    background: white;
-    border: 2px solid #e2e8f0;
+    background: --bg-primary;
+    border: 2px solid --border-color;
     border-radius: 8px;
     padding: 12px 16px;
-    color: #2d3748;
+    color: --text-primary;
     font-size: 0.95rem;
     transition: all 0.2s;
 }
 
 .modal-adicionar-pista .form-control:focus,
 .modal-adicionar-pista .form-select:focus {
-    background: white;
-    border-color: #ff9800;
-    box-shadow: 0 0 0 4px rgba(255, 152, 0, 0.1);
+    background: --bg-primary;
+    border-color: --orange-variant;
+    box-shadow: 0 0 0 4px --orange-glow;
     outline: none;
 }
 
@@ -94,30 +94,30 @@
 }
 
 .area-upload {
-    border: 3px dashed #ff9800;
+    border: 3px dashed --orange-variant;
     border-radius: 12px;
     padding: 40px 20px;
     text-align: center;
     cursor: pointer;
-    background: white;
+    background: --bg-primary;
     transition: all 0.3s;
 }
 
 .area-upload:hover {
-    border-color: #ff6b35;
-    background: #fff5f0;
+    border-color: --orange;
+    background: --bg-secondary;
     transform: translateY(-2px);
 }
 
 .area-upload i {
     font-size: 3rem;
-    color: #ff9800;
+    color: --orange-variant;
     margin-bottom: 12px;
 }
 
 .area-upload p {
     margin: 0;
-    color: #4a5568;
+    color: --text-secondary;
     font-size: 1rem;
     font-weight: 500;
 }
@@ -134,38 +134,38 @@
     height: 120px;
     object-fit: cover;
     border-radius: 8px;
-    border: 2px solid #ff9800;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid --orange-variant;
+    box-shadow: 0 2px 8px --box-shadow;
 }
 
 .modal-adicionar-pista .modal-footer {
     padding: 20px 30px;
-    background: white;
-    border-top: 2px solid #f0f0f0;
+    background: --bg-primary;
+    border-top: 2px solid --border-color;
     flex-shrink: 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 -2px 10px --box-shadow;
 }
 
 .modal-adicionar-pista .btn-primary {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff9800 100%);
+    background: --gradient-orange;
     border: none;
     padding: 14px 32px;
     border-radius: 8px;
     font-weight: 600;
-    color: white;
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    color: --bg-primary; ;
+    box-shadow: 0 4px 12px --orange-glow;
     transition: all 0.3s;
 }
 
 .modal-adicionar-pista .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-    background: linear-gradient(135deg, #ff5722 0%, #ff8c00 100%);
+    box-shadow: 0 6px 20px --orange-glow;
+    background:  --gradiente-orange;
 }
 
 .modal-adicionar-pista .btn-secondary {
-    background: #e2e8f0;
-    color: #2d3748;
+    background: --border-color; ;
+    color: --text-primary;
     border: none;
     padding: 14px 32px;
     border-radius: 8px;
@@ -174,24 +174,25 @@
 }
 
 .modal-adicionar-pista .btn-secondary:hover {
-    background: #cbd5e0;
+    background: --border-color; ;
     transform: translateY(-2px);
 }
 
 .modal-adicionar-pista .select2-container--default .select2-selection--single {
     height: 48px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid --border-color;
     border-radius: 8px;
 }
 
 .modal-adicionar-pista .select2-container--default.select2-container--focus .select2-selection--single {
-    border-color: #ff9800;
+    border-color: --orange-variant;
+    box-shadow: 0 0 0 4px --orange-glow;
 }
 
 .modal-adicionar-pista .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: 44px;
     padding-left: 16px;
-    color: #2d3748;
+    color: --text-primary;
 }
 
 /*Todo: Responsividade melhorar isso depois se necessario */
