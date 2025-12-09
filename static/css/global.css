@@ -2,12 +2,13 @@
   --bg-primary: white;
   --bg-secondary: #f8f9fa;
   --bg-muted: #fafafa;
+  --text: #000000;
   --text-primary: #212529;
   --text-secondary: #6c757d;
   --border-color: #e2e8f0;
-  --card-bg: white;
+  --card-bg: #f0f0f0;
   --input-bg: #ffffff;
-  --orange-start: #FF6B35;
+  --orange-start: #ff5e24;
   --orange-end: #F7931E;
   --orange-variant: #ff9800;
   --orange: #FF6B35;
@@ -17,4 +18,6 @@
   --input-success: #28a745;
   --gradient-orange: linear-gradient(135deg, var(--orange-start) 0%, var(--orange-variant) 100%);
   --box-shadow:rgba(0, 0, 0, 0.1);
+  --shadow: rgba(255, 255, 255, 0.2);
+  --background-admin: linear-gradient(to bottom, #ffffff9d 0%, #6e6e6e 100%);
 }

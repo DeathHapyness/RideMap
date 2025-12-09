@@ -16,7 +16,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0,0,0,0.7);
+    background: var(--box-shadow);
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -29,9 +29,9 @@
 }
 
 #loginScreen .container-login{
-    background-color: #fff;
+    background-color: var(--bg-primary);
     border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 5px 15px var(--box-shadow);
     position: relative;
     overflow: hidden;
     width: 768px;
@@ -58,7 +58,7 @@
 }
 
 #loginScreen .container-login button{
-    color: #000000;
+    color: var(--text);
     font-size: 12px;
     padding: 10px 45px;
     border: 1px solid transparent;
@@ -73,11 +73,11 @@
 
 #loginScreen .container button.hidden{
     background-color: transparent;
-    border-color: #fff;
+    border-color: #333;
 }
 
 #loginScreen .container-login form{
-    background-color: #fff;
+    background-color: var(--bg-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,8 +87,8 @@
 }
 
 #loginScreen .container-login input{
-    background-color: #eee;
-    border: none;
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--orange-start);
     margin: 8px 0;
     padding: 10px 15px;
     font-size: 13px;

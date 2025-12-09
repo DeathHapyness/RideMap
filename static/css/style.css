@@ -13,7 +13,7 @@
     left: 0;
     width: 24%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--box-shadow);
     clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
     z-index: 10;
     display: flex;
@@ -28,7 +28,7 @@ img{
 
 #overlay-conteudo {
     text-align: center;
-    color: white;
+    color: var(--bg-primary);
 }
 
 #overlay-conteudo h1 {
@@ -43,14 +43,14 @@ img{
 }
 
 .btn{
-    border-color: #ff9925;
+    border-color: var(--orange-variant);
 }
 
 .btn:hover {
     transform: scale(1.15);
     transition: transform 0.8s;
-    color: #ffffff;
-    border-color: #ffffff;
+    color: var(--bg-primary);
+    border-color: var(--bg-primary);
 }
 
 #loginScreen {
@@ -59,7 +59,7 @@ img{
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0,0,0,0.7);
+    background: var(--box-shadow);
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -71,7 +71,7 @@ img{
 }
 
 #loginOverlay {
-    background: #fff;
+    background: var(--bg-primary);
     border-radius: 12px;
     box-shadow: 0 0 32px #00000055;
     padding: 2rem 2.5rem;
@@ -91,7 +91,7 @@ img{
 #features {
     position: relative;
     z-index: 5;
-    background: #f8f9fa;
+    background: var(--bg-secondary);
 }
 
 #features h2 {
@@ -163,15 +163,15 @@ img{
 }
 
 .modal-recuperar .modal-header {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff9800 100%);
-    color: white;
+    background: var(--gradient-orange);
+    color: var(--bg-primary);
     border-radius: 5px 5px 0 0;
     border-bottom: none;
     padding: 24px 30px;
 }
 
 .modal-recuperar h5 {
-    color: white;
+    color: var(--bg-primary);
 }
 
 .modal-recuperar .btn-close {
@@ -185,18 +185,18 @@ img{
 .icone-centro {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #ff6b35 0%, #ff9800 100%);
+    background: var(--gradient-orange);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 20px;
-    box-shadow: 0 8px 24px rgba(255, 152, 0, 0.3);
+    box-shadow: 0 8px 24px var(--orange-glow);
 }
 
 .icone-centro i {
     font-size: 2.5rem;
-    color: white;
+    color: var(--bg-primary);
 }
 
 .texto-descricao {
@@ -215,15 +215,15 @@ img{
 }
 
 .btn-enviar {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff9800 100%);
+    background: var(--gradient-orange);
     border: none;
     padding: 14px 32px;
     border-radius: 2px;
     font-weight: 600;
-    color: white;
+    color: var(--bg-primary);
     width: 100%;
     margin-top: 10px;
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 4px 12px var(--orange-glow);
 }
 
 .btn-enviar:hover {
@@ -232,7 +232,7 @@ img{
 
 .btn-voltar {
     background: transparent;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-color);
     color: #4a5568;
     padding: 14px 32px;
     border-radius: 2px;
@@ -243,8 +243,8 @@ img{
 
 .btn-overlay {
     background-color: transparent !important;
-    border: 2px solid white !important;
-    color: white !important;
+    border: 2px solid var(--bg-primary) !important;
+    color: var(--bg-primary) !important;
     padding: 12px 30px !important;
     font-weight: 600 !important;
     border-radius: 8px !important;
@@ -253,8 +253,8 @@ img{
 }
 
 .btn-overlay:hover {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-    border-color: #ff6b35 !important;
+    background-color: var(--shadow) !important;
+    border-color: var(--orange) !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 4px 15px var(--orange-glow);
 }

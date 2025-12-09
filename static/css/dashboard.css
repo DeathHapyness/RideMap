@@ -6,7 +6,7 @@
     height: 100%;
     width: 250px;
     background: linear-gradient(135deg, #fffefee8 45%, #ff7112 100%);
-    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 0 20px var(--box-shadow);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
     overflow-y: auto;
@@ -19,11 +19,11 @@
 
 .sidebar-header {
     padding: 25px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--box-shadow);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgb(255, 255, 255);
+    background: var(--bg-primary);
 }
 
 .sidebar-header img {
@@ -32,7 +32,7 @@
 }
 
 .sidebar-header h4 {
-    color: #1a1a1a;
+    color: var(--text-primary);
     font-size: 35px;
     margin: 0;
 }
@@ -45,22 +45,22 @@
     padding: 15px 20px;
     display: flex;
     align-items: center;
-    color: rgba(0, 0, 0, 0.836);
+    color: var(--text);
     text-decoration: none;
     transition: all 0.3s ease;
     border-left: 3px solid transparent;
 }
 
 .menu-item:hover {
-    background: rgba(0, 0, 0, 0.308);
-    border-left-color: #fff;
-    color: #fff;
+    background: #0000006e; /**Nao mexer e nem colocar global css*/
+    border-left-color: var(--bg-primary);
+    color: var(--bg-primary);
 }
 
 .menu-item.active {
-    background: rgba(255, 255, 255, 0.15);
-    border-left-color: #fff;
-    color: #fff;
+    background: var(--box-shadow);
+    border-left-color: var(--bg-primary);
+    color: var(--bg-primary);
     font-weight: 600;
 }
 
@@ -85,17 +85,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgb(0, 0, 0);
+    color: var(--text);
 }
 
 .hamburger-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+    box-shadow: 0 6px 20px var(--orange-glow-strong);
 }
 
 .hamburger-btn.active {
     left: 260px;
-    background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%);
+    background: var(--gradient-orange);
 }
 
 @media (max-width: 768px) {
@@ -106,9 +106,9 @@
 
 .user-info {
     padding: 25px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--box-shadow);
     text-align: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--bg-primary);
 }
 
 .user-info img {
@@ -116,19 +116,19 @@
     height: 100px;
     border-radius: 60%;
     margin-bottom: 12px;
-    border: 3px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 3px solid var(--box-shadow);
+    box-shadow: 0 4px 12px var(--box-shadow);
 }
 
 .user-name {
     font-weight: 600;
     margin-bottom: 5px;
-    color: #000000;
+    color: var(--text);
     font-size: 1.1rem;
 }
 
 .user-email {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--bg-primary);
     font-size: 0.875rem;
 }
 
@@ -139,7 +139,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--text);
     z-index: 999;
     backdrop-filter: blur(2px);
 }
@@ -151,23 +151,23 @@
 }
 
 .badge-notificacoes {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-    color: white;
+    background: var(--gradient-orange);
+    color: var(--bg-primary);
     border-radius: 12px;
     padding: 3px 9px;
     font-size: 0.75rem;
     font-weight: 700;
     margin-left: 8px;
-    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 2px 8px var(--orange-glow);
     animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
     0%, 100% {
-        box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+        box-shadow: 0 2px 8px var(--orange-glow);
     }
     50% {
-        box-shadow: 0 2px 12px rgba(255, 107, 53, 0.6);
+        box-shadow: 0 2px 12px var(--orange-glow-strong);
     }
 }
 
@@ -177,12 +177,12 @@
     right: 20px;
     width: 350px;
     max-height: 500px;
-    background: white;
+    background: var(--bg-primary);
     border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 32px var(--box-shadow);
     z-index: 9999;
     overflow: hidden;
-    border: 1px solid rgba(255, 107, 53, 0.1);
+    border: 1px solid var(--orange-glow);
 }
 
 .notificacoes-header {
@@ -190,8 +190,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 18px 20px;
-    border-bottom: 1px solid #e2e8f0;
-    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--gradient-orange);
     color: white;
 }
 
@@ -199,15 +199,15 @@
     margin: 0;
     font-size: 1.125rem;
     font-weight: 600;
-    color: white;
+    color: var(--bg-primary);
 }
 
 .notificacoes-header button {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--shadow);
     border: none;
     font-size: 1.25rem;
     cursor: pointer;
-    color: white;
+    color: var(--bg-primary);
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -218,7 +218,7 @@
 }
 
 .notificacoes-header button:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: var(--shadow);
     transform: rotate(90deg);
 }
 
@@ -238,15 +238,15 @@
 }
 
 .notificacao-item:hover {
-    background: #fff5f0;
-    border-color: rgba(255, 107, 53, 0.2);
+    background: var(--bg-secondary);
+    border-color: var(--orange-glow);
     transform: translateX(4px);
 }
 
 .notificacao-item.nao-lida {
     background: linear-gradient(135deg, #fff5f0 0%, #ffe8dc 100%);
-    border-left: 3px solid #ff6b35;
-    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.1);
+    border-left: 3px solid var(--orange);
+    box-shadow: 0 2px 8px var(--orange-glow);
 }
 
 .notificacao-item:last-child {
@@ -263,12 +263,12 @@
     z-index: 10001;
     width: 110%;
     max-width: 700px;
-    background: white;
+    background: var(--bg-primary);
     border-radius: 3px;
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 48px var(--box-shadow);
     max-height: 90vh;
     overflow-y: auto;
-    border: 1px solid rgba(255, 107, 53, 0.1);
+    border: 1px solid var(--orange-glow);
 }
 
 #perfilContainer.active {
@@ -296,7 +296,7 @@
 
 .logo-ridemap-animated {
     animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 4px 8px rgba(255, 107, 53, 0.3));
+    filter: drop-shadow(0 4px 8px var(--orange-glow-strong));
     transition: all 0.3s ease;
 }
 
@@ -316,7 +316,7 @@
     left: 50%;
     width: 120%;
     height: 120%;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
     transform: translate(-50%, -50%);
     animation: pulse-glow 2s ease-in-out infinite;
     z-index: -1;
