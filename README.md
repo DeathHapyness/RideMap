@@ -504,7 +504,24 @@ ridemap/
 │   │   └── default-avatar.png  # Avatar padrão (NOVO)
 ├── 📁 views/
 │   ├── 📁 layouts/
-│   │   └── main.hbs #Armazena todos os links necessarios 
+│   │   ├── profile-view.hbs # Modal de perfil (NOVO)
+│   │   ├── login-modal.hbs  # Modal de login 
+│   │   └── add-spot-modal.hbs
+│   ├── 404.hbs             # Página de erro 404
+│   ├── add-spot.hbs        # Página de adicao de pista
+│   ├── home.hbs            # Página inicial
+│   ├── dashboard.hbs       # Dashboard usuário
+│   ├── error.hbs           # Página de erros inesperados
+│   └── admin-dashboard.hbs # Painel admin e administrcao
+├── 📄 routes.js            # Rotas da aplicação (ATUALIZADO)
+├── 📄 server.js            # Servidor principal
+├── 📄 email.js            # Parte responsael por envio de email
+├── 📄 .env                 # Variáveis ambiente (ATUALIZADO)
+├── 📄 .gitignore
+├── 📄 package.json
+├── 📄 README_EN.md
+└── 📄 README.md
+```   └── main.hbs #Armazena todos os links necessarios 
 │   ├── 📁 partials/
 │   │   ├── sidebar.hbs     # Menu lateral (ATUALIZADO)
 │   │   ├── profile-view.hbs # Modal de perfil (NOVO)
@@ -571,9 +588,9 @@ O RideMap implementa múltiplas camadas de segurança:
 - [x] Painel administrativo
 - [x] Upload de avatares com Cloudinary ✨ **NOVO**
 - [x] Sistema de roles (user/admin)
-- [x] Interface moderna com gradientes ✨ **NOVO**
-- [x] Animações no logo ✨ **NOVO**
-- [x] Modal de perfil responsivo ✨ **NOVO**
+- [x] Interface moderna com gradientes 
+- [x] Animações no logo 
+- [x] Modal de perfil responsivo 
 - [x] Sistema de notificações aprimorado ✨ **NOVO**
 - [x] "Minhas Pistas" - ver pistas enviadas ✨ **NOVO**
 
@@ -582,7 +599,6 @@ O RideMap implementa múltiplas camadas de segurança:
 - [ ] Upload de múltiplas fotos por pista
 - [ ] Sistema de avaliações (estrelas/comentários)
 - [ ] Editar pista rejeitada
-- [ ] Cropper de imagem interativo
 
 ### 📋 Planejado
 
@@ -590,13 +606,17 @@ O RideMap implementa múltiplas camadas de segurança:
 - [ ] Sistema de favoritos
 - [ ] Compartilhamento social
 - [ ] Rotas/trilhas personalizadas
+- [ ] Dark mode
+
+### 🌟 Futuramente 
+
 - [ ] Eventos e campeonatos
 - [ ] Versão mobile (React Native)
 - [ ] PWA (Progressive Web App)
 - [ ] Modo offline
 - [ ] Integração com redes sociais
 - [ ] Gamificação (badges, rankings)
-- [ ] Dark mode
+- [ ] Cropper de imagem interativo
 
 ---
 
