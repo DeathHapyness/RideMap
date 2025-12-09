@@ -581,7 +581,6 @@ RideMap implements multiple security layers:
 - [ ] Multiple photo upload per park
 - [ ] Rating system (stars/comments)
 - [ ] Edit rejected parks
-- [ ] Interactive image cropper
 
 ### 📋 Planned
 
@@ -589,13 +588,18 @@ RideMap implements multiple security layers:
 - [ ] Favorites system
 - [ ] Social sharing
 - [ ] Custom routes/trails
-- [ ] Events and competitions
+- [ ] Dark mode
+
+### 🌟 In the Future
+
+- [ ] Events and championships
 - [ ] Mobile version (React Native)
 - [ ] PWA (Progressive Web App)
 - [ ] Offline mode
 - [ ] Social media integration
 - [ ] Gamification (badges, rankings)
-- [ ] Dark mode
+- [ ] Interactive image cropper
+
 
 ---
 
