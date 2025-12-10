@@ -499,9 +499,23 @@ ridemap/
 │   │   ├── recuperacao-senha.js # Lógica de recuperacao de senha com email 
 │   │   └── map.js          # Lógica do mapa
 │   └── 📁 img/
-│   │   ├──png_c0jcq.png        # Logo principal
-│   │   ├──wheel(1).png         # Logo da aba navegador
-│   │   └── default-avatar.png  # Avatar padrão (NOVO)
+│       ├──png_c0jcq.png        # Logo principal
+│       ├──wheel(1).png         # Logo da aba navegador
+│       │ default-avatar.png    # Avatar padrão 
+│       ├── 📁 backgrounds/
+│       │   ├── 1234.jpg        # Novo fundo do dashboard 
+│       │   ├──login_Screen.png   # Novo arte da tela de login
+│       │   ├──rosa-ad-pista-menor.jpg  # Nova logo de aba
+│       │   └──rosa-add-pista.jpg   # Fundo novo screen de adicoa de pista
+│       ├──  📁 imgs_reservas/
+│       │    ├──  back_add-pista.png
+│       │    ├── back-dsh2.jpg
+│       │    ├── dashboard_bckgrd.jpg
+│       │    ├── dsh_back.jpg
+│       │    └── foto_jao.jpg
+│       └── 📁 logos/
+│            ├── logo-laranja-pronta.png
+│            └── nova-logo-aba-prt.png
 ├── 📁 views/
 │   ├── 📁 layouts/
 │   │   ├── profile-view.hbs # Modal de perfil (NOVO)
