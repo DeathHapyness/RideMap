@@ -1,0 +1,23 @@
+# Variáveis de ambiente (CRÍTICO!)
+.env
+.env.*
+*.env
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# Lock
+*.package-lock.json
+*.package.json
+node_modules/
+
+# Uploads
+uploads/
+
+# Backups DB
+*_backup.sql
+*.sql.bak
+db/backups/.env
