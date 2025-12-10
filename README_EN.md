@@ -485,12 +485,11 @@ ridemap/
 │   │   ├── style.css       # Main Style (UPDATED)
 │   │   ├── sidebar.css     # Menu Styles (NEW)
 │   │   ├── profile.css     # Profile Styles (NEW)
-│   │   ├── profile.css     # Global Style (New and Updated)
 │   │   ├── admin-dashboard.css # Admin Panel Style
 │   │   ├── login.css       # Login Dashboard Style
 │   │   ├── dashboard.css   # Main Sidebar Dashboard Style
-│   │   ├── adicionar-pista.css # Spot Addition Interface Style (Updated)
-│   │   └── dashboard-perfil.css # Dashboard Styles
+│   │   ├── adicionar-pista.css # Spot Addition Interface Style (UPDATED)
+│   │   └── dashboard-perfil.css # Dashboard Profile Styles
 │   ├── 📁 js/
 │   │   ├── dashboard.js    # Dashboard Logic
 │   │   ├── admin.js        # Admin Logic
@@ -501,7 +500,21 @@ ridemap/
 │   └── 📁 img/
 │       ├── png_c0jcq.png        # Main Logo
 │       ├── wheel(1).png         # Browser Tab Logo
-│       └── default-avatar.png  # Default Avatar (NEW)
+│       ├── default-avatar.png   # Default Avatar
+│       ├── 📁 backgrounds/
+│       │   ├── 1234.jpg        # New Dashboard Background
+│       │   ├── login_Screen.png   # New Login Screen Art
+│       │   ├── rosa-ad-pista-menor.jpg  # New Tab Logo
+│       │   └── rosa-add-pista.jpg   # New Add Spot Screen Background
+│       ├── 📁 imgs_reservas/   # Backup Images
+│       │   ├── back_add-pista.png
+│       │   ├── back-dsh2.jpg
+│       │   ├── dashboard_bckgrd.jpg
+│       │   ├── dsh_back.jpg
+│       │   └── foto_jao.jpg
+│       └── 📁 logos/
+│           ├── logo-laranja-pronta.png  # Orange Logo Ready
+│           └── nova-logo-aba-prt.png    # New Tab Logo Ready
 ├── 📁 views/
 │   ├── 📁 layouts/
 │   │   └── main.hbs        # Stores All Necessary Links
@@ -520,10 +533,10 @@ ridemap/
 ├── 📄 server.js            # Main Server
 ├── 📄 email.js             # Responsible for Email Sending
 ├── 📄 .env                 # Environment Variables (UPDATED)
-├── 📄 .gitignore
-├── 📄 package.json
-├── 📄 README_EN.md
-└── 📄 README.md
+├── 📄 .gitignore           # Git Ignore File
+├── 📄 package.json         # Node.js Dependencies
+├── 📄 README_EN.md         # English README
+└── 📄 README.md            # Portuguese README
 ```  
 
 ---
