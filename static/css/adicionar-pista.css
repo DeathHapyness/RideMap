@@ -15,21 +15,25 @@
     border: none;
     display: flex;
     flex-direction: column;
-    background: --bg-muted;
+    background: var(--bg-muted);
 }
 
 .modal-adicionar-pista .modal-header {
-    background: --gradient-orange;
-    color: --bg-primary;
+    background: #9b9b9bbe;
+    color: var(--bg-primary);
     border-bottom: none;
     padding: 24px 30px;
     flex-shrink: 0;
-    box-shadow: 0 2px 10px --orange-glow;
+    box-shadow: 0 2px 10px var(--orange-glow);
+}
+
+.modal-adicionar-pista .modal-header h5 {
+    color: var(--bg-primary);    
 }
 
 .modal-adicionar-pista .modal-title {
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.9rem;
 }
 
 .modal-adicionar-pista .btn-close {
@@ -45,6 +49,10 @@
     padding: 30px;
     overflow-y: auto;
     flex: 1;
+    background-image:  url('/static/img/backgrounds/rosa-add-pista-menor.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .modal-adicionar-pista .row {
@@ -53,27 +61,27 @@
 
 .modal-adicionar-pista .form-label {
     font-weight: 500;
-    color: --text-primary;
+    color: var(--text-primary);
     margin-bottom: 8px;
-    font-size: 0.95rem;
+    font-size: 1.4rem;
 }
 
 .modal-adicionar-pista .form-control,
 .modal-adicionar-pista .form-select {
-    background: --bg-primary;
-    border: 2px solid --border-color;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     padding: 12px 16px;
-    color: --text-primary;
+    color: var(--text);
     font-size: 0.95rem;
     transition: all 0.2s;
 }
 
 .modal-adicionar-pista .form-control:focus,
 .modal-adicionar-pista .form-select:focus {
-    background: --bg-primary;
-    border-color: --orange-variant;
-    box-shadow: 0 0 0 4px --orange-glow;
+    background: var(--bg-primary);
+    border-color: var(--orange-variant);
+    box-shadow: 0 0 0 4px var(--orange-glow);
     outline: none;
 }
 
@@ -94,30 +102,30 @@
 }
 
 .area-upload {
-    border: 3px dashed --orange-variant;
+    border: 3px dashed var(--orange-variant);
     border-radius: 12px;
     padding: 40px 20px;
     text-align: center;
     cursor: pointer;
-    background: --bg-primary;
+    background: var(--bg-primary);
     transition: all 0.3s;
 }
 
 .area-upload:hover {
-    border-color: --orange;
-    background: --bg-secondary;
+    border-color: var(--orange);
+    background: var(--bg-secondary);
     transform: translateY(-2px);
 }
 
 .area-upload i {
     font-size: 3rem;
-    color: --orange-variant;
+    color: var(--orange-variant);
     margin-bottom: 12px;
 }
 
 .area-upload p {
     margin: 0;
-    color: --text-secondary;
+    color: var(--text-secondary);
     font-size: 1rem;
     font-weight: 500;
 }
@@ -134,38 +142,38 @@
     height: 120px;
     object-fit: cover;
     border-radius: 8px;
-    border: 2px solid --orange-variant;
-    box-shadow: 0 2px 8px --box-shadow;
+    border: 2px solid var(--orange-variant);
+    box-shadow: 0 2px 8px var(--box-shadow);
 }
 
 .modal-adicionar-pista .modal-footer {
     padding: 20px 30px;
-    background: --bg-primary;
-    border-top: 2px solid --border-color;
+    background: var(--bg-primary);
+    border-top: 2px solid var(--border-color);
     flex-shrink: 0;
-    box-shadow: 0 -2px 10px --box-shadow;
+    box-shadow: 0 -2px 10px var(--box-shadow);
 }
 
 .modal-adicionar-pista .btn-primary {
-    background: --gradient-orange;
+    background: var(--gradient-orange);
     border: none;
     padding: 14px 32px;
     border-radius: 8px;
     font-weight: 600;
-    color: --bg-primary; ;
-    box-shadow: 0 4px 12px --orange-glow;
+    color: var(--bg-primary); 
+    box-shadow: 0 4px 12px var(--orange-glow);
     transition: all 0.3s;
 }
 
 .modal-adicionar-pista .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px --orange-glow;
-    background:  --gradiente-orange;
+    box-shadow: 0 6px 20px var(--orange-glow);
+    background:  var(--gradient-orange);
 }
 
 .modal-adicionar-pista .btn-secondary {
-    background: --border-color; ;
-    color: --text-primary;
+    background: var(--border-color); 
+    color: var(--text-primary);
     border: none;
     padding: 14px 32px;
     border-radius: 8px;
@@ -174,25 +182,25 @@
 }
 
 .modal-adicionar-pista .btn-secondary:hover {
-    background: --border-color; ;
+    background: var(--border-color); 
     transform: translateY(-2px);
 }
 
 .modal-adicionar-pista .select2-container--default .select2-selection--single {
     height: 48px;
-    border: 2px solid --border-color;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
 }
 
 .modal-adicionar-pista .select2-container--default.select2-container--focus .select2-selection--single {
-    border-color: --orange-variant;
-    box-shadow: 0 0 0 4px --orange-glow;
+    border-color: var(--orange-variant);
+    box-shadow: 0 0 0 4px var(--orange-glow);
 }
 
 .modal-adicionar-pista .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: 44px;
     padding-left: 16px;
-    color: --text-primary;
+    color: var(--text-primary);
 }
 
 /*Todo: Responsividade melhorar isso depois se necessario */
