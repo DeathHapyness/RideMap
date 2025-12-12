@@ -129,6 +129,74 @@ if (btnEntrar) {
             return;
         }
 
+        //*login com gloogle 
+            const { Client, Account } = Appwrite;
+
+            require('dotenv').config();
+        const sdk = require('node-appwrite');
+
+        const client = new sdk.Client()
+        .setEndpoint(process.env.APPWRITE_ENDPOINT)
+        .setProject(process.env.APPWRITE_PROJECT_ID)
+
+        //*Função para fazer login com Google
+        function loginWithGoogle() {
+            try {
+                const successUrl = window.location.origin + '/success.html';
+                const failureUrl = window.location.origin + '/error.html';
+                
+                account.createOAuth2Session(
+                    'google',
+                    successUrl,
+                    failureUrl
+                );
+            } catch (error) {
+                console.error('Erro ao iniciar login:', error);
+                alert('Erro ao tentar fazer login com Google');
+            }
+        }
+
+        // Verificar se usuário está logado ao carregar a página
+        async function checkAuth() {
+            try {
+                const user = await account.get();
+                showUserInfo(user);
+            } catch (error) {
+                showLoginButton();
+            }
+        }
+
+        // Mostrar informações do usuário
+        function showUserInfo(user) {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('userSection').style.display = 'block';
+            
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userId').textContent = user.$id;
+        }
+
+        // Mostrar botão de login
+        function showLoginButton() {
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('userSection').style.display = 'none';
+        }
+
+        // Fazer logout
+        async function logout() {
+            try {
+                await account.deleteSession('current');
+                showLoginButton();
+                alert('Logout realizado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+                alert('Erro ao fazer logout');
+            }
+        }
+
+        // Verificar autenticação quando a página carregar
+        window.addEventListener('DOMContentLoaded', checkAuth);
+
         // Salvar no localStorage (opcional, pois já está na sessão)
         const userData = {
             id: usuarioEncontrado.id,
@@ -152,6 +220,88 @@ if (btnEntrar) {
                 timer: 1500
             });
 
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 1500);
+        } else {
+            window.location.href = '/dashboard';
+        }
+    });
+}
+
+require('dotenv').config();
+const sdk = require('node-appwrite');
+
+const client = new sdk.Client()
+    .setEndpoint(process.env.APPWRITE_ENDPOINT)
+    .setProject(process.env.APPWRITE_PROJECT_ID)
+const account = new Appwrite.Account(client);
+
+// Função global para login com Google
+function loginWithGoogle() {
+    try {
+        const successUrl = window.location.origin + '/success.html';
+        const failureUrl = window.location.origin + '/error.html';
+        account.createOAuth2Session('google', successUrl, failureUrl);
+    } catch (error) {
+        console.error('Erro ao iniciar login:', error);
+        alert('Erro ao tentar fazer login com Google');
+    }
+}
+
+// Função global para login manual
+function handleLogin() {
+    const emailInput = document.querySelector('.sign-in input[type="email"]');
+    const senhaInput = document.querySelector('.sign-in input[type="password"]');
+    if (!emailInput || !senhaInput) return;
+    const email = emailInput.value;
+    const senha = senhaInput.value;
+    if (!email || !senha) {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: 'Atenção',
+                text: 'Por favor, preencha todos os campos',
+                icon: 'warning'
+            });
+        } else {
+            alert('Por favor, preencha todos os campos');
+        }
+        return;
+    }
+    verificarUsuario(email, senha).then(usuarioEncontrado => {
+        if (!usuarioEncontrado || usuarioEncontrado.error) {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Erro',
+                    text: usuarioEncontrado?.error || 'Usuário não encontrado ou senha incorreta.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                alert(usuarioEncontrado?.error || 'Usuário não encontrado ou senha incorreta.');
+            }
+            return;
+        }
+        // Salvar no localStorage
+        const userData = {
+            id: usuarioEncontrado.id,
+            nome: usuarioEncontrado.nome,
+            email: usuarioEncontrado.email,
+            avatar: usuarioEncontrado.avatar || '/img/default-avatar.png'
+        };
+        try {
+            localStorage.setItem('user', JSON.stringify(userData));
+        } catch (e) {
+            console.error('Erro ao salvar no localStorage:', e);
+        }
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Bem-vindo!',
+                text: `Olá, ${usuarioEncontrado.nome}!`,
+                showConfirmButton: false,
+                timer: 1500
+            });
             setTimeout(() => {
                 window.location.href = '/dashboard';
             }, 1500);
