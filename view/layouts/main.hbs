@@ -26,11 +26,12 @@
     <link rel="stylesheet" href="/static/css/adicionar-pista.css">
     <link rel="stylesheet" href="/static/css/dashboard-perfil.css">
     <!-- Favicon -->
-    <link rel="icon" href="/static/img/logos/logo-laranja-pronta.png">
+    <link rel="icon" href="/static/img/logos/logo-principal.png">
 </head>
 <body>
     {{{body}}}
-
+    <!-- Appwrite -->
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.0"></script>
     <!-- jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <!-- Bootstrap JS -->
@@ -44,6 +45,7 @@
     <!-- Scripts Custom -->
     <script src="/static/js/map.js" defer></script>
     <script src="/static/js/script.js" defer></script>
+    <script src="/static/js/darkmode.js" type="text/javascript" defer ></script>
     
     {{!-- Carrega dashboard.js APENAS se estiver na página do dashboard --}}
     {{#if isDashboard}}
