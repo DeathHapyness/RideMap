@@ -4,9 +4,10 @@
 
 <!-- Menu Lateral -->
 <div class="sidebar">
-    <div class="sidebar-header">
-        <img src="/static/img/png_c0jcq.png" alt="RideMap Logo">
-        <h4>RideMap</h4>
+    <div class="sidebar-header" style="justify-content: center; padding: 0; height: auto; background: transparent; display: flex; align-items: end;">
+        <img src="/static/img/logos/logo-principal.png" 
+             style="height: 210px; width: auto; margin: -35px auto 0 auto; display: block; position: relative; top: 10px;" 
+             alt="RideMap Logo">
     </div>
     
     <div class="user-info">
@@ -37,6 +38,11 @@
         <a href="#" class="menu-item" onclick="toggleNotificacoes()">
             <i class="fas fa-bell"></i>
             Notificações
+            <span class="badge-notificacoes" style="display: none;">0</span>
+        </a>
+         <a href="#" class="menu-item" onclick="" id="theme-switch">
+            <i class="fas fa-moon"></i>
+            Dark Mode
             <span class="badge-notificacoes" style="display: none;">0</span>
         </a>
         <a href="#" class="menu-item" id="logoutBtn">
