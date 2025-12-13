@@ -525,6 +525,11 @@ ridemap/
 │   │   ├── profile-view.hbs # Modal de perfil (NOVO)
 │   │   ├── login-modal.hbs  # Modal de login 
 │   │   └── add-spot-modal.hbs
+│   ├── 📁 partials/
+│   │   ├── sidebar.hbs     # Menu lateral (ATUALIZADO)
+│   │   ├── profile-view.hbs # Modal de perfil (NOVO)
+│   │   ├── login-modal.hbs  # Modal de login 
+│   │   └── add-spot-modal.hbs
 │   ├── 404.hbs             # Página de erro 404
 │   ├── add-spot.hbs        # Página de adicao de pista
 │   ├── home.hbs            # Página inicial
@@ -537,20 +542,6 @@ ridemap/
 ├── 📄 .env                 # Variáveis ambiente (ATUALIZADO)
 ├── 📄 .gitignore
 ├── 📄 package.json
-├── 📄 README_EN.md
-└── 📄 README.md
-```   └── main.hbs #Armazena todos os links necessarios 
-│   ├── 📁 partials/
-│   │   ├── sidebar.hbs     # Menu lateral (ATUALIZADO)
-│   │   ├── profile-view.hbs # Modal de perfil (NOVO)
-│   │   ├── login-modal.hbs  # Modal de login 
-│   │   └── add-spot-modal.hbs
-│   ├── 404.hbs             # Página de erro 404
-│   ├── add-spot.hbs        # Página de adicao de pista
-│   ├── home.hbs            # Página inicial
-│   ├── dashboard.hbs       # Dashboard usuário
-│   ├── error.hbs           # Página de erros inesperados
-│   └── admin-dashboard.hbs # Painel admin e administrcao
 ├── 📄 routes.js            # Rotas da aplicação (ATUALIZADO)
 ├── 📄 server.js            # Servidor principal
 ├── 📄 email.js            # Parte responsael por envio de email
