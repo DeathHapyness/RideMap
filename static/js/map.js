@@ -1,10 +1,24 @@
 const map = L.map('map', { minZoom: 4.5 });
 map.setView([-23.5505, -46.6333], 7);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+// Tile layers claro e escuro
+window.lightTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 20,
     attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
+});
+
+window.darkTileLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+    maxZoom: 20,
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+});
+
+if (document.body.classList.contains('darkmode')) {
+    window.darkTileLayer.addTo(map);
+} else {
+    window.lightTileLayer.addTo(map);
+}
+
+window.map = map;
 
 const meuIcone = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
