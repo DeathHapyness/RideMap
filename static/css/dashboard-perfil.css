@@ -5,32 +5,6 @@
     position: relative;
 }
 
-.btn-fechar-perfil {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: var(--gradient-orange);
-    border: none;
-    color: var(--bg-primary);
-    font-size: 28px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    line-height: 1;
-    padding: 0;
-    box-shadow: 0 4px 15px var(--orange-glow);
-}
-
-.btn-fechar-perfil:hover {
-    transform: rotate(90deg) scale(1.1);
-    box-shadow: 0 6px 20px var(--orange-glow-strong);
-}
-
 .text-center {
     text-align: center;
 }
@@ -67,34 +41,15 @@
     border-radius: 50% !important;
 }
 
-#btnTrocarAvatar {
-    background: transparent;
-    border: 2px solid var(--orange-start);
-    color: var(--orange-start);
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
-}
-
-#btnTrocarAvatar:hover {
-    background: var(--gradient-orange);
-    color: var(--bg-primary);
-    border-color: transparent;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--orange-glow);
-}
-
 .form-label {
     display: block;
     font-size: 0.95rem;
     font-weight: 600;
-    color: #333;
+    color: var(--text);
     margin-bottom: 8px;
 }
+
+
 
 .form-control {
     width: 100%;
@@ -112,12 +67,13 @@
     box-shadow: 0 0 0 3px var(--orange-glow);
 }
 
-.form-control:readonly {
+.form-control{
     background-color: var(--bg-muted);
+    color: #fff !important;
     cursor: not-allowed;
 }
 
-/* Botões */
+/** Botões */
 .btn {
     padding: 12px 20px;
     border: none;
@@ -163,6 +119,53 @@
     border-color: transparent;
 }
 
+.btn-fechar-perfil {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--gradient-orange);
+    border: none;
+    color: var(--bg-primary);
+    font-size: 28px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    line-height: 1;
+    padding: 0;
+    box-shadow: 0 4px 15px var(--orange-glow);
+}
+
+.btn-fechar-perfil:hover {
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 20px var(--orange-glow-strong);
+}
+
+#btnTrocarAvatar {
+    background: transparent;
+    border: 2px solid var(--orange-start);
+    color: var(--orange-start);
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#btnTrocarAvatar:hover {
+    background: var(--gradient-orange);
+    color: var(--bg-primary);
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--orange-glow);
+}
+
 .d-grid {
     display: grid;
 }
@@ -190,7 +193,7 @@ hr {
 h5 {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #333;
+    color: var(--text);
     margin-bottom: 1rem;
 }
 
@@ -201,6 +204,7 @@ form .mb-3 {
 input[type="password"] {
     padding-right: 45px;
 }
+
 
 /* Responsivo */
 @media (max-width: 576px) {
@@ -248,6 +252,10 @@ input[type="password"] {
 
 .form-control.is-valid {
     border-color: var(--input-success);
+}
+
+.form-control input{
+    color: black;
 }
 
 .invalid-feedback {
@@ -299,11 +307,6 @@ input[type="password"] {
 /* Melhorias visuais */
 .profile-modal-content {
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
-}
-
-/* Hover nos inputs */
-.form-control:hover:not(:focus):not(:readonly) {
-    border-color: #ffb385;
 }
 
 /* Transições suaves */
