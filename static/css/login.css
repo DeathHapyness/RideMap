@@ -39,29 +39,38 @@
     min-height: 480px;
 }
 
+#loginScreen .container-login h1{
+    color: var(--text);
+}
+
 #loginScreen .container-login p{
     font-size: 16px;
     line-height: 20px;
     letter-spacing: 0.3px;
     margin: 20px 0;
+    color: var(--text);
 }
 
 #loginScreen .container-login span{
     font-size: 12px;
+    color: var(--text);
 }
 
 #loginScreen .container-login a{
-    color: #333;
+    color: var(--text);
     font-size: 13px;
     text-decoration: none;
     margin: 15px 0 10px;
+    border-radius: 10px;
 }
 
 #loginScreen .container-login button{
     color: var(--text);
+    background-color: var(--bg-primary);
+    border-color: var(--border-color);
     font-size: 12px;
     padding: 10px 45px;
-    border: 1px solid transparent;
+    border:    5px ;
     border-radius: 10px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -70,6 +79,12 @@
     cursor: pointer;
 }
 
+#loginScreen .container-login button:hover,
+#loginScreen .container-login  {
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--orange-start);
+    border-color: var(--orange-start);
+}
 
 #loginScreen .container button.hidden{
     background-color: transparent;
@@ -95,6 +110,7 @@
     border-radius: 8px;
     width: 100%;
     outline: none;
+    color: var(--text);
 }
 
 #loginScreen .form-container{
@@ -133,7 +149,7 @@
 }
 
 #loginScreen .social-icons a{
-    border: 1px solid #ccc;
+    border: 1.5px solid var(--text);
     border-radius: 20%;
     display: inline-flex;
     justify-content: center;
@@ -141,6 +157,24 @@
     margin: 0 3px;
     width: 40px;
     height: 40px;
+}
+
+/* Login Modal Social Icons */
+.social-icons .google-icon {
+     width: 2.5rem;
+    height: 2.5rem; 
+}
+
+.social-icons .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    transition: transform 0.2s;
+}
+
+.social-icons .icon:hover {
+    transform: scale(1.1);
 }
 
 #loginScreen .toggle-container{
@@ -162,7 +196,7 @@
 
 #loginScreen .toggle{
     height: 100%;
-    background-image: url('/static/img/backgrounds/Login_Screen.png');
+    background-image: url('/static/img/backgrounds/logo-definitiva.png');
     background-size: cover;
     background-position: left;
     background-repeat: no-repeat;
@@ -193,12 +227,12 @@
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
     background: transparent;
-    color: #fff;
+    color: var(--text);
 }
 
 #loginScreen .toggle-panel button,
 #loginScreen .toggle-panel a {
-    color: #fff;
+    color: var(--text);
     background: rgba(0,0,0,0.4);
     border: 1px solid #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
