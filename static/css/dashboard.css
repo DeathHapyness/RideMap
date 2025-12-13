@@ -10,7 +10,7 @@
             rgba(0, 0, 0, 0.705), 
             rgba(252, 137, 60, 0.212)       
         ),
-        url('/static/img/backgrounds/1234.jpg');
+        url('/static/img/backgrounds/flechas-dashboard.jpg');
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
@@ -53,7 +53,7 @@
     padding: 15px 20px;
     display: flex;
     align-items: center;
-    color: var(--bg-primary);
+    color: var(--text);
     text-decoration: none;
     transition: all 0.3s ease;
     border-left: 3px solid transparent;
@@ -77,7 +77,6 @@
     font-size: 1.1rem;
     width: 20px;
     text-align: center;
-    color: var(--bg-primary);
 }
 
 .hamburger-btn {
@@ -132,7 +131,7 @@
 .user-name {
     font-weight: 500;
     margin-bottom: 5px;
-    color: var(--bg-primary);
+    color: var(--text);
     font-size: 1.7rem;
 }
 
@@ -148,7 +147,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--text);
+    background: var(--bg-primary);
     z-index: 999;
     backdrop-filter: blur(2px);
 }
@@ -192,6 +191,13 @@
     z-index: 9999;
     overflow: hidden;
     border: 1px solid var(--orange-glow);
+    color: var(--text);
+}
+
+.notificacoes-dropdown small,
+.notificacoes-dropdown span,
+.notificacoes-dropdown p {
+    color: var(--text) !important;
 }
 
 .notificacoes-header {
@@ -209,12 +215,12 @@
     font-size: 1.125rem;
     font-weight: 600;
     color: var(--bg-primary);
+    color: var(--text);
 }
 
 .notificacoes-header button {
-    background: var(--shadow);
     border: none;
-    font-size: 1.25rem;
+    font-size: 2.5rem;
     cursor: pointer;
     color: var(--bg-primary);
     width: 32px;
@@ -224,11 +230,6 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-}
-
-.notificacoes-header button:hover {
-    background: var(--shadow);
-    transform: rotate(90deg);
 }
 
 .notificacoes-lista {
@@ -244,6 +245,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     border: 1px solid transparent;
+    background-color: var(--bg-secondary);
 }
 
 .notificacao-item:hover {
@@ -293,53 +295,5 @@
     to {
         opacity: 1;
         transform: translate(-50%, -50%);
-    }
-}
-
-/* animacoes logo sidebar*/
-
-.logo-ridemap-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.logo-ridemap-animated {
-    animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 4px 8px var(--orange-glow-strong));
-    transition: all 0.3s ease;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-.logo-ridemap-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120%;
-    height: 120%;
-    background: radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    animation: pulse-glow 2s ease-in-out infinite;
-    z-index: -1;
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(0.8);
-        opacity: 0;
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 0.6;
     }
 }
