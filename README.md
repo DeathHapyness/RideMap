@@ -536,9 +536,6 @@ ridemap/
 │   ├── dashboard.hbs       # Dashboard usuário
 │   ├── error.hbs           # Página de erros inesperados
 │   └── admin-dashboard.hbs # Painel admin e administrcao
-├── 📄 routes.js            # Rotas da aplicação (ATUALIZADO)
-├── 📄 server.js            # Servidor principal
-├── 📄 email.js            # Parte responsael por envio de email
 ├── 📄 .env                 # Variáveis ambiente (ATUALIZADO)
 ├── 📄 .gitignore
 ├── 📄 package.json
