@@ -177,7 +177,7 @@ async function showMySpots() {
 }
 function showAddSpot() {
     const modalAdicionarPista = new bootstrap.Modal(document.getElementById('addSpotModal'));
-    
+
     $('#spotState').select2({
         dropdownParent: $('#addSpotModal'),
         placeholder: 'Selecione o estado...',
