@@ -5,8 +5,8 @@
   --text: #000000;
   --text-primary: #212529;
   --text-secondary: #6c757d;
-  --border-color: #747373;
-  --card-bg: #f0f0f0;
+  --border-color: #252525;
+  --card-bg: #f0f0f08f;
   --input-bg: #ffffff;
   --orange-start: #ff5e24;
   --orange-end: #F7931E;
@@ -17,7 +17,23 @@
   --input-error: #dc3545;
   --input-success: #28a745;
   --gradient-orange: linear-gradient(135deg, var(--orange-start) 0%, var(--orange-variant) 100%);
-  --box-shadow:rgba(0, 0, 0, 0.1);
-  --shadow: rgba(255, 255, 255, 0.2);
+  --box-shadow:rgba(0, 0, 0, 0.397);
+  --shadow: rgba(0, 0, 0, 0.267);
   --background-admin: linear-gradient(to bottom, #ffffff9d 0%, #6e6e6e 100%);
+}
+
+.darkmode{
+  --bg-primary: #121212;
+  --bg-secondary: #313131;
+  --bg-muted: #2c2c2c;
+  --text: #ffffff;
+  --text-primary: #f1f1f1;
+  --border-color: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --orange-end: #F7931E;
+  --card-bg: #2a2a2a;
+  --input-bg: #3a3a3a;
+  --box-shadow: rgba(0, 0, 0, 0.336);
+  --shadow: rgba(0, 0, 0, 0.795);
+  --background-admin: linear-gradient(to bottom, #2c2c2c 0%, #1e1e1e 100%);
 }
