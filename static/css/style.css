@@ -13,13 +13,20 @@
     left: 0;
     width: 24%;
     height: 100%;
-    background: var(--box-shadow);
+    background: var(--shadow);
     clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
     z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+#overlay p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    color: var(--text);
+}
+
 img{
     width: 13%;
     height: auto;
@@ -32,9 +39,10 @@ img{
 }
 
 #overlay-conteudo h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: 50px;
+    margin-bottom: 1.5rem;
     font-family: variable(--font-family-headings);
+    color: var(--orange);
 }
 
 #overlay-conteudo p {
@@ -97,6 +105,19 @@ img{
 #features h2 {
     font-size: 2rem;
     margin-bottom: 2rem;
+    color: var(--text);
+}
+
+.features {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: var(--bg-primary);
+    color: var(--text);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px var(--box-shadow);
+    padding: 2.5rem 1.5rem;
 }
 
 .feature-card h4 {
@@ -125,6 +146,7 @@ img{
 .feature-card p {
     font-size: 0.9rem;
     color: #555;
+    color: var(--text);
 }
 
 .button {
@@ -242,19 +264,53 @@ img{
 }
 
 .btn-overlay {
-    background-color: transparent !important;
-    border: 2px solid var(--bg-primary) !important;
-    color: var(--bg-primary) !important;
-    padding: 12px 30px !important;
-    font-weight: 600 !important;
-    border-radius: 8px !important;
-    transition: all 0.3s ease !important;
-    backdrop-filter: blur(5px);
+    color: var(--text) !important;
+    background: var(--shadow);
+    border: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    padding: 12px 32px;
+    margin: 10px 0;
+    box-shadow: 0 2px 8px var(--box-shadow);
+    transition: background 0.2s, color 0.2s;
 }
 
 .btn-overlay:hover {
-    background-color: var(--shadow) !important;
-    border-color: var(--orange) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px var(--orange-glow);
+    background: var(--orange);
+    color: #fff;
 }
+
+.cta-button{
+    background-color: var(--text);
+}
+
+#theme-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 30px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px var(--box-shadow);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+theme-switch svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--text);
+}
+
+theme-switch svg:last-child {
+    display: none;
+}
+
+
