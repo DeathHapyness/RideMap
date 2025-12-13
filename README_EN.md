@@ -477,66 +477,73 @@ http://localhost:3000
 ridemap/
 ├── 📁 config/
 │   ├── cloudinary.js       # Cloudinary Configuration (NEW)
-│   └── multer.js           # File Upload
+│   └── multer.js           # File upload
 ├── 📁 db/
 │   └── config.js           # MySQL Connection
 ├── 📁 static/
 │   ├── 📁 css/
-│   │   ├── style.css       # Main Style (UPDATED)
-│   │   ├── sidebar.css     # Menu Styles (NEW)
-│   │   ├── profile.css     # Profile Styles (NEW)
-│   │   ├── admin-dashboard.css # Admin Panel Style
-│   │   ├── login.css       # Login Dashboard Style
-│   │   ├── dashboard.css   # Main Sidebar Dashboard Style
-│   │   ├── adicionar-pista.css # Spot Addition Interface Style (UPDATED)
-│   │   └── dashboard-perfil.css # Dashboard Profile Styles
+│   │   ├── style.css       # Main styles (UPDATED)
+│   │   ├── sidebar.css     # Menu styles (NEW)
+│   │   ├── profile.css     # Profile styles (NEW)
+│   │   ├── profile.css     # Global styles (New and Updated)
+│   │   ├── admin-dashboard.css # Admin panel styles
+│   │   ├── login.css       # Login dashboard styles
+│   │   ├── dashboard.css   # Main sidebar dashboard styles
+│   │   ├── adicionar-pista.css # Add spot interface styles (Updated)
+│   │   └── dashboard-perfil.css # Dashboard styles
 │   ├── 📁 js/
-│   │   ├── dashboard.js    # Dashboard Logic
-│   │   ├── admin.js        # Admin Logic
-│   │   ├── profile-view.js # Profile Logic (NEW)
-│   │   ├── script.js       # Basic Animation Logic
-│   │   ├── recuperacao-senha.js # Password Recovery Logic with Email
-│   │   └── map.js          # Map Logic
+│   │   ├── dashboard.js    # Dashboard logic
+│   │   ├── admin.js        # Admin logic
+│   │   ├── profile-view.js # Profile logic (NEW)
+│   │   ├── script.js       # Basic animation logic
+│   │   ├── recuperacao-senha.js # Password recovery logic with email
+│   │   ├── darkmod.js      # Dark mode logic
+│   │   └── map.js          # Map logic
 │   └── 📁 img/
-│       ├── png_c0jcq.png        # Main Logo
-│       ├── wheel(1).png         # Browser Tab Logo
-│       ├── default-avatar.png   # Default Avatar
 │       ├── 📁 backgrounds/
-│       │   ├── 1234.jpg        # New Dashboard Background
-│       │   ├── login_Screen.png   # New Login Screen Art
-│       │   ├── rosa-ad-pista-menor.jpg  # New Tab Logo
-│       │   └── rosa-add-pista.jpg   # New Add Spot Screen Background
-│       ├── 📁 imgs_reservas/   # Backup Images
-│       │   ├── back_add-pista.png
-│       │   ├── back-dsh2.jpg
-│       │   ├── dashboard_bckgrd.jpg
-│       │   ├── dsh_back.jpg
-│       │   └── foto_jao.jpg
+│       │   ├── flechas-dashbaord.jpg  # New dashboard background
+│       │   ├── login_Screen.png   # New login screen artwork
+│       │   ├── rosa-ad-pista-menor.jpg  # New tab logo
+│       │   └── rosa-add-pista.jpg   # New add spot screen background
+│       ├── 📁 imgs_reservas/
+│       ├── 📁 logos/
+│       │    ├── dark_mode_24dp.jpg   # Dark mode icon
+│       │    ├── google-logo-search-new.jpg # Google icon
+│       │    ├── light_mode_24dp.jpg  # Light mode icon
+│       │    ├── logo-principal.png   # New main logo
+│       │    └── nova-logo-aba-prt.png # New browser tab logo
+│       ├──  📁 imgs_reservas/   # Reserve images
+│       │    ├──  back_add-pista.png    
+│       │    ├── back-dsh2.jpg
+│       │    ├── dashboard_bckgrd.jpg
+│       │    └── dsh_back.jpg   
 │       └── 📁 logos/
-│           ├── logo-laranja-pronta.png  # Orange Logo Ready
-│           └── nova-logo-aba-prt.png    # New Tab Logo Ready
+│            ├── logo-laranja-pronta.png
+│            └── nova-logo-aba-prt.png
 ├── 📁 views/
 │   ├── 📁 layouts/
-│   │   └── main.hbs        # Stores All Necessary Links
+│   │   ├── profile-view.hbs # Profile modal (NEW)
+│   │   ├── login-modal.hbs  # Login modal
+│   │   └── add-spot-modal.hbs
 │   ├── 📁 partials/
-│   │   ├── sidebar.hbs     # Sidebar Menu (UPDATED)
-│   │   ├── profile-view.hbs # Profile Modal (NEW)
-│   │   ├── login-modal.hbs  # Login Modal
-│   │   └── add-spot-modal.hbs # Add Spot Modal
-│   ├── 404.hbs             # 404 Error Page
-│   ├── add-spot.hbs        # Add Spot Page
-│   ├── home.hbs            # Home Page
-│   ├── dashboard.hbs       # User Dashboard
-│   ├── error.hbs           # Unexpected Errors Page
-│   └── admin-dashboard.hbs # Admin Panel and Administration
-├── 📄 routes.js            # Application Routes (UPDATED)
-├── 📄 server.js            # Main Server
-├── 📄 email.js             # Responsible for Email Sending
-├── 📄 .env                 # Environment Variables (UPDATED)
-├── 📄 .gitignore           # Git Ignore File
-├── 📄 package.json         # Node.js Dependencies
-├── 📄 README_EN.md         # English README
-└── 📄 README.md            # Portuguese README
+│   │   ├── sidebar.hbs     # Sidebar menu (UPDATED)
+│   │   ├── profile-view.hbs # Profile modal (NEW)
+│   │   ├── login-modal.hbs  # Login modal
+│   │   └── add-spot-modal.hbs
+│   ├── 404.hbs             # 404 error page
+│   ├── add-spot.hbs        # Add spot page
+│   ├── home.hbs            # Home page
+│   ├── dashboard.hbs       # User dashboard
+│   ├── error.hbs           # Unexpected errors page
+│   └── admin-dashboard.hbs # Admin panel and administration
+├── 📄 routes.js            # Application routes (UPDATED)
+├── 📄 server.js            # Main server
+├── 📄 email.js             # Email sending handler
+├── 📄 .env                 # Environment variables (UPDATED)
+├── 📄 .gitignore
+├── 📄 package.json
+├── 📄 README_EN.md
+└── 📄 README.md
 ```  
 
 ---
@@ -582,7 +589,6 @@ RideMap implements multiple security layers:
 - [x] Moderation system
 - [x] Real-time notifications
 - [x] Administrative panel
-- [x] Avatar upload with Cloudinary ✨ **NEW**
 - [x] Role system (user/admin)
 - [x] Modern interface with gradients 
 - [x] Logo animations 
@@ -602,6 +608,7 @@ RideMap implements multiple security layers:
 - [ ] Social sharing
 - [ ] Custom routes/trails
 - [ ] Dark mode
+- [ ] Avatar upload with Cloudinary 
 
 ### 🌟 In the Future
 
