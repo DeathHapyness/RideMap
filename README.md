@@ -497,22 +497,26 @@ ridemap/
 │   │   ├── profile-view.js # Lógica do perfil (NOVO)
 │   │   ├── script.js       # Lógica de animacoes basicas
 │   │   ├── recuperacao-senha.js # Lógica de recuperacao de senha com email 
+│   │   ├── darkmod.js      # Lógica do dark mod
 │   │   └── map.js          # Lógica do mapa
 │   └── 📁 img/
-│       ├──png_c0jcq.png        # Logo principal
-│       ├──wheel(1).png         # Logo da aba navegador
-│       │ default-avatar.png    # Avatar padrão 
 │       ├── 📁 backgrounds/
-│       │   ├── 1234.jpg        # Novo fundo do dashboard 
+│       │   ├── flechas-dashbaord.jpg  # Novo fundo do dashboard 
 │       │   ├──login_Screen.png   # Novo arte da tela de login
 │       │   ├──rosa-ad-pista-menor.jpg  # Nova logo de aba
 │       │   └──rosa-add-pista.jpg   # Fundo novo screen de adicoa de pista
-│       ├──  📁 imgs_reservas/
-│       │    ├──  back_add-pista.png
+│       ├── 📁 imgs_reservas/
+│       ├── 📁 logos/
+│       │    ├── dark_mode_24dp.jpg   #icone de dark mod
+│       │    ├── google-logo-search-new.jpg #icone google 
+│       │    ├── light_mode_24dp.jpg  #icone de light mod
+│       │    ├── logo-principal.png   #nova logo principal     
+│       │    └── nova-logo-aba-prt.png #nova logo para aba do navegador
+│       ├──  📁 imgs_reservas/   # Imgs reserva
+│       │    ├──  back_add-pista.png    
 │       │    ├── back-dsh2.jpg
 │       │    ├── dashboard_bckgrd.jpg
-│       │    ├── dsh_back.jpg
-│       │    └── foto_jao.jpg
+│       │    └── dsh_back.jpg   
 │       └── 📁 logos/
 │            ├── logo-laranja-pronta.png
 │            └── nova-logo-aba-prt.png
@@ -600,10 +604,7 @@ O RideMap implementa múltiplas camadas de segurança:
 - [x] Sistema de moderação
 - [x] Notificações em tempo real
 - [x] Painel administrativo
-- [x] Upload de avatares com Cloudinary ✨ **NOVO**
-- [x] Sistema de roles (user/admin)
-- [x] Interface moderna com gradientes 
-- [x] Animações no logo 
+- [x] Sistema de roles (user/admin) 
 - [x] Modal de perfil responsivo 
 - [x] Sistema de notificações aprimorado ✨ **NOVO**
 - [x] "Minhas Pistas" - ver pistas enviadas ✨ **NOVO**
@@ -621,6 +622,7 @@ O RideMap implementa múltiplas camadas de segurança:
 - [ ] Compartilhamento social
 - [ ] Rotas/trilhas personalizadas
 - [ ] Dark mode
+- [ ] Upload de avatares com Cloudinary
 
 ### 🌟 Futuramente 
 
