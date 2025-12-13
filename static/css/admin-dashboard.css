@@ -25,14 +25,14 @@ body {
 }
 
 .admin-header-content h1 {
-    color: #1a1a1a;
+    color: var(--orange-variant);
     font-size: 1.8rem;
     font-weight: 600;
     margin: 0 0 5px 0;
 }
 
 .admin-header-content p {
-    color: var(--orange-start);
+    color: var(--text);
     margin: 0;
     font-size: 1.5rem;
 }
@@ -44,7 +44,7 @@ body {
 
 .btn-voltar {
     background: var(--text-secondary);
-    color: white;
+    color: var(--bg-primary);
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -100,7 +100,7 @@ body {
 }
 
 .stats-card p {
-    color: #666;
+    color: var(--text);
     font-weight: 500;
     font-size: 0.9rem;
     margin: 0;
@@ -151,7 +151,7 @@ body {
 }
 
 .pista-card p {
-    color: #555;
+    color: var(--text);
     margin: 0 0 8px 0;
     line-height: 1.5;
     font-size: 0.95rem;
