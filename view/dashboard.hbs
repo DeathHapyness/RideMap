@@ -8,16 +8,22 @@
 {{> add-spot-modal}}
 
 <!-- Modal Minhas Pistas -->
-<div class="modal" id="minhasPistasModal">
+<div class="modal" id="minhasPistasModal" style="z-index: 9999;">
   <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5> Minhas Pistas</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="modal-content" style="background-color: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 40px var(--box-shadow);">
+      <div class="modal-header" style="background: var(--gradient-orange); color: white; border-bottom: none; border-radius: 12px 12px 0 0; padding: 20px 30px;">
+        <h2 style="color: white; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 12px;">
+          <i class="fas fa-map-marked-alt"></i>
+          Minhas Pistas
+        </h2>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal" style="filter: brightness(0) invert(1);"></button>
       </div>
       
-      <div class="modal-body" id="minhasPistasLista">
-        <p class="text-center">Carregando...</p>
+      <div class="modal-body" id="minhasPistasLista" style="padding: 30px; background-color: var(--bg-secondary); max-height: 70vh; overflow-y: auto;">
+        <div style="text-align: center; padding: 40px 20px; color: var(--text-secondary);">
+          <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--orange-start); margin-bottom: 15px;"></i>
+          <p style="margin: 0; font-size: 1.1rem;">Carregando suas pistas...</p>
+        </div>
       </div>
     </div>
   </div>
