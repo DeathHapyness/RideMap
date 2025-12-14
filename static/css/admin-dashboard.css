@@ -1,4 +1,3 @@
-
 body {
     
     background: var(--background-admin); 
@@ -82,6 +81,35 @@ body {
 .btn-sair:hover {
     background: var(--input-error);
     color: var(--bg-primary);
+}
+
+.btn-theme {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-theme:hover {
+    background: var(--orange-start);
+    color: white;
+    border-color: var(--orange-start);
+    transform: scale(1.05);
+}
+
+.btn-theme i {
+    transition: transform 0.3s ease;
+}
+
+.btn-theme:hover i {
+    transform: rotate(20deg);
 }
 
 .stats-card {
