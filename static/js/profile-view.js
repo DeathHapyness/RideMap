@@ -66,9 +66,10 @@ if (profileForm) {
             const data = await response.json();
             
             if (data.success) {
-                Swal.fire('Sucesso!', 'Perfil atualizado!', 'success');
+               alert("Perfil atualizado com sucesso!\nRefaça o login para sua nova foto de perfil aparecer");
+                location.reload();
             } else {
-                Swal.fire('Erro', data.error || 'Erro ao atualizar', 'error');
+                alert(data.error || 'Erro ao atualizar perfil');
             }
         } catch (error) {
             Swal.fire('Erro', 'Erro ao atualizar perfil', 'error');
