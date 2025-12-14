@@ -1,5 +1,10 @@
 .modal-adicionar-pista {
     padding: 0 !important;
+    pointer-events: auto !important;
+}
+
+.modal-adicionar-pista * {
+    pointer-events: auto !important;
 }
 
 .modal-adicionar-pista .modal-dialog {
@@ -7,6 +12,7 @@
     max-width: 100%;
     width: 100vw;
     height: 100vh;
+    pointer-events: auto !important;
 }
 
 .modal-adicionar-pista .modal-content {
@@ -53,10 +59,16 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    pointer-events: auto !important;
 }
 
 .modal-adicionar-pista .row {
     margin-bottom: 16px;
+    pointer-events: auto !important;
+}
+
+.modal-adicionar-pista form {
+    pointer-events: auto !important;
 }
 
 .modal-adicionar-pista .form-label {
@@ -66,15 +78,21 @@
     font-size: 1.4rem;
 }
 
+.modal-adicionar-pista .mb-3 {
+    pointer-events: auto !important;
+}
+
 .modal-adicionar-pista .form-control,
 .modal-adicionar-pista .form-select {
     background: var(--bg-primary);
     border: 2px solid var(--border-color);
     border-radius: 8px;
     padding: 12px 16px;
-    color: var(--text);
+    color: var(--text-primary) !important;
     font-size: 0.95rem;
     transition: all 0.2s;
+    pointer-events: auto !important;
+    cursor: text !important;
 }
 
 .modal-adicionar-pista .form-control:focus,
@@ -83,10 +101,25 @@
     border-color: var(--orange-variant);
     box-shadow: 0 0 0 4px var(--orange-glow);
     outline: none;
+    pointer-events: auto !important;
 }
 
 .modal-adicionar-pista .form-control::placeholder {
-    color: #a0aec0;
+    color: #a0aec0 !important;
+    opacity: 0.7;
+}
+
+/* Garantir que o texto apareça em ambos os modos */
+body:not(.darkmode) .modal-adicionar-pista .form-control,
+body:not(.darkmode) .modal-adicionar-pista .form-select {
+    color: #212529 !important;
+    -webkit-text-fill-color: #212529 !important;
+}
+
+body.darkmode .modal-adicionar-pista .form-control,
+body.darkmode .modal-adicionar-pista .form-select {
+    color: #e2e8f0 !important;
+    -webkit-text-fill-color: #e2e8f0 !important;
 }
 
 .modal-adicionar-pista textarea.form-control {
@@ -99,6 +132,24 @@
     border: 2px solid #e2e8f0;
     margin-bottom: 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    touch-action: auto !important;
+}
+
+/* Garantir que o container do mapa não bloqueie nada */
+#mapaPicker .leaflet-container {
+    touch-action: auto !important;
+}
+
+/* Garantir que inputs estejam sempre clicáveis */
+.modal-adicionar-pista input[type="text"],
+.modal-adicionar-pista input[type="file"],
+.modal-adicionar-pista textarea,
+.modal-adicionar-pista select {
+    cursor: text !important;
+    pointer-events: auto !important;
+    user-select: text !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
 }
 
 .area-upload {
@@ -200,11 +251,40 @@
 .modal-adicionar-pista .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: 44px;
     padding-left: 16px;
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
 }
 
 .modal-adicionar-pista .select2-selection__rendered {
     background-color: var(--bg-primary);
+    color: var(--text-primary) !important;
+}
+
+/* Corrigir cor do texto no Select2 dropdown */
+.select2-container--default .select2-results__option {
+    color: var(--text-primary) !important;
+}
+
+.select2-container--default .select2-results__option--highlighted {
+    background-color: var(--orange-start) !important;
+    color: white !important;
+}
+
+/* Garantir que Select2 dropdown não bloqueie inputs */
+.select2-container {
+    z-index: 1070 !important;
+}
+
+.select2-dropdown {
+    z-index: 1071 !important;
+}
+
+.modal-backdrop {
+    z-index: 1059 !important;
+}
+
+/* Corrigir z-index do modal */
+.modal.show {
+    z-index: 1060 !important;
 }
 
 /*Todo: Responsividade melhorar isso depois se necessario */
