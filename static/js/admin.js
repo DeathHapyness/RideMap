@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    carregarEstatisticas();
     carregarPistasPendentes();
 });
 
@@ -126,4 +127,21 @@ async function rejeitarPista(id) {
             Swal.fire('Erro!', 'Não foi possível rejeitar a pista.', 'error');
         }
     }
+}
+
+async function carregarEstatisticas() {
+  try {
+    // Total de usuários
+    const resUsuarios = await fetch('/api/admin');
+    const dataUsuarios = await resUsuarios.json();
+    document.getElementById('totalUsuarios').textContent = dataUsuarios.total;
+    
+    // Total de pistas ativas
+    const resPistas = await fetch('/api/admin/pistas-ativas');
+    const dataPistas = await resPistas.json();
+    document.getElementById('totalPistas').textContent = dataPistas.total;
+    
+  } catch (error) {
+    console.error('Erro ao carregar estatísticas:', error);
+  }
 }
