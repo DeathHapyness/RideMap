@@ -7,6 +7,93 @@
     z-index: 0;
 }
 
+/* Garantir que os marcadores do Leaflet apareçam acima de tudo */
+.leaflet-pane {
+    z-index: 400 !important;
+}
+
+.leaflet-tile-pane {
+    z-index: 200 !important;
+}
+
+.leaflet-overlay-pane {
+    z-index: 400 !important;
+}
+
+.leaflet-shadow-pane {
+    z-index: 500 !important;
+}
+
+.leaflet-marker-pane {
+    z-index: 600 !important;
+}
+
+.leaflet-tooltip-pane {
+    z-index: 650 !important;
+}
+
+.leaflet-popup-pane {
+    z-index: 700 !important;
+}
+
+.leaflet-map-pane canvas,
+.leaflet-map-pane svg {
+    z-index: auto !important;
+}
+
+/* Garantir que os ícones dos marcadores sejam visíveis */
+.leaflet-marker-icon {
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.leaflet-marker-shadow {
+    z-index: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 0.5 !important;
+}
+
+/* Marcador customizado vermelho bonito */
+.custom-marker {
+    background: none !important;
+    border: none !important;
+}
+
+.marker-pin {
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    position: absolute;
+    transform: rotate(-45deg);
+    left: 50%;
+    top: 50%;
+    margin: -15px 0 0 -15px;
+    border: 3px solid white;
+}
+
+.marker-pin::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: white;
+    position: absolute;
+    border-radius: 50%;
+    top: 30%;
+    left: 30%;
+}
+
+/* Hover no marcador */
+.custom-marker:hover .marker-pin {
+    transform: rotate(-45deg) scale(1.1);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.7);
+    transition: all 0.3s ease;
+}
+
 #overlay {
     position: absolute;
     top: 0;
