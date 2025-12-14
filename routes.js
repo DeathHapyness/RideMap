@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const upload = require('./config/multer');
 const pool = require('./db/config');
 const cloudinary = require('./config/cloudinary');
+const { enviarEmailRecuperacao } = require('./email');
 
-//**Verifica se esta logado */
+// ============================================================
+// MIDDLEWARES DE AUTENTICAÇÃO E AUTORIZAÇÃO
+// ============================================================
+
 function isAuthenticated(req, res, next) {
   if (req.session.user) {
     return next();
@@ -20,13 +25,24 @@ function isAuthenticated(req, res, next) {
   res.redirect('/login');
 }
 
-//* Verifica se é ADMIN
 function isAdmin(req, res, next) {
   if (req.session.user && req.session.user.role === 'admin') {
     return next();
   }
   res.status(403).json({ error: 'Acesso negado! Apenas administradores.' });
 }
+
+// ============================================================
+// VALIDAÇÕES E REGEX
+// ============================================================
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)*$/;
+const nomeRegex = /^[a-záàâãéèêíïóôõöúçñ\s]{3,50}$/i;
+const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+// ============================================================
+// ROTAS PÚBLICAS
+// ============================================================
 
 router.get('/', (req, res) => {
   res.render('home', { title: 'RideMap' });
@@ -37,19 +53,41 @@ router.get('/login', (req, res) => {
   res.redirect('/');
 });
 
+router.get('/register', (req, res) => {
+  if (req.session.user) return res.redirect('/dashboard');
+  res.render('home', { title: 'Registro - RideMap', showRegisterModal: true });
+});
+
+router.get('/api/spots', async (req, res) => {
+  try {
+    const [spots] = await pool.query('SELECT * FROM pistas WHERE status = ?', ['aprovada']);
+    res.json(spots);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar pistas' });
+  }
+});
+
+// ============================================================
+// AUTENTICAÇÃO
+// ============================================================
+
 router.post('/login', async (req, res) => {
   try {
-    // VALIDAÇÃO DE EMAIL
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Validação de email
     if (!emailRegex.test(req.body.email)) {
       return res.status(400).json({ error: 'Email inválido' });
     }
 
     const [rows] = await pool.query('SELECT * FROM usuarios WHERE email = ?', [req.body.email]);
-    if (!rows[0]) return res.status(401).json({ error: 'Usuário não encontrado' });
+    if (!rows[0]) {
+      return res.status(401).json({ error: 'Usuário não encontrado' });
+    }
 
     const match = await bcrypt.compare(req.body.senha, rows[0].senha);
-    if (!match) return res.status(401).json({ error: 'Senha incorreta' });
+    if (!match) {
+      return res.status(401).json({ error: 'Senha incorreta' });
+    }
 
     const user = {
       id: rows[0].id,
@@ -67,31 +105,19 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/register', (req, res) => {
-  if (req.session.user) return res.redirect('/dashboard');
-  res.render('home', { title: 'Registro - RideMap', showRegisterModal: true });
-});
-
 router.post('/register', async (req, res) => {
   try {
     const { nome, email, senha } = req.body;
-
-    //! Adicionado REGEX para validação, nao mexer!!!
     
-    //valida formato do email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)*$/;
+    // Validações
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: 'Email inválido,tente novamente por favor' });
+      return res.status(400).json({ error: 'Email inválido, tente novamente por favor' });
     }
     
-    //  valida nome permite apenas letras e espacos
-    const nomeRegex = /^[a-záàâãéèêíïóôõöúçñ\s]{3,50}$/i;
     if (!nomeRegex.test(nome)) {
       return res.status(400).json({ error: 'Nome deve ter 3-50 caracteres (apenas letras)' });
     }
     
-    // valida senha com mínimo 8 caracteres, 1 maiúscula, 1 minúscula, 1 número
-    const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!senhaRegex.test(senha)) {
       return res.status(400).json({ 
         error: 'Senha deve ter no mínimo 8 caracteres, 1 maiúscula, 1 minúscula e 1 número' 
@@ -104,7 +130,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Email já cadastrado' });
     }
 
-    // Hash da senha e limite de caracteres 
+    // Hash da senha
     const hash = await bcrypt.hash(senha, 15);
 
     await pool.query('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)', 
@@ -122,6 +148,53 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+router.post('/recuperar-senha', async (req, res) => {
+  console.log('Rota /recuperar-senha chamada!');
+  console.log('Email recebido:', req.body.email);
+  
+  try {
+    const { email } = req.body;
+    
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Email inválido' });
+    }
+    
+    const [usuario] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [email]);
+    
+    if (!usuario[0]) {
+      return res.json({ 
+        success: true, 
+        message: 'Email enviado, você receberá instruções de como recuperar sua senha.' 
+      });
+    }
+    
+    // Gera token único
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiracao = new Date(Date.now() + 3600000); 
+    
+    await pool.query(
+      'UPDATE usuarios SET reset_token = ?, reset_expira = ? WHERE email = ?',
+      [token, expiracao, email]
+    );
+    
+    // Envia email
+    await enviarEmailRecuperacao(email, token);
+    
+    res.json({ 
+      success: true, 
+      message: 'Email enviado! Verifique sua caixa de entrada.' 
+    });
+    
+  } catch (error) {
+    console.error('Erro:', error);
+    res.status(500).json({ error: 'Erro ao processar solicitação' });
+  }
+});
+
+// ============================================================
+// ROTAS DE USUÁRIO AUTENTICADO
+// ============================================================
+
 router.get('/dashboard', isAuthenticated, (req, res) => {
   res.render('dashboard', { 
     title: 'Dashboard - RideMap',
@@ -133,75 +206,200 @@ router.get('/dashboard', isAuthenticated, (req, res) => {
   });
 });
 
-router.get('/api/spots', async (req, res) => {
-  const [spots] = await pool.query('SELECT * FROM pistas WHERE status = ?', ['aprovada']);
-  res.json(spots);
-});
-
 router.post('/update-avatar', isAuthenticated, upload.single('avatar'), async (req, res) => {
-    try {
-        const userId = req.session.user.id;
-        const avatarUrl = `/uploads/avatars/${req.file.filename}`;
-        
-        await pool.query(
-            'UPDATE usuarios SET avatar_url = ? WHERE id = ?',
-            [avatarUrl, userId]
-        );
-        
-        res.json({ 
-            success: true, 
-            avatar_url: avatarUrl 
-        });
-        
-    } catch (error) {
-        console.error('Erro ao atualizar avatar:', error);
-        res.status(500).json({ 
-            success: false,
-            error: 'Erro ao atualizar avatar' 
-        });
-    }
+  try {
+    const userId = req.session.user.id;
+    const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+    
+    await pool.query(
+      'UPDATE usuarios SET avatar_url = ? WHERE id = ?',
+      [avatarUrl, userId]
+    );
+    
+    res.json({ 
+      success: true, 
+      avatar_url: avatarUrl 
+    });
+    
+  } catch (error) {
+    console.error('Erro ao atualizar avatar:', error);
+    res.status(500).json({ 
+      success: false,
+      error: 'Erro ao atualizar avatar' 
+    });
+  }
 });
 
 router.post('/update-profile', isAuthenticated, async (req, res) => {
-    try {
-        const userId = req.session.user.id;
-        const novoNome = req.body.nome;
-        
-        const nomeRegex = /^[a-záàâãéèêíïóôõöúçñ\s]{3,50}$/i;
-        if (!nomeRegex.test(novoNome)) {
-          return res.status(400).json({ 
-            error: 'Nome deve ter 3-50 caracteres (apenas letras)' 
-          });
-        }
-        
-        await pool.query(
-            'UPDATE usuarios SET nome = ? WHERE id = ?',
-            [novoNome, userId]
-        );
-        
-        req.session.user.nome = novoNome;
-        
-        res.json({
-            success: true,
-            nome: novoNome
-        });
-        
-    } catch (error) {
-        console.error('Erro ao atualizar perfil:', error);
-        res.status(500).json({
-            success: false,
-            error: 'Erro ao atualizar perfil'
-        });
+  try {
+    const userId = req.session.user.id;
+    const novoNome = req.body.nome;
+    
+    if (!nomeRegex.test(novoNome)) {
+      return res.status(400).json({ 
+        error: 'Nome deve ter 3-50 caracteres (apenas letras)' 
+      });
     }
+    
+    await pool.query(
+      'UPDATE usuarios SET nome = ? WHERE id = ?',
+      [novoNome, userId]
+    );
+    
+    req.session.user.nome = novoNome;
+    
+    res.json({
+      success: true,
+      nome: novoNome
+    });
+    
+  } catch (error) {
+    console.error('Erro ao atualizar perfil:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Erro ao atualizar perfil'
+    });
+  }
 });
 
-// ========== ROTAS DE ADMIN ==========
+// ============================================================
+// ROTAS DE PISTAS
+// ============================================================
+
+router.post('/api/pistas/criar', isAuthenticated, async (req, res) => {
+  try {
+    const { nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude } = req.body;
+    const usuarioId = req.session.user.id;
+
+    await pool.query(
+      `INSERT INTO pistas (nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude, usuario_id, status, data_criacao) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
+      [nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude, usuarioId, 'pendente']
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao criar pista' });
+  } 
+});
+
+router.get('/api/minhas-pistas', isAuthenticated, async (req, res) => {
+  try {
+    const usuarioId = req.session.user.id;
+    const [pistas] = await pool.query(
+      'SELECT * FROM pistas WHERE usuario_id = ? ORDER BY data_criacao DESC',
+      [usuarioId]
+    );
+    res.json(pistas);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar suas pistas' });
+  }
+});
+
+// ============================================================
+// ROTAS DE NOTIFICAÇÕES
+// ============================================================
+
+router.get('/api/notificacoes/count', isAuthenticated, async (req, res) => {
+  try {
+    const usuarioId = req.session.user.id;
+    const [resultado] = await pool.query(
+      'SELECT COUNT(*) as total FROM notificacoes WHERE usuario_id = ? AND lida = ?',
+      [usuarioId, 0]
+    );
+    res.json({ total: resultado[0].total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar notificações' });
+  }
+});
+
+router.get('/api/notificacoes', isAuthenticated, async (req, res) => {
+  try {
+    const usuarioId = req.session.user.id;
+    const [notificacoes] = await pool.query(
+      'SELECT * FROM notificacoes WHERE usuario_id = ? ORDER BY data_criacao DESC',
+      [usuarioId]
+    );
+    res.json(notificacoes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar notificações' });
+  }
+});
+
+router.post('/api/notificacoes/marcar-lida/:id', isAuthenticated, async (req, res) => {
+  try {
+    const notificacoesId = req.params.id;
+    const usuarioId = req.session.user.id;
+    
+    await pool.query(
+      'UPDATE notificacoes SET lida = ? WHERE id = ? AND usuario_id = ?',
+      [1, notificacoesId, usuarioId]
+    );
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao marcar notificações como lidas' });
+  }
+});
+
+// ============================================================
+// ROTAS DE ADMINISTRADOR
+// ============================================================
 
 router.get('/admin/dashboard', isAuthenticated, isAdmin, (req, res) => {
   res.render('admin-dashboard', { 
     title: 'Painel Admin - RideMap',
     user: req.session.user
   });
+});
+
+router.get('/api/admin/', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const [result] = await pool.query(`
+      SELECT COUNT(*) as total
+      FROM usuarios
+      WHERE ativo = TRUE
+    `);
+    
+    res.json({ 
+      success: true,
+      total: result[0].total 
+    });
+    
+  } catch (error) {
+    console.error('Erro ao contar usuários ativos:', error);
+    res.status(500).json({ 
+      success: false,
+      error: 'Erro ao contar usuários ativos' 
+    });
+  }
+});
+
+router.get('/api/admin/pistas-ativas', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const [result] = await pool.query(`
+      SELECT COUNT(*) as total
+      FROM pistas
+      WHERE status = 'aprovada'
+    `);
+    
+    res.json({ 
+      success: true,
+      total: result[0].total 
+    });
+    
+  } catch (error) {
+    console.error('Erro ao contar pistas ativas:', error);
+    res.status(500).json({ 
+      success: false,
+      error: 'Erro ao contar pistas ativas' 
+    });
+  }
 });
 
 router.get('/api/admin/pistas-pendentes', isAuthenticated, isAdmin, async (req, res) => {
@@ -279,156 +477,8 @@ router.post('/api/admin/rejeitar-pista/:id', isAuthenticated, isAdmin, async (re
   }
 });
 
-router.post('/api/pistas/criar', isAuthenticated, async (req, res) => {
-  try {
-    const { nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude } = req.body;
-    const usuarioId = req.session.user.id;
-
-    await pool.query(
-      'INSERT INTO pistas (nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude, usuario_id, status, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())',
-      [nome, cidade, estado, tipo, dificuldade, descricao, latitude, longitude, usuarioId, 'pendente']
-    );
-
-    res.json({ success: true });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao criar pista' });
-  } 
-});
-
-//TODO: Rota para listar usuarios ativos para admin terminar isso 
-router.get('/api/admin/usuarios-ativos', isAuthenticated, isAdmin, async (req, res) => {
-  try {
-    const [usuarios] = await pool.query(`
-      SELECT 
-        id,
-        nome,
-        email,
-        role,
-        data_criacao
-      FROM usuarios
-      WHERE ativo = TRUE
-      ORDER BY data_criacao DESC
-    `);
-    
-    res.json(usuarios);
-  } catch (error) {
-    console.error('Erro ao buscar usuários ativos:', error);
-    res.status(500).json({ error: 'Erro ao buscar usuários ativos' });
-  }
-});
-
-//**Logica de notificacoes para usuarios */
-
-router.get('/api/notificacoes/count', isAuthenticated, async (req, res) => {
-  try {
-    const usuarioId = req.session.user.id;
-    const [resultado] = await pool.query(
-      'SELECT COUNT(*) as total FROM notificacoes WHERE usuario_id = ? AND lida = ?',
-      [usuarioId, 0]
-    );
-    res.json({ total: resultado[0].total });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao buscar notificações' });
-  }
-});
-
-router.get('/api/notificacoes', isAuthenticated, async (req, res) => {
-  try {
-    const usuarioId = req.session.user.id;
-    const [notificacoes] = await pool.query(
-      'SELECT * FROM notificacoes WHERE usuario_id = ? ORDER BY data_criacao DESC',
-      [usuarioId]
-    );
-    res.json(notificacoes);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao buscar notificações' });
-  }
-});
-
-router.post('/api/notificacoes/marcar-lida/:id', isAuthenticated, async (req, res) => {
-  try {
-    const notificacoesId = req.params.id;
-    const usuarioId = req.session.user.id;
-    await pool.query(
-      'UPDATE notificacoes SET lida = ? WHERE id = ? AND usuario_id = ?',
-      [1, notificacoesId ,usuarioId]
-    );
-    res.json({ success: true });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao marcar notificações como lidas' });
-  }
-});
-
-//* Rota para exibir pitas de usuarios (minhas pistas)
-router.get('/api/minhas-pistas', isAuthenticated, async (req, res) => {
-  try {
-    const usuarioId = req.session.user.id;
-    const [pistas] = await pool.query(
-      'SELECT * FROM pistas WHERE usuario_id = ? ORDER BY data_criacao DESC',
-      [usuarioId]
-    );
-    res.json(pistas);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao buscar suas pistas' });
-  }
-});
-
-//! Rota para email nao mexer 
-
-const { enviarEmailRecuperacao } = require('./email');
-const crypto = require('crypto');
-
-router.post('/recuperar-senha', async (req, res) => {
-   console.log('Rota /recuperar-senha chamada!');
-    console.log('Email recebido:', req.body.email);
-    try {
-        const { email } = req.body;
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({ error: 'Email inválido' });
-        }
-        
-        const [usuario] = await pool.query(
-            'SELECT id FROM usuarios WHERE email = ?', 
-            [email]
-        );
-        
-        if (!usuario[0]) {
-            return res.json({ 
-                success: true, 
-                message: 'Email enviado, você receberá instruções de como recuperar sua senha.' 
-            });
-        }
-        
-        // Gera token único
-        const token = crypto.randomBytes(32).toString('hex');
-        const expiracao = new Date(Date.now() + 3600000); 
-        
-        await pool.query(
-            'UPDATE usuarios SET reset_token = ?, reset_expira = ? WHERE email = ?',
-            [token, expiracao, email]
-        );
-        
-        // Envia email
-        await enviarEmailRecuperacao(email, token);
-        
-        res.json({ 
-            success: true, 
-            message: 'Email enviado! Verifique sua caixa de entrada.' 
-        });
-        
-    } catch (error) {
-        console.error('Erro:', error);
-        res.status(500).json({ error: 'Erro ao processar solicitação' });
-    }
-});
-
-//* ====== Configuragacao cloudinary =======
+// ============================================================
+// EXPORTS
+// ============================================================
 
 module.exports = router;
