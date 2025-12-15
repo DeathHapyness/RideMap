@@ -13,10 +13,10 @@
                         </a> 
                     </div>
                     <span><strong>ou use seu e-mail para cadastro</strong></span>
-                    <input type="text" placeholder="Nome" id="registerName">
-                    <input type="email" placeholder="Email" id="registerEmail">
-                    <input type="password" placeholder="Senha" id="registerPassword">
-                    <button type="button" class="btn btn-outline-light mb-2" style="border-color: #00000048;" onclick="handleRegister()">Cadastrar</button>
+                    <input type="text" placeholder="Nome" id="registerName" autocomplete="name">
+                    <input type="email" placeholder="Email" id="registerEmail" autocomplete="email">
+                    <input type="password" placeholder="Senha" id="registerPassword" autocomplete="new-password">
+                    <button type="button" id="btnCadastrar" class="btn btn-outline-light mb-2" style="border-color: #00000048;">Cadastrar</button>
                 </form>
             </div>
             <div class="form-container sign-in">
@@ -30,8 +30,8 @@
                         </a> 
                     </div>
                     <span><strong>ou use seu e-mail e senha</strong></span>
-                    <input type="email" placeholder="Email" id="loginEmail">
-                    <input type="password" placeholder="Senha" id="loginPassword">
+                    <input type="email" placeholder="Email" id="loginEmail" autocomplete="email">
+                    <input type="password" placeholder="Senha" id="loginPassword" autocomplete="current-password">
                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalRecuperarSenha">Esqueceu sua senha?</a>
                     <button type="button" id="bntEntrar" class="btn btn-outline-light mb-2" style="border-color: #00000048;" onclick="handleLogin()">Entrar</button>
                     <button type="button" id="closeLogin" class="btn btn-outline-light mb-2" style="border-color: #00000048;">Cancelar</button>
