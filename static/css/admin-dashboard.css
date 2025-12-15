@@ -1,22 +1,29 @@
 body {
-    
     background: var(--background-admin); 
     min-height: 100vh;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 .admin-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .admin-header {
     background: var(--card-bg); 
-    padding: 30px;
-    border-radius: 3px;
-    margin-bottom: 30px;
-    box-shadow: 0 1px 2px  var(--box-shadow);
+    padding: 25px 40px;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: 0 2px 4px var(--box-shadow);
     border-bottom: 3px solid var(--orange-start);
     display: flex;
     justify-content: space-between;
@@ -139,6 +146,7 @@ body {
     border: none;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     border-radius: 3px;
+    width: 100%;
 }
 
 .card-header {
@@ -219,5 +227,282 @@ body {
 
 .btn-rejeitar:hover {
     background: var(--input-error);
+}
+
+/* Barra de navegação */
+.admin-nav-bar {
+    background: var(--bg-primary);
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    box-shadow: 0 2px 10px var(--box-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.admin-nav-btn {
+    flex: 1;
+    max-width: 250px;
+    background: transparent;
+    border: none;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+    border-bottom: 3px solid transparent;
+    position: relative;
+}
+
+.admin-nav-btn i {
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.admin-nav-btn span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.admin-nav-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--orange-start);
+}
+
+.admin-nav-btn:hover i {
+    transform: scale(1.1);
+}
+
+.admin-nav-btn.active {
+    color: var(--orange-start);
+    border-bottom-color: var(--orange-start);
+    background: var(--bg-secondary);
+}
+
+.admin-nav-btn.active i {
+    color: var(--orange-variant);
+}
+
+/* Container do conteúdo */
+.admin-content {
+    padding: 30px 40px;
+    min-height: calc(100vh - 220px);
+    max-width: 100%;
+}
+
+/* Views */
+.admin-view {
+    display: none;
+}
+
+.admin-view.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .admin-nav-bar {
+        flex-wrap: wrap;
+    }
+    
+    .admin-nav-btn {
+        flex: 1 1 50%;
+        max-width: none;
+        padding: 15px 10px;
+    }
+    
+    .admin-nav-btn i {
+        font-size: 1.2rem;
+    }
+    
+    .admin-nav-btn span {
+        font-size: 0.8rem;
+    }
+    
+    .admin-header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .admin-content {
+        padding: 15px 20px;
+    }
+}
+
+/* ==================== TABELA DE PISTAS ==================== */
+#tabelaPistas {
+    margin-bottom: 0;
+}
+
+#tabelaPistas thead {
+    background: var(--card-bg);
+    border-bottom: 2px solid var(--orange-start);
+}
+
+#tabelaPistas thead th {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 15px 12px;
+    border: none;
+}
+
+#tabelaPistas tbody td {
+    color: var(--text);
+    padding: 12px;
+    vertical-align: middle;
+    border-color: var(--border-color, rgba(0,0,0,0.1));
+}
+
+#tabelaPistas tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+#tabelaPistas tbody tr:hover {
+    background: var(--hover-bg, rgba(255, 107, 53, 0.05));
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.status-badge.pendente {
+    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+    color: #000;
+}
+
+.status-badge.ativa {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: #fff;
+}
+
+.status-badge.rejeitada {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: #fff;
+}
+
+/* Botões de Ação na Tabela */
+.btn-action {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 2px;
+}
+
+.btn-action i {
+    font-size: 0.85rem;
+}
+
+.btn-action.btn-aprovar {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.btn-action.btn-aprovar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.btn-action.btn-rejeitar {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+}
+
+.btn-action.btn-rejeitar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.btn-action.btn-ver {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+}
+
+.btn-action.btn-ver:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.btn-action.btn-editar {
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    color: white;
+}
+
+.btn-action.btn-editar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
+}
+
+/* Search e Filter */
+.card-header .form-control,
+.card-header .form-select {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color, #dee2e6);
+    color: var(--text);
+}
+
+.card-header .form-control:focus,
+.card-header .form-select:focus {
+    border-color: var(--orange-start);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+}
+
+/* Tabela Responsiva */
+@media (max-width: 992px) {
+    #tabelaPistas thead th {
+        font-size: 0.75rem;
+        padding: 10px 8px;
+    }
+    
+    #tabelaPistas tbody td {
+        font-size: 0.85rem;
+        padding: 10px 8px;
+    }
+    
+    .btn-action {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+    
+    .card-header .d-flex {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .card-header .form-control,
+    .card-header .form-select {
+        width: 100% !important;
+    }
 }
 
