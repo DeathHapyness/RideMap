@@ -1,3 +1,4 @@
+{{! filepath: /home/death_hapyness/projetos/ridemap3/view/admin-dashboard.hbs }}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,62 +11,210 @@
     <link rel="stylesheet" href="/static/css/admin-dashboard.css">
 </head>
 <body>
-   <div class="admin-header">
-    <div class="admin-header-content">
-        <h1><i class="fas fa-shield-alt"></i> Painel Administrativo - RideMap</h1>
-        <p>Olá, <strong>{{user.nome}}</strong></p>
-    </div>
-    <div class="admin-header-actions">
-        <button id="theme-switch" class="btn-theme" title="Alternar tema">
-            <i class="fas fa-moon"></i>
-        </button>
-        <a href="/dashboard" class="btn-voltar">
-            <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
-        </a>
-        <a href="/logout" class="btn-sair">
-            <i class="fas fa-sign-out-alt"></i> Sair
-        </a>
-    </div>
-</div>
+    <div class="admin-container">
+        
+        <!-- Header do Admin -->
+        <div class="admin-header">
+            <div class="admin-header-content">
+                <h1><i class="fas fa-shield-alt"></i> Painel Administrativo - RideMap</h1>
+                <p>Olá, <strong>{{user.nome}}</strong></p>
+            </div>
+            <div class="admin-header-actions">
+                <button id="theme-switch" class="btn-theme" title="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="/dashboard" class="btn-voltar">
+                    <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+                </a>
+                <a href="/logout" class="btn-sair">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </a>
+            </div>
+        </div>
 
-<!-- UMA row para TODOS os cards -->
-<!--TERMINAR DE FAZER LOGICA PARA FUCIONAMENTO DE NOVOS CARDS-->
-<div class="row mb-4">
-    <!--Usuários -->
-    <div class="col-md-4">
-        <div class="stats-card" id="cardUsuarios">
-            <i class="fas fa-users fa-2x text-primary mb-2"></i>
-            <div class="stats-number" id="totalUsuarios">0</div>
-            <p>Total de Usuários</p>
+        <!-- Barra de navegação -->
+        <div class="admin-nav-bar">
+            <button class="admin-nav-btn active" data-view="estatisticas">
+                <i class="fas fa-chart-line"></i>
+                <span>Estatísticas</span>
+            </button>
+            <button class="admin-nav-btn" data-view="moderacao">
+                <i class="fas fa-tasks"></i>
+                <span>Pistas</span>
+            </button>
+            <button class="admin-nav-btn" data-view="usuarios">
+                <i class="fas fa-users"></i>
+                <span>Usuários</span>
+            </button>
+            <button class="admin-nav-btn" data-view="chamados">
+                <i class="fas fa-cog"></i>
+                <span>Chamados</span>
+            </button>
+            <button class="admin-nav-btn" data-view="avisos">
+                <i class="fas fa-ticket"></i>
+                <span>Avisos</span>
+            </button>
+        </div>
+
+        <!-- Container do conteúdo -->
+        <div class="admin-content">
+            
+            <!-- View: Estatísticas -->
+            <div class="admin-view active" id="view-estatisticas">
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="stats-card">
+                            <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                            <div class="stats-number" id="totalUsuarios">0</div>
+                            <p>Total de Usuários</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-card">
+                            <i class="fas fa-map-marker-alt fa-2x text-success mb-2"></i>
+                            <div class="stats-number" id="totalPistas">0</div>
+                            <p>Total de Pistas</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-card">
+                            <i class="fas fa-clock fa-2x text-warning mb-2"></i>
+                            <div class="stats-number" id="totalPendentes">0</div>
+                            <p>Pistas Pendentes</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 10px;">
+                        <div class="stats-card">
+                            <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2"></i>
+                            <div class="stats-number" id="totalDenuncias">0</div>
+                            <p>Denúncias</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 10px;">
+                        <div class="stats-card">
+                            <i class="fas fa-ticket-alt fa-2x text-primary mb-2"></i>
+                            <div class="stats-number" id="totalChamados">0</div>
+                            <p>Chamados Abertos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Moderação de Pistas -->
+            <div class="admin-view" id="view-moderacao">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                        <h3 class="mb-2 mb-md-0"><i class="fas fa-map-marked-alt"></i> Gerenciamento de Pistas</h3>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <input type="text" id="searchPistas" class="form-control form-control-sm" placeholder="🔍 Buscar pista..." style="max-width: 200px;">
+                            <select id="filterStatus" class="form-select form-select-sm" style="max-width: 150px;">
+                                <option value="todas">Todas</option>
+                                <option value="pendente" selected>Pendentes</option>
+                                <option value="ativa">Ativas</option>
+                                <option value="rejeitada">Rejeitadas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="tabelaPistas">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Localização</th>
+                                        <th>Tipo</th>
+                                        <th>Status</th>
+                                        <th>Criado por</th>
+                                        <th>Data</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaPistasTabela">
+                                    <tr>
+                                        <td colspan="8" class="text-center py-4">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Carregando...</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Usuários -->
+            <div class="admin-view" id="view-usuarios">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                        <h3 class="mb-2 mb-md-0"><i class="fas fa-users"></i> Gestão de Usuários</h3>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <input type="text" id="searchUsuarios" class="form-control form-control-sm" placeholder="🔍 Buscar usuário..." style="max-width: 200px;">
+                            <select id="filterRole" class="form-select form-select-sm" style="max-width: 150px;">
+                                <option value="todos">Todos</option>
+                                <option value="user">Usuários</option>
+                                <option value="admin">Admins</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="tabelaUsuarios">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Pistas</th>
+                                        <th>Cadastro</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaUsuariosTabela">
+                                    <tr>
+                                        <td colspan="8" class="text-center py-4">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Carregando...</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Chamados -->
+            <div class="admin-view" id="view-chamados">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-cog"></i> Gestão de Chamados</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-center text-muted">Em desenvolvimento...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Avisos -->
+            <div class="admin-view" id="view-avisos">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-ticket"></i> Sistema de Avisos</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-center text-muted">Em desenvolvimento...</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-    <!--Pistas -->
-    <div class="col-md-4">
-        <div class="stats-card">
-            <i class="fas fa-map-marker-alt fa-2x text-success mb-2"></i>
-            <div class="stats-number" id="totalPistas">0</div>
-            <p>Total de Pistas</p>
-        </div>
-    </div>
-    <!--Pistas Pendentes-->
-    <div class="col-md-4">
-        <div class="stats-card">
-            <i class="fas fa-clock fa-2x text-warning mb-2"></i>
-            <div class="stats-number" id="totalPendentes">0</div>
-            <p>Pistas Pendentes</p>
-        </div>
-    </div>
-</div>
-<!-- -->
-<div class="card">
-    <div class="card-header">
-        <h3><i class="fas fa-list"></i> Pistas Aguardando Moderação</h3>
-    </div>
-    <div class="card-body" id="listaPistas">
-        <p class="text-center">Carregando...</p>
-    </div>
-</div>
-</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
