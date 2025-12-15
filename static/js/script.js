@@ -1,3 +1,4 @@
+console.log('🚀 script.js CARREGADO!');
 const explorarSC = document.getElementById('btnExplorar');
 const overley = document.getElementById('overlay-conteudo');
 const overlay = document.getElementById('overlay');
@@ -65,6 +66,13 @@ if (loginBtn && container) {
     });
 }
 
+// Função para abrir o modal de registro
+function handleRegister() {
+    if (container) {
+        container.classList.add("active");
+    }
+}
+
 async function verificarUsuario(email, senha) {
     try {
         const response = await fetch('/login', {
@@ -129,75 +137,7 @@ if (btnEntrar) {
             return;
         }
 
-        //*login com gloogle 
-            const { Client, Account } = Appwrite;
-
-            require('dotenv').config();
-        const sdk = require('node-appwrite');
-
-        const client = new sdk.Client()
-        .setEndpoint(process.env.APPWRITE_ENDPOINT)
-        .setProject(process.env.APPWRITE_PROJECT_ID)
-
-        //*Função para fazer login com Google
-        function loginWithGoogle() {
-            try {
-                const successUrl = window.location.origin + '/success.html';
-                const failureUrl = window.location.origin + '/error.html';
-                
-                account.createOAuth2Session(
-                    'google',
-                    successUrl,
-                    failureUrl
-                );
-            } catch (error) {
-                console.error('Erro ao iniciar login:', error);
-                alert('Erro ao tentar fazer login com Google');
-            }
-        }
-
-        // Verificar se usuário está logado ao carregar a página
-        async function checkAuth() {
-            try {
-                const user = await account.get();
-                showUserInfo(user);
-            } catch (error) {
-                showLoginButton();
-            }
-        }
-
-        // Mostrar informações do usuário
-        function showUserInfo(user) {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('userSection').style.display = 'block';
-            
-            document.getElementById('userName').textContent = user.name;
-            document.getElementById('userEmail').textContent = user.email;
-            document.getElementById('userId').textContent = user.$id;
-        }
-
-        // Mostrar botão de login
-        function showLoginButton() {
-            document.getElementById('loginSection').style.display = 'block';
-            document.getElementById('userSection').style.display = 'none';
-        }
-
-        // Fazer logout
-        async function logout() {
-            try {
-                await account.deleteSession('current');
-                showLoginButton();
-                alert('Logout realizado com sucesso!');
-            } catch (error) {
-                console.error('Erro ao fazer logout:', error);
-                alert('Erro ao fazer logout');
-            }
-        }
-
-        // Verificar autenticação quando a página carregar
-        window.addEventListener('DOMContentLoaded', checkAuth);
-
-        // Salvar no localStorage (opcional, pois já está na sessão)
+        // Salvar no localStorage
         const userData = {
             id: usuarioEncontrado.id,
             nome: usuarioEncontrado.nome,
@@ -229,24 +169,10 @@ if (btnEntrar) {
     });
 }
 
-require('dotenv').config();
-const sdk = require('node-appwrite');
-
-const client = new sdk.Client()
-    .setEndpoint(process.env.APPWRITE_ENDPOINT)
-    .setProject(process.env.APPWRITE_PROJECT_ID)
-const account = new Appwrite.Account(client);
-
-// Função global para login com Google
+// Função global para login com Google (comentada - implementar com Appwrite no futuro)
 function loginWithGoogle() {
-    try {
-        const successUrl = window.location.origin + '/success.html';
-        const failureUrl = window.location.origin + '/error.html';
-        account.createOAuth2Session('google', successUrl, failureUrl);
-    } catch (error) {
-        console.error('Erro ao iniciar login:', error);
-        alert('Erro ao tentar fazer login com Google');
-    }
+    alert('Login com Google será implementado em breve!');
+    // TODO: Implementar OAuth2 com Appwrite
 }
 
 // Função global para login manual
@@ -311,22 +237,37 @@ function handleLogin() {
     });
 }
 
-const btnCadastrar = document.querySelector('.sign-up form button[type="button"]');
-if (btnCadastrar) {
-    btnCadastrar.addEventListener('click', async function(e) {
+// Usar event delegation no documento para capturar cliques no botão
+console.log('Event delegation registrado para cadastro');
+
+document.addEventListener('click', async function(e) {
+    console.log('Clique detectado em:', e.target.id, e.target);
+    
+    // Verificar se o clique foi no botão de cadastrar
+    if (e.target && e.target.id === 'btnCadastrar') {
         e.preventDefault();
+        console.log('✅ Botão cadastrar clicado!');
         
-        const nomeInput = document.querySelector('.sign-up input[placeholder*="Nome"]');
-        const emailInput = document.querySelector('.sign-up input[type="email"]');
-        const senhaInput = document.querySelector('.sign-up input[type="password"]');
+        const nomeInput = document.getElementById('registerName');
+        const emailInput = document.getElementById('registerEmail');
+        const senhaInput = document.getElementById('registerPassword');
         
-        if (!nomeInput || !emailInput || !senhaInput) return;
+        console.log('Inputs encontrados:', { nomeInput, emailInput, senhaInput });
+        
+        if (!nomeInput || !emailInput || !senhaInput) {
+            console.error('Inputs não encontrados!');
+            alert('Erro: Campos não encontrados!');
+            return;
+        }
         
         const nome = nomeInput.value;
         const email = emailInput.value;
         const senha = senhaInput.value;
 
+        console.log('Valores capturados:', { nome, email, senha });
+
         if (!nome || !email || !senha) {
+            console.warn('Campos vazios!');
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     title: 'Atenção',
@@ -338,6 +279,8 @@ if (btnCadastrar) {
             }
             return;
         }
+
+        console.log('Enviando requisição para /register...');
 
         if (typeof Swal !== 'undefined') {
             Swal.fire({
@@ -359,7 +302,9 @@ if (btnCadastrar) {
                 body: JSON.stringify({ nome, email, senha })
             });
 
+            console.log('Resposta recebida:', response.status);
             const data = await response.json();
+            console.log('Dados:', data);
 
             if (response.ok) {
                 if (typeof Swal !== 'undefined') {
@@ -396,8 +341,8 @@ if (btnCadastrar) {
                 alert('Não foi possível criar a conta. Tente novamente.');
             }
         }
-    });
-}
+    }
+});
 
 function loadUserProfile() {
     try {
