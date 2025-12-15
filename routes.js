@@ -418,6 +418,114 @@ router.get('/api/admin/pistas-pendentes', isAuthenticated, isAdmin, async (req, 
   }
 });
 
+// Nova rota: buscar TODAS as pistas (pendentes, ativas, rejeitadas)
+router.get('/api/admin/todas-pistas', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const [pistas] = await pool.query(`
+      SELECT 
+        p.id,
+        p.nome,
+        CONCAT(p.cidade, ' - ', p.estado) as localizacao,
+        p.cidade,
+        p.estado,
+        p.latitude,
+        p.longitude,
+        p.tipo,
+        p.dificuldade,
+        p.status,
+        p.data_criacao as criado_em,
+        u.nome as usuario_nome
+      FROM pistas p
+      LEFT JOIN usuarios u ON p.usuario_id = u.id
+      ORDER BY 
+        CASE p.status 
+          WHEN 'pendente' THEN 1 
+          WHEN 'aprovada' THEN 2 
+          WHEN 'ativa' THEN 2
+          WHEN 'rejeitada' THEN 3 
+        END,
+        p.data_criacao DESC
+    `);
+    
+    // Normalizar status 'aprovada' para 'ativa'
+    const pistasNormalizadas = pistas.map(pista => ({
+      ...pista,
+      status: pista.status === 'aprovada' ? 'ativa' : pista.status
+    }));
+    
+    res.json({ success: true, pistas: pistasNormalizadas });
+  } catch (error) {
+    console.error('Erro ao buscar todas as pistas:', error);
+    res.status(500).json({ success: false, error: 'Erro ao buscar pistas' });
+  }
+});
+
+// Buscar todos os usuários
+router.get('/api/admin/todos-usuarios', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const [usuarios] = await pool.query(`
+      SELECT 
+        u.id,
+        u.nome,
+        u.email,
+        u.avatar_url,
+        u.role,
+        u.ativo,
+        u.data_criacao,
+        u.ultima_atividade,
+        COUNT(p.id) as total_pistas
+      FROM usuarios u
+      LEFT JOIN pistas p ON u.id = p.usuario_id
+      GROUP BY u.id
+      ORDER BY u.data_criacao DESC
+    `);
+    res.json({ success: true, usuarios });
+  } catch (error) {
+    console.error('Erro ao buscar usuários:', error);
+    res.status(500).json({ success: false, error: 'Erro ao buscar usuários' });
+  }
+});
+
+// Desativar usuário
+router.post('/api/admin/desativar-usuario/:id', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const usuarioId = req.params.id;
+    const { motivo } = req.body;
+    
+    if (!motivo) {
+      return res.status(400).json({ error: 'Motivo é obrigatório' });
+    }
+    
+    // Apenas atualiza o status ativo (coluna motivo_desativacao não existe)
+    await pool.query(
+      'UPDATE usuarios SET ativo = ? WHERE id = ?',
+      [false, usuarioId]
+    );
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Erro ao desativar usuário:', error);
+    res.status(500).json({ error: 'Erro ao desativar usuário' });
+  }
+});
+
+// Ativar usuário
+router.post('/api/admin/ativar-usuario/:id', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const usuarioId = req.params.id;
+    
+    await pool.query(
+      'UPDATE usuarios SET ativo = ? WHERE id = ?',
+      [true, usuarioId]
+    );
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Erro ao ativar usuário:', error);
+    res.status(500).json({ error: 'Erro ao ativar usuário' });
+  }
+});
+
 router.post('/api/admin/aprovar-pista/:id', isAuthenticated, isAdmin, async (req, res) => {
   try {
     const pistaId = req.params.id;
