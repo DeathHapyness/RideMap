@@ -23,6 +23,7 @@
     "@getbrevo/brevo": "^3.0.1",
     "@sendgrid/mail": "^8.1.6",
     "bcrypt": "^6.0.0",
+    "bootstrap-icons": "^1.13.1",
     "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
@@ -33,6 +34,7 @@
     "mssql": "^11.0.1",
     "multer": "^2.0.2",
     "mysql2": "^3.15.2",
+    "node-appwrite": "^21.0.0",
     "nodemailer": "^7.0.10",
     "resend": "^6.2.2"
   },
