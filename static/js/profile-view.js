@@ -32,7 +32,8 @@ if (perfilAvatarInput) {
             const data = await response.json();
             
             if (data.success) {
-                perfilAvatar.src = data.avatar_url;
+                perfilAvatar.src = data.avatar_url + '?t=' + Date.now();
+                
                 Swal.fire('Sucesso!', 'Foto atualizada!', 'success');
             } else {
                 Swal.fire('Erro', data.error || 'Erro ao atualizar foto', 'error');
@@ -66,7 +67,7 @@ if (profileForm) {
             const data = await response.json();
             
             if (data.success) {
-               alert("Perfil atualizado com sucesso!\nRefaça o login para sua nova foto de perfil aparecer");
+               alert("Perfil atualizado com sucesso!");
                 location.reload();
             } else {
                 alert(data.error || 'Erro ao atualizar perfil');
