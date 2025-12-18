@@ -585,6 +585,33 @@ router.post('/api/admin/rejeitar-pista/:id', isAuthenticated, isAdmin, async (re
   }
 });
 
+//**Rota de filtros */
+router.get('/api/pistas/filtrar', async (req, res) => {
+  try {
+    const { tipo, dificuldade, cidade, estado } = req.query;
+    let query = 'SELECT * FROM pistas WHERE status = ?';
+    const params = ['aprovada'];
+
+    if (tipo) {
+      query += ' AND tipo = ?';
+      params.push(tipo);
+    }
+    if (dificuldade) {
+      query += ' AND dificuldade = ?';
+      params.push(dificuldade);
+    }
+    if (estado) {
+      query += ' AND estado = ?';
+      params.push(estado);
+    }
+    const [pistas] = await pool.query(query, params);
+    res.json(pistas);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao filtrar pistas' });
+  }
+});
+
 // ============================================================
 // EXPORTS
 // ============================================================
