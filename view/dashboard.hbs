@@ -7,12 +7,120 @@
 {{!-- Modal Adicionar Pista --}}
 {{> add-spot-modal}}
 
+{{!-- Modal de Filtros --}}
+<div class="modal-filtros" id="filtrosModal" style="display: none;">
+    <div class="modal-filtros-content">
+        <div class="modal-filtros-header">
+            <h3><i class="fas fa-filter"></i> Filtros</h3>
+            <button class="btn-close-filtros" id="fecharFiltros">×</button>
+        </div>
+        <div class="modal-filtros-body">
+            <p>Ajuste os filtros para encontrar pistas que atendam às suas preferências:</p>
+            <form id="formFiltros">
+                <div class="form-group">
+                    <label for="dificuldade">Dificuldade:</label>
+                    <select id="dificuldade" class="form-label"  style="height: 35px; width: 100px; border-radius: 5px; padding: 5px;">
+                        <option value="" style="color: var(--text);" >Todas</option>
+                        <option value="iniciante" style="color: var(--text);" >Iniciante</option>
+                        <option value="intermediario" style="color: var(--text);" >Intermediário</option>
+                        <option value="avancado" style="color: var(--text);" >Avançado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tipo">Tipo:</label>
+                    <select id="tipo" class="form-label" style="height: 35px; width: 100px; border-radius: 5px; padding: 5px;">
+                        <option value="" style="color: var(--text);" >Todos</option>
+                        <option value="estrada" style="color: var(--text);" >Cimento</option>
+                        <option value="trilha" style="color: var(--text);" >Madeira</option>
+                        <option value="misto" style="color: var(--text);" >Misto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                            <label for="spotState" class="form-label" style="height: 35px; width: 100px; border-radius: 5px; padding: 5px;">Estado</label>
+                            <select class="form-select" id="spotState" required>
+                                <option value="">Selecione...</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                                <option value="outros">OUTRO PAIS</option>
+                            </select>
+                        </div>
+                <div class="filter-group">
+                <h3>⭐ Avaliação Mínima</h3>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="star5" name="rating">
+                        <label for="star5">⭐⭐⭐⭐⭐ (5 estrelas)</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="star4" name="rating">
+                        <label for="star4">⭐⭐⭐⭐ (4+ estrelas)</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="star3" name="rating">
+                        <label for="star3">⭐⭐⭐ (3+ estrelas)</label>
+                    </div>
+                </div>
+            </div>
+                    <div class="range-container">
+                        <label>Distância Máxima</label>
+                        
+                        <div class="range-values">
+                            <span>0 km</span>
+                            <span id="distanceValue">50 km</span>
+                        </div>
+                        
+                        <!-- AQUI: O SLIDER/RANGE -->
+                        <input 
+                            type="range" 
+                            id="distance" 
+                            min="0" 
+                            max="100" 
+                            value="50" 
+                            oninput="updateDistance(this.value)"
+                        >
+                    </div>
+                  <script>
+                  function updateDistance(value) {
+                      document.getElementById('distanceValue').textContent = value + ' km';
+                  }
+                  </script>
+                <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Modal Minhas Pistas -->
 <div class="modal" id="minhasPistasModal" style="z-index: 9999;">
   <div class="modal-dialog modal-xl">
-    <div class="modal-content" style="background-color: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 40px var(--box-shadow);">
-      <div class="modal-header" style="background: var(--gradient-orange); color: white; border-bottom: none; border-radius: 12px 12px 0 0; padding: 20px 30px;">
-        <h2 style="color: white; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 12px;">
+    <div class="modal-content" style="background-color: var(--bg-primary); color: var(--text); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 40px var(--box-shadow);">
+      <div class="modal-header" style="background: var(--gradient-orange); color: var(--bg-primary); border-bottom: none; border-radius: 12px 12px 0 0; padding: 20px 30px;">
+        <h2 style="color: var(--text); font-weight: 600; margin: 0; display: flex; align-items: center; gap: 12px;">
           <i class="fas fa-map-marked-alt"></i>
           Minhas Pistas
         </h2>
@@ -20,7 +128,7 @@
       </div>
       
       <div class="modal-body" id="minhasPistasLista" style="padding: 30px; background-color: var(--bg-secondary); max-height: 70vh; overflow-y: auto;">
-        <div style="text-align: center; padding: 40px 20px; color: var(--text-secondary);">
+        <div style="text-align: center; padding: 40px 20px; color: var(--text);">
           <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--orange-start); margin-bottom: 15px;"></i>
           <p style="margin: 0; font-size: 1.1rem;">Carregando suas pistas...</p>
         </div>
