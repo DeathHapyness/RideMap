@@ -54,7 +54,84 @@ document.addEventListener('DOMContentLoaded', function() {
         hamburgerBtn.style.visibility = 'visible';
         hamburgerBtn.style.opacity = '1';
     }
+
+    const filterBtn = document.querySelector('.filter-btn');
+    if (filterBtn) {
+        filterBtn.style.display = 'block';
+        filterBtn.style.visibility = 'visible';
+        filterBtn.style.opacity = '1';
+    }
+
+    // Event listener para o botão de filtros
+    const filtrosBtn = document.getElementById('filtrosBtn');
+    const filtrosModal = document.getElementById('filtrosModal');
+    const fecharFiltros = document.getElementById('fecharFiltros');
     
+    if (filtrosBtn && filtrosModal) {
+        // Abrir modal
+        filtrosBtn.addEventListener('click', function() {
+            filtrosModal.style.display = 'flex';
+            console.log('Modal de filtros aberto');
+        });
+        if (fecharFiltros) {
+            fecharFiltros.addEventListener('click', function() {
+                filtrosModal.style.display = 'none';
+            });
+        }
+        filtrosModal.addEventListener('click', function(e) {
+            if (e.target === filtrosModal) {
+                filtrosModal.style.display = 'none';
+            }
+        });
+    }
+
+    // Lógica do formulário de filtros
+    const formFiltros = document.getElementById('formFiltros');
+    if (formFiltros) {
+        formFiltros.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const dificuldade = document.getElementById('dificuldade').value;
+            const tipo = document.getElementById('tipo').value;
+            console.log('Filtros aplicados:', { dificuldade, tipo });
+
+            function applyFilters(dificuldade, tipo) {
+                const filters = {
+                    localizacao: [localizacao.latitude, localizacao.longitude],
+                    tipo: [tipo],
+                    dificuldade: [dificuldade], 
+                };
+                atualizarMarcadores(filters);
+                
+                // Armazena os filtros no localStorage 
+                localStorage.setItem('mapFilters', JSON.stringify(filters));
+            }
+            if (dificuldade && tipo) {
+                applyFilters(dificuldade, tipo);
+            } else {
+                if (dificuldade) {
+                    applyFilters(dificuldade, null);
+                } else if (tipo) {
+                    applyFilters(null, tipo);
+                } else {
+                    applyFilters(null, null);
+                }
+            };
+
+            // Fechar o modal após aplicar
+            filtrosModal.style.display = 'none';
+            
+            // Mostrar feedback ao usuário
+            Swal.fire({
+                icon: 'success',
+                title: 'Filtros Aplicados!',
+                text: 'Os marcadores no mapa foram atualizados.',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        });
+    }
+
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.querySelector('.overlay-menu');
     const logoutBtn = document.getElementById('logoutBtn');
@@ -65,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.toggle('active');
         overlay.classList.toggle('active');
         hamburgerBtn.classList.toggle('active');
+        filterBtn.classList.toggle('active');
     }
 
     function closeMenu() {
