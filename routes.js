@@ -610,6 +610,46 @@ router.get('/api/pistas/filtrar', async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Erro ao filtrar pistas' });
   }
+});  
+
+router.post('/api/pistas/filtrar', async (req, res) => {
+  try {
+    const { tipo, dificuldade, cidade, estado } = req.body;
+    
+    let query = 'SELECT * FROM pistas WHERE status = ?';
+    const params = ['aprovada'];
+
+    if (tipo && tipo.length > 0) {
+      const placeholders = tipo.map(() => '?').join(',');
+      query += ` AND tipo IN (${placeholders})`;
+      params.push(...tipo);
+    }
+
+    if (dificuldade && dificuldade.length > 0) {
+      const placeholders = dificuldade.map(() => '?').join(',');
+      query += ` AND dificuldade IN (${placeholders})`;
+      params.push(...dificuldade);
+    }
+
+    if (cidade && cidade.length > 0) {
+      const placeholders = cidade.map(() => '?').join(',');
+      query += ` AND cidade IN (${placeholders})`;
+      params.push(...cidade);
+    }
+
+    if (estado && estado.length > 0) {
+      const placeholders = estado.map(() => '?').join(',');
+      query += ` AND estado IN (${placeholders})`;
+      params.push(...estado);
+    }
+
+    const [pistas] = await pool.query(query, params);
+    res.json(pistas);
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao filtrar pistas' });
+  }
 });
 
 // ============================================================
