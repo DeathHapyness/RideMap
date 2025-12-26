@@ -93,32 +93,25 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const dificuldade = document.getElementById('dificuldade').value;
             const tipo = document.getElementById('tipo').value;
-            console.log('Filtros aplicados:', { dificuldade, tipo });
+            const estado = document.getElementById('spotState').value;
+            
+            console.log('Filtros selecionados:', { dificuldade, tipo, estado });
 
-            function applyFilters(dificuldade, tipo) {
-                const filters = {
-                    localizacao: [localizacao.latitude, localizacao.longitude],
-                    tipo: [tipo],
-                    dificuldade: [dificuldade], 
-                };
-                atualizarMarcadores(filters);
-                
-                // Armazena os filtros no localStorage 
-                localStorage.setItem('mapFilters', JSON.stringify(filters));
-            }
-            if (dificuldade && tipo) {
-                applyFilters(dificuldade, tipo);
-            } else {
-                if (dificuldade) {
-                    applyFilters(dificuldade, null);
-                } else if (tipo) {
-                    applyFilters(null, tipo);
-                } else {
-                    applyFilters(null, null);
-                }
+            // Aplica os filtros
+            const filters = {
+                tipo: tipo ? [tipo] : [],
+                dificuldade: dificuldade ? [dificuldade] : [],
+                estado: estado ? [estado] : []
             };
-
-            // Fechar o modal após aplicar
+            
+            // Chama a função do map.js para atualizar marcadores
+            if (typeof window.atualizarMarcadores === 'function') {
+                window.atualizarMarcadores(filters);
+            } else {
+                console.error('Função atualizarMarcadores não encontrada!');
+            }
+            
+            // Fechar o modal após aplicar  
             filtrosModal.style.display = 'none';
             
             // Mostrar feedback ao usuário
