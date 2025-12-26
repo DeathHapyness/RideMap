@@ -586,7 +586,7 @@ router.post('/api/admin/rejeitar-pista/:id', isAuthenticated, isAdmin, async (re
 });
 
 //**Rota de filtros */
-router.get('/api/pistas/filtrar', async (req, res) => {
+router.get('/api/dashboard', async (req, res) => {
   try {
     const { tipo, dificuldade, cidade, estado } = req.query;
     let query = 'SELECT * FROM pistas WHERE status = ?';
@@ -612,7 +612,7 @@ router.get('/api/pistas/filtrar', async (req, res) => {
   }
 });  
 
-router.post('/api/pistas/filtrar', async (req, res) => {
+router.post('/api/dashboard', async (req, res) => {
   try {
     const { tipo, dificuldade, cidade, estado } = req.body;
     
