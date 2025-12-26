@@ -69,7 +69,7 @@
 
 .form-control{
     background-color: var(--bg-muted);
-    color: #fff !important;
+    color: var(--text) !important;
     cursor: not-allowed;
 }
 
@@ -312,4 +312,8 @@ input[type="password"] {
 /* Transições suaves */
 * {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#perfilNome{
+    color: var(--text);
 }
