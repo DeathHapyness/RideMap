@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mysql = require('mysql2');
 
-const databaseName = 'RideMap';
+const databaseName = 'ridemap';
 
 // configuracao do banco de dados
 const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD'];

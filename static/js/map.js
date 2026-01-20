@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pistas.forEach((pista) => {
                     const lat = parseFloat(pista.latitude);
                     const lng = parseFloat(pista.longitude);
-                    
+                    //conferir se a imagem esta sendo puxada do bd -> pista.imagens = linha 103
                     const popupContent = `
                         <div style="min-width: 200px;">
                             <h5 style="color: #FF6B35; margin-bottom: 10px;">${pista.nome}</h5>
@@ -139,7 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p style="margin: 5px 0;"><strong>📍</strong> ${pista.cidade}, ${pista.estado}</p>
                         <p style="margin: 5px 0;"><strong>🎯</strong> ${pista.tipo}</p>
                         <p style="margin: 5px 0;"><strong>📊</strong> ${pista.dificuldade}</p>
+                        <p style="margin: 5px 0;"><strong>⭐</strong> ${pista.avaliacao || 'Sem avaliações'}</p>
                         <p style="margin: 5px 0;"><strong>Descrição:</strong> ${pista.descricao || 'Sem descrição'}</p>
+                        <p style="margin: 5px 0;"><strong>Imagens:</strong></p>
+                        <p style="margin: 5px 0 5px 10px;">${pista.imagens || 'Sem imagens'}</p>
                     </div>
                 `;
                 
