@@ -163,7 +163,7 @@ Com sistema de moderação robusto, notificações em tempo real e interface int
 |------------|-----------|
 | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white) | Ambiente de execução |
 | ![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white) | Framework web |
-| ![MySQL](https://img.shields.io/badge/MySQL_8.0-4479A1?style=flat&logo=mysql&logoColor=white) | Banco de dados |
+| ![PostgreSQL](https://img.shields.io/badge/PostgreSQL_17+-4169E1?style=flat&logo=postgresql&logoColor=white) | Banco de dados |
 | ![bcrypt](https://img.shields.io/badge/bcrypt-003A70?style=flat) | Criptografia de senhas |
 | ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=flat&logo=cloudinary&logoColor=white) | Upload de imagens |
 | ![Multer](https://img.shields.io/badge/Multer-FF6B35?style=flat) | Processamento de arquivos |
@@ -176,9 +176,9 @@ Com sistema de moderação robusto, notificações em tempo real e interface int
 ┌─────────────────────────────────────────────┐
 │          Padrão MVC Completo                │
 ├─────────────────────────────────────────────┤
-│  ┌─────────┐  ┌────────┐  ┌──────────┐     │
-│  │  Model  │  │  View  │  │Controller│     │
-│  └─────────┘  └────────┘  └──────────┘     │
+│  ┌─────────┐  ┌────────┐  ┌──────────┐      │
+│  │  Model  │  │  View  │  │Controller│      │
+│  └─────────┘  └────────┘  └──────────┘      │
 ├─────────────────────────────────────────────┤
 │  • REST API                                 │
 │  • Session-based Authentication             │
