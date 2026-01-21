@@ -7,9 +7,9 @@
 **Plataforma colaborativa para skatistas encontrarem e compartilharem pistas de skate pelo Brasil**
 
 [![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow?style=for-the-badge)](https://github.com/DeathHapyness/ridemap)
-[![Node](https://img.shields.io/badge/node-16+-green?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
-[![MySQL](https://img.shields.io/badge/mysql-8.0-blue?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com)
-[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange?style=for-the-badge)](LICENSE)
+[![Node](https://img.shields.io/badge/node-16+-green?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/pt-br)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17+-blue?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org)
+[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
 
 **Idiomas:** 🇧🇷 **Português** | [🇺🇸 English](README_EN.md)
 
@@ -292,7 +292,7 @@ npm install
 
 Entre no MySQL:
 ```bash
-mysql -u root -p
+postgreSQL -u root -p
 ```
 
 Execute os comandos:
@@ -302,7 +302,7 @@ USE ridemap;
 
 -- Criação da tabela usuarios (ATUALIZADA)
 CREATE TABLE usuarios (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
@@ -311,47 +311,155 @@ CREATE TABLE usuarios (
     avatar_public_id VARCHAR(255),
     role VARCHAR(20) DEFAULT 'user',
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_email (email),
-    INDEX idx_role (role)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    ultima_atividade TIMESTAMP NULL,
+    ativo BOOLEAN DEFAULT TRUE
+); 
+
+--índices:
+CREATE INDEX idx_email ON usuarios(email);
+CREATE INDEX idx_role ON usuarios(role);
+CREATE INDEX idx_ativo ON usuarios(ativo);
 
 -- Criação da tabela pistas
+CREATE TYPE tipo_pista AS ENUM ('skate', 'patins', 'ambos');
+CREATE TYPE dificuldade_tipo AS ENUM ('facil', 'medio', 'dificil');
+
 CREATE TABLE pistas (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
     cidade VARCHAR(100) NOT NULL,
     estado VARCHAR(2) NOT NULL,
     latitude DECIMAL(10,8),
     longitude DECIMAL(11,8),
-    tipo ENUM('skate','patins','ambos') NOT NULL,
-    dificuldade ENUM('facil','medio','dificil') NOT NULL,
+    tipo tipo_pista NOT NULL,
+    dificuldade dificuldade_tipo NOT NULL,
     descricao TEXT,
     usuario_id INT NOT NULL,
     status VARCHAR(20) DEFAULT 'pendente',
     motivo_rejeicao TEXT,
-    data_moderacao DATETIME,
+    data_moderacao TIMESTAMP,
     moderador_id INT,
-    ativa TINYINT(1) DEFAULT 1,
+    ativa BOOLEAN DEFAULT TRUE,
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    INDEX idx_status (status),
-    INDEX idx_cidade (cidade),
-    INDEX idx_tipo (tipo),
-    INDEX idx_dificuldade (dificuldade)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_status ON pistas(status);
+CREATE INDEX idx_cidade ON pistas(cidade);
+CREATE INDEX idx_tipo ON pistas(tipo);
+CREATE INDEX idx_dificuldade ON pistas(dificuldade);
+CREATE INDEX idx_usuario ON pistas(usuario_id);
+CREATE INDEX idx_ativa ON pistas(ativa);    
 
 -- Criação da tabela notificacoes
 CREATE TABLE notificacoes (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY ,
     usuario_id INT NOT NULL,
     tipo VARCHAR(50) NOT NULL,
     mensagem TEXT NOT NULL,
     lida BOOLEAN DEFAULT FALSE,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_usuario_lida ON notificacoes(usuario_id, lida);
+CREATE INDEX idx_data ON notificacoes(data_criacao);
+CREATE INDEX idx_lida ON notificacoes(lida);
+
+-- Criação da tabela fotos_pistas
+
+CREATE TABLE fotos_pistas (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    pista_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    url VARCHAR(500) NOT NULL,
+    public_id VARCHAR(255),
+    descricao TEXT,
+    principal BOOLEAN DEFAULT FALSE,
+    aprovada BOOLEAN DEFAULT FALSE,
+    data_upload TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (pista_id) REFERENCES pistas(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_pista ON fotos_pistas(pista_id);
+CREATE INDEX idx_usuario ON fotos_pistas(usuario_id);
+CREATE INDEX idx_aprovada ON fotos_pistas(aprovada);
+CREATE INDEX idx_principal ON fotos_pistas(principal);
+
+-- Criação da tabela fotos_perfil
+
+CREATE TABLE fotos_perfil (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    url VARCHAR(500) NOT NULL,
+    public_id VARCHAR(255),
+    ativa BOOLEAN DEFAULT TRUE,
+    data_upload TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_usuario ON fotos_perfil(usuario_id);
+CREATE INDEX idx_ativa ON fotos_perfil(ativa);
+
+-- Criação da tabela avaliacoes
+
+CREATE or REPLACE FUNCTION atualiza_data_atualizacao()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.data_atualizacao = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TABLE avaliacoes (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    pista_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    nota INT NOT NULL CHECK (nota >= 1 AND nota <= 5),
+    comentario TEXT,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (pista_id) REFERENCES pistas(id) ON DELETE CASCADE,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    INDEX idx_usuario_lida (usuario_id, lida),
-    INDEX idx_data (data_criacao)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    CONSTRAINT unique_avaliacao UNIQUE (pista_id, usuario_id)
+);
+
+
+CREATE INDEX idx_pista ON avaliacoes(pista_id);
+CREATE INDEX idx_usuario ON avaliacoes(usuario_id);
+CREATE INDEX idx_nota ON avaliacoes(nota);
+CREATE INDEX idx_data ON avaliacoes(data_criacao);
+
+CREATE TRIGGER trg_atualiza_data_atualizacao
+BEFORE UPDATE ON avaliacoes
+FOR EACH ROW
+EXECUTE FUNCTION atualiza_data_atualizacao();
+
+CREATE TRIGGER trg_atualiza_data_atualizacao
+BEFORE UPDATE ON avaliacoes
+FOR EACH ROW
+EXECUTE FUNCTION atualiza_data_atualizacao();
+
+-- Criação da tabela usuarios_banidos
+
+CREATE TABLE usuarios_banidos (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    motivo TEXT NOT NULL,
+    data_banimento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_expiracao TIMESTAMP NULL,
+    banido_por INT,
+    permanente BOOLEAN DEFAULT FALSE,
+    ativo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (banido_por) REFERENCES usuarios(id) ON DELETE SET NULL
+);
+
+CREATE INDEX idx_usuario ON usuarios_banidos(usuario_id);
+CREATE INDEX idx_ativo ON usuarios_banidos(ativo);
+CREATE INDEX idx_permanente ON usuarios_banidos(permanente);
+CREATE INDEX idx_data_expiracao ON usuarios_banidos(data_expiracao);    
 ```
 
 #### 4️⃣ Configure as variáveis de ambiente
@@ -476,25 +584,28 @@ http://localhost:3000
 ```
 ridemap/
 ├── 📁 config/
-│   ├── cloudinary.js       # Configuração Cloudinary (NOVO)
-│   └── multer.js           # Upload de arquivos
+│   ├── cloudinary.js       
+│   └── multer.js           
 ├── 📁 db/
-│   └── config.js           # Conexão MySQL
+│   ├── config.js                 # Conexão MySQL
+│   ├── initDatabase.js           # Novo arquivo de criacao de BD (NOVO)
+│   └── RideMap.sql               # Novo BD atualizado para postgreSQL (NOVO)
+│ 
 ├── 📁 static/
 │   ├── 📁 css/
-│   │   ├── style.css       # Estilo principal (ATUALIZADO)
-│   │   ├── sidebar.css     # Estilos do menu (NOVO)
-│   │   ├── profile.css     # Estilos do perfil (NOVO)
-│   │   ├── profile.css     # Estilo global (Novo e Atualizado)
-│   │   ├── admin-dashboard.css # Estilo do painel de administracao
-│   │   ├── login.css       # Estilo do dashboard de login
-│   │   ├── dashboard.css   # Estilo do dashboard lateral principal
-│   │   ├── adicionar-pista.css #Estilo interface de adicao de pistas (Atualizado)
-│   │   └── dashboard-perfil.css # Estilos dashboard
+│   │   ├── style.css       # Estilo principal
+│   │   ├── sidebar.css     
+│   │   ├── profile.css     
+│   │   ├── profile.css     
+│   │   ├── admin-dashboard.css 
+│   │   ├── login.css       
+│   │   ├── dashboard.css   
+│   │   ├── adicionar-pista.css  
+│   │   └── dashboard-perfil.css 
 │   ├── 📁 js/
-│   │   ├── dashboard.js    # Lógica dashboard
-│   │   ├── admin.js        # Lógica admin
-│   │   ├── profile-view.js # Lógica do perfil (NOVO)
+│   │   ├── dashboard.js    
+│   │   ├── admin.js        # Funcoes da interface de admin 
+│   │   ├── profile-view.js # Lógica do perfil 
 │   │   ├── script.js       # Lógica de animacoes basicas
 │   │   ├── recuperacao-senha.js # Lógica de recuperacao de senha com email 
 │   │   ├── darkmod.js      # Lógica do dark mod
@@ -522,12 +633,12 @@ ridemap/
 │            └── nova-logo-aba-prt.png
 ├── 📁 views/
 │   ├── 📁 layouts/
-│   │   ├── profile-view.hbs # Modal de perfil (NOVO)
+│   │   ├── profile-view.hbs # Modal de perfil 
 │   │   ├── login-modal.hbs  # Modal de login 
 │   │   └── add-spot-modal.hbs
 │   ├── 📁 partials/
-│   │   ├── sidebar.hbs     # Menu lateral (ATUALIZADO)
-│   │   ├── profile-view.hbs # Modal de perfil (NOVO)
+│   │   ├── sidebar.hbs     # Menu lateral 
+│   │   ├── profile-view.hbs # Modal de perfil 
 │   │   ├── login-modal.hbs  # Modal de login 
 │   │   └── add-spot-modal.hbs
 │   ├── 404.hbs             # Página de erro 404
@@ -536,17 +647,16 @@ ridemap/
 │   ├── dashboard.hbs       # Dashboard usuário
 │   ├── error.hbs           # Página de erros inesperados
 │   └── admin-dashboard.hbs # Painel admin e administrcao
-├── 📄 .env                 # Variáveis ambiente (ATUALIZADO)
+├── 📄 .env                 # Arquivos sigilosos
 ├── 📄 .gitignore
 ├── 📄 package.json
-├── 📄 routes.js            # Rotas da aplicação (ATUALIZADO)
-├── 📄 server.js            # Servidor principal
-├── 📄 email.js            # Parte responsael por envio de email
-├── 📄 .env                 # Variáveis ambiente (ATUALIZADO)
+├── 📄 routes.js            # Rotas atualizada para o novo BD 
+├── 📄 server.js            
+├── 📄 email.js                        
 ├── 📄 .gitignore
 ├── 📄 package.json
-├── 📄 README_EN.md
-└── 📄 README.md
+├── 📄 README_EN.md        # (ATUALIZADO)
+└── 📄 README.md           # (ATUALIZADO)
 ```
 
 ---
@@ -594,8 +704,9 @@ O RideMap implementa múltiplas camadas de segurança:
 - [x] Painel administrativo
 - [x] Sistema de roles (user/admin) 
 - [x] Modal de perfil responsivo 
-- [x] Sistema de notificações aprimorado ✨ **NOVO**
-- [x] "Minhas Pistas" - ver pistas enviadas ✨ **NOVO**
+- [x] Sistema de notificações aprimorado 
+- [x] "Minhas Pistas" - ver pistas enviadas 
+- [x] Dark mode ✨ **NOVO**
 
 ### 🚧 Em Desenvolvimento
 
@@ -609,7 +720,6 @@ O RideMap implementa múltiplas camadas de segurança:
 - [ ] Sistema de favoritos
 - [ ] Compartilhamento social
 - [ ] Rotas/trilhas personalizadas
-- [ ] Dark mode
 - [ ] Upload de avatares com Cloudinary
 
 ### 🌟 Futuramente 
@@ -684,7 +794,7 @@ npm run format
 
 ### Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
 
-[![CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-orange.svg?style=for-the-badge)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
 
 </div>
 
@@ -810,4 +920,3 @@ Documentação:           █████████░  85%
 **[⬆ Voltar ao topo](#-ridemap)**
 
 </div>
-teste
