@@ -223,7 +223,7 @@ body.darkmode .modal-adicionar-pista .form-select {
 }
 
 .modal-adicionar-pista .btn-secondary {
-    background: var(--border-color); 
+    background: var(--bg-primary); 
     color: var(--text-primary);
     border: none;
     padding: 14px 32px;
@@ -233,7 +233,7 @@ body.darkmode .modal-adicionar-pista .form-select {
 }
 
 .modal-adicionar-pista .btn-secondary:hover {
-    background: var(--border-color); 
+    background: var(--bg-secondary); 
     transform: translateY(-2px);
 }
 
