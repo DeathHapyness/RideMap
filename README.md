@@ -698,11 +698,10 @@ O RideMap implementa múltiplas camadas de segurança:
 
 - [x] Sistema de autenticação completo
 - [x] Mapa interativo com Leaflet
-- [x] CRUD de pistas
 - [x] Sistema de moderação
 - [x] Notificações em tempo real
 - [x] Painel administrativo
-- [x] Sistema de roles (user/admin) 
+- [x] Filtros avançados (tipo, dificuldade, distância) 
 - [x] Modal de perfil responsivo 
 - [x] Sistema de notificações aprimorado 
 - [x] "Minhas Pistas" - ver pistas enviadas 
@@ -716,7 +715,6 @@ O RideMap implementa múltiplas camadas de segurança:
 
 ### 📋 Planejado
 
-- [ ] Filtros avançados (tipo, dificuldade, distância)
 - [ ] Sistema de favoritos
 - [ ] Compartilhamento social
 - [ ] Rotas/trilhas personalizadas
