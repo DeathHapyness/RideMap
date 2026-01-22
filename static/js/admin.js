@@ -213,10 +213,9 @@ async function carregarEstatisticas() {
 
 // ==================== GERENCIAMENTO DE TABELA DE PISTAS ====================
 
-let todasPistas = []; // Cache de todas as pistas
-let pistasFiltradas = []; // Pistas após aplicar filtros
+let todasPistas = []; 
+let pistasFiltradas = [];
 
-// Carregar todas as pistas (pendentes, ativas e rejeitadas)
 async function carregarTodasPistas() {
     try {
         const response = await fetch('/api/admin/todas-pistas');
@@ -233,16 +232,15 @@ async function carregarTodasPistas() {
     }
 }
 
-// Aplicar filtros de status e busca
+
 function aplicarFiltros() {
     const filtroStatus = document.getElementById('filterStatus').value;
     const termoBusca = document.getElementById('searchPistas').value.toLowerCase();
     
     pistasFiltradas = todasPistas.filter(pista => {
-        // Filtro de status
+
         const passaStatus = filtroStatus === 'todas' || pista.status === filtroStatus;
         
-        // Filtro de busca (nome, cidade, estado, tipo, dificuldade)
         const passaBusca = !termoBusca || 
             pista.nome.toLowerCase().includes(termoBusca) ||
             (pista.localizacao && pista.localizacao.toLowerCase().includes(termoBusca)) ||
@@ -257,7 +255,6 @@ function aplicarFiltros() {
     renderizarTabela();
 }
 
-// Renderizar tabela com as pistas filtradas
 function renderizarTabela() {
     const tbody = document.getElementById('listaPistasTabela');
     
@@ -273,7 +270,6 @@ function renderizarTabela() {
         const statusText = pista.status === 'pendente' ? 'Pendente' : 
                           pista.status === 'ativa' ? 'Ativa' : 'Rejeitada';
         
-        // Data formatada
         const data = new Date(pista.criado_em).toLocaleDateString('pt-BR', {
             day: '2-digit',
             month: '2-digit',
@@ -316,7 +312,6 @@ function renderizarTabela() {
     tbody.innerHTML = html;
 }
 
-// Aprovar pista (atualizado para funcionar com tabela)
 async function aprovarPista(id) {
     const result = await Swal.fire({
         title: 'Aprovar pista?',
@@ -338,11 +333,9 @@ async function aprovarPista(id) {
             if (data.success) {
                 Swal.fire('Aprovada!', 'A pista foi aprovada com sucesso.', 'success');
                 
-                // Atualizar o status da pista no cache
                 const pista = todasPistas.find(p => p.id === id);
                 if (pista) pista.status = 'ativa';
                 
-                // Recarregar estatísticas e tabela
                 carregarEstatisticas();
                 aplicarFiltros();
             } else {
@@ -355,7 +348,6 @@ async function aprovarPista(id) {
     }
 }
 
-// Rejeitar pista (atualizado para funcionar com tabela)
 async function rejeitarPista(id) {
     const { value: motivo } = await Swal.fire({
         title: 'Rejeitar pista',
@@ -391,7 +383,6 @@ async function rejeitarPista(id) {
                 const pista = todasPistas.find(p => p.id === id);
                 if (pista) pista.status = 'rejeitada';
                 
-                // Recarregar estatísticas e tabela
                 carregarEstatisticas();
                 aplicarFiltros();
             } else {
@@ -428,7 +419,6 @@ async function carregarTodosUsuarios() {
     }
 }
 
-// Aplicar filtros de status e busca para USUÁRIOS
 function aplicarFiltrosUsuarios() {
     const filtroRole = document.getElementById('filterRole');
     const termoBusca = document.getElementById('searchUsuarios');
@@ -439,10 +429,9 @@ function aplicarFiltrosUsuarios() {
     const searchValue = termoBusca.value.toLowerCase();
     
     usuariosFiltrados = todosUsuarios.filter(usuario => {
-        // Filtro por role
+
         const passaRole = roleValue === 'todos' || usuario.role === roleValue;
         
-        // Filtro de busca (nome, email)
         const passaBusca = !searchValue || 
             usuario.nome.toLowerCase().includes(searchValue) ||
             usuario.email.toLowerCase().includes(searchValue);
@@ -483,7 +472,6 @@ function renderizarTabelaUsuarios() {
             ? new Date(usuario.ultima_atividade).toLocaleDateString('pt-BR')
             : 'Nunca';
         
-        // Botões de ação
         let botoesAcao = '';
         if (usuario.ativo) {
             botoesAcao = `
@@ -607,7 +595,6 @@ async function ativarUsuario(id) {
     }
 }
 
-// Editar usuário (placeholder)
 function editarUsuario(id) {
     Swal.fire('Em desenvolvimento', 'Funcionalidade de edição será implementada em breve.', 'info');
 }
