@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Função para filtrar e atualizar marcadores
     window.atualizarMarcadores = function(filters = {}) {
-        // Remove todos os marcadores do mapa
         todosOsMarcadores.forEach(marker => map.removeLayer(marker));
         todosOsMarcadores = [];
 
@@ -93,12 +92,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     const lng = parseFloat(pista.longitude);
                     //conferir se a imagem esta sendo puxada do bd -> pista.imagens = linha 103
                     const popupContent = `
-                        <div style="min-width: 200px;">
+                         <div style="min-width: 200px;">
                             <h5 style="color: #FF6B35; margin-bottom: 10px;">${pista.nome}</h5>
-                            <p style="margin: 5px 0;"><strong>📍</strong> ${pista.cidade}, ${pista.estado}</p>
-                            <p style="margin: 5px 0;"><strong>🎯</strong> ${pista.tipo}</p>
-                            <p style="margin: 5px 0;"><strong>📊</strong> ${pista.dificuldade}</p>
+                            <p style="margin: 5px 0;"><strong>📍Localizacao:</strong> ${pista.cidade}, ${pista.estado}</p>
+                            <p style="margin: 5px 0;"><strong>🎯Dificuldade:</strong> ${pista.tipo}</p>
+                            <p style="margin: 5px 0;"><strong>📊Dificuldade:</strong> ${pista.dificuldade}</p>
+                            <p style="margin: 5px 0;"><strong>⭐Avaliação:</strong> ${pista.avaliacao || 'Sem avaliações'}</p>
                             <p style="margin: 5px 0;"><strong>Descrição:</strong> ${pista.descricao || 'Sem descrição'}</p>
+                            <p style="margin: 5px 0;"><strong>Imagens:</strong></p>
+                            <p style="margin: 5px 0 5px 10px;">
+                                ${pista.fotos_pistas && pista.fotos_pistas[0] 
+                                ? pista.fotos_pistas[0] 
+                                : 'Sem imagens'}
+                            </p>
                         </div>
                     `;
                     
@@ -136,13 +142,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 const popupContent = `
                     <div style="min-width: 200px;">
                         <h5 style="color: #FF6B35; margin-bottom: 10px;">${pista.nome}</h5>
-                        <p style="margin: 5px 0;"><strong>📍</strong> ${pista.cidade}, ${pista.estado}</p>
-                        <p style="margin: 5px 0;"><strong>🎯</strong> ${pista.tipo}</p>
-                        <p style="margin: 5px 0;"><strong>📊</strong> ${pista.dificuldade}</p>
-                        <p style="margin: 5px 0;"><strong>⭐</strong> ${pista.avaliacao || 'Sem avaliações'}</p>
+                        <p style="margin: 5px 0;"><strong>📍Localizacao:</strong> ${pista.cidade}, ${pista.estado}</p>
+                        <p style="margin: 5px 0;"><strong>🎯Dificuldade:</strong> ${pista.tipo}</p>
+                        <p style="margin: 5px 0;"><strong>📊Dificuldade:</strong> ${pista.dificuldade}</p>
+                        <p style="margin: 5px 0;"><strong>⭐Avaliação:</strong> ${pista.avaliacao || 'Sem avaliações'}</p>
                         <p style="margin: 5px 0;"><strong>Descrição:</strong> ${pista.descricao || 'Sem descrição'}</p>
                         <p style="margin: 5px 0;"><strong>Imagens:</strong></p>
-                        <p style="margin: 5px 0 5px 10px;">${pista.imagens || 'Sem imagens'}</p>
+                        <p style="margin: 5px 0 5px 10px;">
+                            ${pista.fotos_pistas && pista.fotos_pistas[0] 
+                            ? pista.fotos_pistas[0] 
+                            : 'Sem imagens'}
+                        </p>
                     </div>
                 `;
                 
