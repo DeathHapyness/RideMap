@@ -589,6 +589,9 @@ router.post('/api/admin/rejeitar-pista/:id', isAuthenticated, isAdmin, async (re
 router.get('/api/dashboard', async (req, res) => {
   try {
     const { tipo, dificuldade, cidade, estado } = req.query;
+
+    console.log('Filtros recebidos:',req.query, { tipo, dificuldade, cidade, estado });
+
     let query = 'SELECT * FROM pistas WHERE status = $1';
     const params = ['aprovada'];
     let paramCount = 2;
@@ -619,6 +622,8 @@ router.get('/api/dashboard', async (req, res) => {
 router.post('/api/dashboard', async (req, res) => {
   try {
     const { tipo, dificuldade, cidade, estado } = req.body;
+
+    console.log('Filtros recebidos (POST):', req.body, { tipo, dificuldade, cidade, estado });
     
     let query = 'SELECT * FROM pistas WHERE status = $1';
     const params = ['aprovada'];
