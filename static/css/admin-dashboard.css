@@ -478,6 +478,20 @@ html {
     box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
 }
 
+#btnNovoAviso{
+    background: #007bff;
+    color: var(--text);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.0rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
 /* Tabela Responsiva */
 @media (max-width: 992px) {
     #tabelaPistas thead th {
