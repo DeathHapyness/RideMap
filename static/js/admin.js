@@ -598,3 +598,36 @@ async function ativarUsuario(id) {
 function editarUsuario(id) {
     Swal.fire('Em desenvolvimento', 'Funcionalidade de edição será implementada em breve.', 'info');
 }
+
+//Administraca de avisos 
+async function carregarAvisos() {
+    try {
+        const response = await fetch('/api/admin/avisos');
+        const data = await response.json();
+        
+        if (data.success) {
+            const listaAvisos = document.getElementById('listaAvisos');
+            if (listaAvisos) {
+                if (data.avisos.length === 0) {
+                    listaAvisos.innerHTML = '<p class="text-center text-muted">Nenhum aviso ativo.</p>';
+                    return;
+                }
+                
+                let html = '';
+                data.avisos.forEach(aviso => {
+                    html += `
+                        <div class="aviso-card" id="aviso-${aviso.id}">
+                            <h5>${aviso.titulo}</h5>
+                            <p>${aviso.mensagem}</p>
+                            <small class="text-muted">Publicado em: ${new Date(aviso.criado_em).toLocaleDateString('pt-BR')}</small>
+                        </div>
+                    `;
+                });
+                
+                listaAvisos.innerHTML = html;
+            }
+        }
+    } catch (error) {
+        console.error('Erro ao carregar avisos:', error);
+    }
+}   
