@@ -646,7 +646,7 @@ ridemap/
 │   ├── home.hbs            # Página inicial
 │   ├── dashboard.hbs       # Dashboard usuário
 │   ├── error.hbs           # Página de erros inesperados
-│   └── admin-dashboard.hbs # Painel admin e administrcao
+│   └── admin-dashboard.hbs # Painel admin e administracao
 ├── 📄 .env                 # Arquivos sigilosos
 ├── 📄 .gitignore
 ├── 📄 package.json
@@ -701,7 +701,7 @@ O RideMap implementa múltiplas camadas de segurança:
 - [x] Sistema de moderação
 - [x] Notificações em tempo real
 - [x] Painel administrativo
-- [x] Filtros avançados (tipo, dificuldade, distância) 
+- [x] Filtros avançados (tipo, dificuldade, distância) ✨ **NOVO** **(sendo finalizado)** 
 - [x] Modal de perfil responsivo 
 - [x] Sistema de notificações aprimorado 
 - [x] "Minhas Pistas" - ver pistas enviadas 
@@ -712,6 +712,7 @@ O RideMap implementa múltiplas camadas de segurança:
 - [ ] Upload de múltiplas fotos por pista
 - [ ] Sistema de avaliações (estrelas/comentários)
 - [ ] Editar pista rejeitada
+- [ ] Sistema de avisos
 
 ### 📋 Planejado
 
