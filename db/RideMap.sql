@@ -177,3 +177,15 @@ CREATE INDEX idx_usuario ON usuarios_banidos(usuario_id);
 CREATE INDEX idx_ativo ON usuarios_banidos(ativo);
 CREATE INDEX idx_permanente ON usuarios_banidos(permanente);
 CREATE INDEX idx_data_expiracao ON usuarios_banidos(data_expiracao);    
+
+CREATE TABLE avisos (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('info', 'warning', 'success')),
+    mensagem TEXT NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expira_em TIMESTAMP NULL
+);
+
+CREATE INDEX idx_avisos_ativos ON avisos(ativo, expira_em, data_criacao DESC);
