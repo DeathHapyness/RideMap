@@ -662,6 +662,54 @@ router.post('/api/dashboard', async (req, res) => {
   }
 });
 
+router.get('/admin/dashboard', isAuthenticated, isAdmin, (req, res) => {
+  res.render('admin-dashboard', { 
+    title: 'Painel Admin - RideMap',
+    user: req.session.user
+  });
+});
+
+router.get('/api/admin/avisos', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const avisos = await pool.query(`
+         SELECT 
+        id, 
+        titulo, 
+        tipo, 
+        mensagem, 
+        ativo, 
+        data_criacao, 
+        expira_em
+      FROM avisos
+      ORDER BY data_criacao DESC
+    `);
+    res.json({ success: true, avisos: avisos.rows });
+  } catch (error) {
+    console.error('Erro ao buscar avisos:', error);
+    res.status(500).json({ success: false, message: 'Erro ao buscar avisos' });
+  }
+});
+
+router.post('/api/admin/avisos/criar', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const { titulo, mensagem } = req.body;
+    
+    if (!titulo || titulo.trim() === '' || !mensagem || mensagem.trim() === '') {
+      return res.status(400).json({ error: 'Título e mensagem são obrigatórios' });
+    }
+    
+    await pool.query(
+      'INSERT INTO avisos (titulo, mensagem, criado_em) VALUES ($1, $2, NOW())',
+      [titulo, mensagem]
+    );
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Erro ao criar aviso:', error);
+    res.status(500).json({ error: 'Erro ao criar aviso' });
+  }
+});
+
 // ============================================================
 // EXPORTS
 // ============================================================
