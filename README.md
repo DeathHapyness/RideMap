@@ -842,8 +842,9 @@ Este projeto está licenciado sob **CC BY-NC-SA 4.0**. Isso significa:
 Para usar este projeto comercialmente (revender, integrar em produto pago, etc.), **entre em contato**:
 
 📧 **Email:** henrique.dev2@gmail.com
-
-Veja a licença completa: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+🧾 **Termos de uso:** <link link="https://termos-de-uso-ridemap.vercel.app/">https://termos-de-uso-ridemap.vercel.app/<link>
+🔒 **Política de Privacidade:** Em desenvolvimento
+⚖️ **Veja a licença completa:** [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ---
 
