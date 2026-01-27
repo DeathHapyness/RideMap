@@ -8,7 +8,10 @@ const pool = new Pool({
   ssl: {
     //**Em producao mudar para true */
     rejectUnauthorized: false 
-  }
+  },
+  max: 1,
+  idleTimeoutMillis: 0,
+  allowExitOnIdle: true
 });
 
 pool.on('connect', () => {
