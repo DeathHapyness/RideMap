@@ -668,11 +668,13 @@ router.get('/admin/dashboard', isAuthenticated, isAdmin, (req, res) => {
     user: req.session.user
   });
 });
-
 router.get('/api/admin/avisos', isAuthenticated, isAdmin, async (req, res) => {
   try {
+    const testDb = await pool.query('SELECT current_database()');
+    console.log('Banco conectado:', testDb.rows[0].current_database);
+    
     const avisos = await pool.query(`
-         SELECT 
+      SELECT 
         id, 
         titulo, 
         tipo, 
@@ -690,26 +692,23 @@ router.get('/api/admin/avisos', isAuthenticated, isAdmin, async (req, res) => {
   }
 });
 
-router.post('/api/admin/avisos/criar', isAuthenticated, isAdmin, async (req, res) => {
-  try {
+router.post('/api/admin/avisos', isAuthenticated, isAdmin, async (req, res) => {
+  try {   
     const { titulo, mensagem } = req.body;
-    
     if (!titulo || titulo.trim() === '' || !mensagem || mensagem.trim() === '') {
       return res.status(400).json({ error: 'Título e mensagem são obrigatórios' });
     }
-    
-    await pool.query(
-      'INSERT INTO avisos (titulo, mensagem, criado_em) VALUES ($1, $2, NOW())',
-      [titulo, mensagem]
+    const result = await pool.query(
+      'INSERT INTO avisos (titulo, mensagem, tipo, ativo) VALUES ($1, $2, $3, $4) RETURNING *',
+      [titulo, mensagem, 'info', true]
     );
     
-    res.json({ success: true });
+    console.log('✅ Aviso criado:', result.rows[0]);
+    res.json({ success: true, aviso: result.rows[0] });
   } catch (error) {
-    console.error('Erro ao criar aviso:', error);
-    res.status(500).json({ error: 'Erro ao criar aviso' });
+    console.error('❌ Erro ao criar aviso:', error.message);
   }
 });
-
 // ============================================================
 // EXPORTS
 // ============================================================
