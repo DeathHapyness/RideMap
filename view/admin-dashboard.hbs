@@ -210,20 +210,9 @@
                             Novo Aviso
                         </button>
                     </div>
-                    
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover mb-0" id="tabelaAvisos">
-                                <thead>
-                                    <tr>
-                                        <th>Título</th>
-                                        <th>Tipo</th>
-                                        <th>Status</th>
-                                        <th>Mensagem</th>
-                                        <th>Data de criação</th>
-                                        <th>Expira em</th>
-                                    </tr>
-                                </thead>
+                            <table class="table table-hover mb-0" id="listaAvisos">
                                 <tbody>
                                     <!-- Avisos serão carregados aqui dinamicamente -->
                                 </tbody>
@@ -250,9 +239,9 @@
                                 <div class="mb-3">
                                     <label for="tipoAviso" class="form-label">Tipo</label>
                                     <select class="form-select" id="tipoAviso" required>
-                                        <option value="info">Informativo</option>
-                                        <option value="warning">Alerta</option>
-                                        <option value="sucess">Urgente</option>
+                                        <option value="info" id="informativo" >Informativo</option>
+                                        <option value="warning" id="alerta" >Alerta</option>
+                                        <option value="sucess" id="urgente" >Urgente</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -260,8 +249,8 @@
                                     <textarea class="form-control" id="mensagemAviso" rows="4" required></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="dataExpiracao" class="form-label">Data de Expiração</label>
-                                    <input type="date" class="form-control" id="dataExpiracao" required>
+                                    <label for="expira_em" class="form-label">Data de Expiração</label>
+                                    <input type="time" class="form-control" id="expira_em" required>
                                 </div>
                             </form>
                         </div>
