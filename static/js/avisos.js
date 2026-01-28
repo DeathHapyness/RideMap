@@ -27,7 +27,7 @@ document.getElementById('btnSalvarAviso').addEventListener('click', async functi
     const response = await fetch('/api/admin/avisos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ titulo, mensagem })
+      body: JSON.stringify({ titulo, mensagem, tipo: document.getElementById('tipoAviso').value, expira_em: document.getElementById('expira_em').value })
     });
     
     const data = await response.json();
@@ -35,9 +35,10 @@ document.getElementById('btnSalvarAviso').addEventListener('click', async functi
     if (data.success) {
       alert('Aviso criado com sucesso!');
       // Fecha o modal
-      bootstrap.Modal.getInstance(document.getElementById('modalNovoAviso')).hide(); //**arrumar isso 
+      bootstrap.Modal.getInstance(document.getElementById('modalNovoAviso')).hide(); //**arrumar isso depois
       document.getElementById('tituloAviso').value = '';
       document.getElementById('mensagemAviso').value = '';
+      document.getElementById('expira_em').value = '';
       // Recarrega a lista de avisos
       carregarAvisos();
     } else {
@@ -53,10 +54,12 @@ async function carregarAvisos() {
     try {
         const response = await fetch('/api/admin/avisos');
         const data = await response.json();
+        console.log(data, "Fazendo,requisição");
         
         if (data.success) {
             const listaAvisos = document.getElementById('listaAvisos');
             if (listaAvisos) {
+                console.log(data.avisos, "Carregando avisos");
                 if (data.avisos.length === 0) {
                     listaAvisos.innerHTML = '<p class="text-center text-muted">Nenhum aviso ativo.</p>';
                     return;
@@ -64,13 +67,22 @@ async function carregarAvisos() {
                 
                 let html = '';
                 data.avisos.forEach(aviso => {
-                    html += `
-                        <div class="aviso-card" id="aviso-${aviso.id}">
-                            <h5>${aviso.titulo}</h5>
-                            <p>${aviso.mensagem}</p>
-                            <small class="text-muted">Publicado em: ${new Date(aviso.criado_em).toLocaleDateString('pt-BR')}</small>
-                        </div>
-                    `;
+                  html += `
+        <div class="aviso-card aviso-${aviso.tipo}" id="aviso-${aviso.id}">
+            <h5 style="color: var(--orange-end);">Tipo:</h5>
+            <h5>${aviso.tipo}</h5>
+            <strong style="color: var(--orange-end);">Aviso:</strong>
+            <h5 style="color: var(--text);">${aviso.titulo}</h5>
+            <strong style="color: var(--orange-end);">Mensagem:</strong>
+            <p style="color: var(--text);">${aviso.mensagem}</p>
+            <strong style="color: var(--orange-end);">Datas:</strong>
+            <small class="text-muted">Publicado em: ${new Date(aviso.data_criacao).toLocaleDateString('pt-BR')}</small>
+            <small class="text-muted">Expira em: ${new Date(aviso.expira_em).toLocaleDateString('pt-BR')}</small>
+            <h5 style="color: var(--orange-end);">ID:</h5>
+            <p style="color: var(--text);">${aviso.id}</p>
+                    <p>---------------------------------------</p>
+            </div>
+    `;
                 });
                 listaAvisos.innerHTML = html;
             }
