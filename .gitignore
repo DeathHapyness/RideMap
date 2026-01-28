@@ -8,8 +8,7 @@
 
 # Lock
 *.package-lock.json
-*.package.json
-.package-lock.json
+package-lock.json
 node_modules/
 
 # Uploads
