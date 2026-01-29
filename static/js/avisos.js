@@ -69,17 +69,13 @@ async function carregarAvisos() {
                 data.avisos.forEach(aviso => {
                   html += `
         <div class="aviso-card aviso-${aviso.tipo}" id="aviso-${aviso.id}">
-            <h5 style="color: var(--orange-end);">Tipo:</h5>
-            <h5>${aviso.tipo}</h5>
-            <strong style="color: var(--orange-end);">Aviso:</strong>
-            <h5 style="color: var(--text);">${aviso.titulo}</h5>
-            <strong style="color: var(--orange-end);">Mensagem:</strong>
-            <p style="color: var(--text);">${aviso.mensagem}</p>
-            <strong style="color: var(--orange-end);">Datas:</strong>
+            <h1 style="color: var(--text);">Tipo:${aviso.tipo}</h1>
+            <h5 style="color: var(--text);">Aviso:${aviso.titulo}</h5>
+            <h5  style="color: var(--text);">Mensagem:${aviso.mensagem}</h5>
+            <h5 style="color: var(--orange-end);">Datas:</h5>
             <small class="text-muted">Publicado em: ${new Date(aviso.data_criacao).toLocaleDateString('pt-BR')}</small>
             <small class="text-muted">Expira em: ${new Date(aviso.expira_em).toLocaleDateString('pt-BR')}</small>
-            <h5 style="color: var(--orange-end);">ID:</h5>
-            <p style="color: var(--text);">${aviso.id}</p>
+            <h5 style="color: var(--text);">ID:${aviso.id}</h5>
                     <p>---------------------------------------</p>
             </div>
     `;
