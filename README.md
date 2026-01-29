@@ -718,14 +718,14 @@ O RideMap implementa múltiplas camadas de segurança:
 - [x] Modal de perfil responsivo 
 - [x] Sistema de notificações aprimorado 
 - [x] "Minhas Pistas" - ver pistas enviadas 
-- [x] Dark mode ✨ **NOVO**
+- [x] Dark mode 
+- [x] Sistema de avisos com popup✨ **NOVO**
 
 ### 🚧 Em Desenvolvimento
 
 - [ ] Upload de múltiplas fotos por pista
 - [ ] Sistema de avaliações (estrelas/comentários)
 - [ ] Editar pista rejeitada
-- [ ] Sistema de avisos
 
 ### 📋 Planejado
 
@@ -843,7 +843,7 @@ Para usar este projeto comercialmente (revender, integrar em produto pago, etc.)
 
 📧 **Email:** henrique.dev2@gmail.com
 🧾 **Termos de uso:** <link link="https://termos-de-uso-ridemap.vercel.app/">https://termos-de-uso-ridemap.vercel.app/<link>
-🔒 **Política de Privacidade:** Em desenvolvimento
+🔒 **Política de Privacidade:** <link link="https://politica-privacidade-ridemap.vercel.app/"><link>
 ⚖️ **Veja a licença completa:** [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ---
