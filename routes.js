@@ -668,6 +668,7 @@ router.get('/admin/dashboard', isAuthenticated, isAdmin, (req, res) => {
     user: req.session.user
   });
 });
+
 router.get('/api/admin/avisos', isAuthenticated, isAdmin, async (req, res) => {
   try {
     const testDb = await pool.query('SELECT current_database()');

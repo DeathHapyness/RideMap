@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Tile layers claro e escuro
     window.lightTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 20,
         attribution: '&copy; OpenStreetMap contributors'
@@ -33,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.map = map;
 
-    // Criar ícone vermelho personalizado usando SVG
     const meuIcone = L.divIcon({
         className: 'custom-marker',
         html: `
@@ -45,10 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
         popupAnchor: [0, -42]
     });
 
-    // Array para guardar todos os marcadores
     let todosOsMarcadores = [];
 
-    // Função para filtrar e atualizar marcadores
     window.atualizarMarcadores = function(filters = {}) {
         todosOsMarcadores.forEach(marker => map.removeLayer(marker));
         todosOsMarcadores = [];
@@ -65,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
             params.append('estado', filters.estado[0]);
         }
 
-        // Usa rota de filtros se houver qualquer filtro aplicado
         const hasFilters = (filters.tipo && filters.tipo.length > 0) || 
                           (filters.dificuldade && filters.dificuldade.length > 0) || 
                           (filters.estado && filters.estado.length > 0);
@@ -172,3 +167,77 @@ document.addEventListener('DOMContentLoaded', function() {
 
     carregarPistas();
 });
+
+
+function criarModalPopup() {
+  //** Verifica se já existe (para não duplicar)
+  if (document.getElementById('modalPopupAviso')) {
+    return;
+  }
+  
+  const modalHTML = `
+    <div class="modal fade" id="modalPopupAviso" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Avisos</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="progress mb-3" style="height: 25px;">
+              <div class="progress-bar" id="barraProgresso" role="progressbar" style="width: 100%;">
+                <span id="tempoRestante">10s</span>
+              </div>
+            </div>
+            <div id="corpoPopupAviso"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const response = await fetch('/api/admin/avisos');
+  const data = await response.json();
+  const jaExibido = sessionStorage.getItem('avisoExibido');
+  
+  // Se tiver avisos
+  if (data.success && data.avisos.length > 0) {
+    
+    criarModalPopup();
+    
+    const avisoMaisRecente = data.avisos[0];
+    document.getElementById('corpoPopupAviso').innerHTML = `
+      <h5>Tipo: ${avisoMaisRecente.tipo}</h5>
+      <strong>Aviso: ${avisoMaisRecente.titulo}</strong>
+      <h5>Mensagem: ${avisoMaisRecente.mensagem}</h5>
+    `;
+    
+    //*Abre o modal NAO MEXER  
+    const modalPopupAviso = new bootstrap.Modal(document.getElementById('modalPopupAviso'));
+    modalPopupAviso.show();
+    
+    let tempoTotal = 10;
+    let tempoRestante = tempoTotal;
+    
+    const intervalo = setInterval(() => {
+      tempoRestante -= 0.1;
+      const porcentagem = (tempoRestante / tempoTotal) * 100;
+      
+      document.getElementById('barraProgresso').style.width = `${porcentagem}%`;
+      document.getElementById('tempoRestante').textContent = tempoRestante.toFixed(1) + 's';
+      
+      if (tempoRestante <= 0) {
+        clearInterval(intervalo);
+        modalPopupAviso.hide();
+      }
+    }, 100);
+  }
+});
+
+function logout() {
+    sessionStorage.clear();
+}
