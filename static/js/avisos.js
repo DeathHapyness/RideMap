@@ -88,3 +88,35 @@ async function carregarAvisos() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', async () => {
+  
+  // Verifica se já mostrou nesta sessão
+  const jaExibido = sessionStorage.getItem('popupAvisosExibido');
+  
+  if (jaExibido) {
+    console.log('Popup já foi exibido nesta sessão');
+    return; // Para aqui, não faz nada
+  }
+  
+  // Continua normalmente se ainda não exibiu...
+  const response = await fetch('/api/admin/avisos');
+  const data = await response.json();
+  
+  if (data.success && data.avisos.length > 0) {
+    
+    criarModalPopup();
+    
+    const avisoMaisRecente = data.avisos[0];
+    document.getElementById('corpoPopupAviso').innerHTML = `...`;
+    
+    // Abre
+    const modalPopupAviso = new bootstrap.Modal(document.getElementById('modalPopupAviso'));
+    modalPopupAviso.show();
+    
+    // MARCA QUE JÁ EXIBIU
+    sessionStorage.setItem('popupAvisosExibido', 'true');
+    
+    // Barra de progresso...
+  }
+});
+
