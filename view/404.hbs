@@ -1,6 +1,247 @@
-<div class="container text-center py-5">
-    <h1 class="display-1">404</h1>
-    <h2>Página não encontrada</h2>
-    <p class="lead">A página que você está procurando não existe ou foi removida.</p>
-    <a href="/" class="btn btn-primary">Voltar para a página inicial</a>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>404 - Página não encontrada</title>
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+rel="stylesheet"
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+/>
+<style>
+body {
+background: 
+linear-gradient(rgba(0, 0, 0, 0.67), rgba(0, 0, 0, 0.67)),
+url('static/img/backgrounds/background-404.jpg');
+background-repeat: no-repeat;
+background-size: cover; 
+background-position: center;
+text-align: center;
+padding-top: 40px;
+overflow: hidden;
+min-height: 100vh;
+color: white ;
+}
+h1 {
+font-size: 8rem;
+}
+
+p {
+font-size: 1.5rem;
+}
+
+p.lead{
+font-size: 2.5rem;
+} 
+
+#game {
+position: relative;
+width: 650px;
+height: 250px;
+border: 2px solid #000;
+margin: 30px auto;
+background-image: url('/static/img/backgrounds/OIP-654551961.jpg');
+background-position: center;
+background-size: cover; 
+background-repeat: no-repeat;
+}
+#dino {
+position: absolute;
+bottom: 0px;
+left: 40px;
+width: 80px;
+height: 80px;
+background-image: url('static/img/backgrounds/mario.gif');
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center bottom;
+}
+#cactus {
+position: absolute;
+bottom: 0;
+right: -30px;
+width: 45px;
+height: 50px;
+background-image: url('static/img/backgrounds/pipe.png');
+background-size: cover; 
+background-position: center;
+background-repeat: no-repeat;
+animation: moveCactus 1.5s linear infinite;
+margin-top: 30px !important;
+}
+@keyframes moveCactus {
+from {
+right: -30px;
+}
+to {
+right: 600px;
+}
+}
+.jump {
+animation: jump 0.5s ease-out;
+}
+@keyframes jump {
+0% {
+bottom: 0;
+}
+50% {
+bottom: 120px;
+}
+100% {
+bottom: 0;
+}
+}
+.clouds{
+position: absolute;
+width: 550px;
+animation: clouds-animation 20s infinite linear;
+}
+@keyframes clouds-animation{
+from{
+right: -550px;
+}
+to{
+right: 100%;
+}
+}
+
+/* Game Over Modal */
+#game-over {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: rgba(0, 0, 0, 0.9);
+padding: 30px;
+border-radius: 10px;
+display: none;
+z-index: 10;
+color: white;
+}
+
+#game-over.show {
+display: block;
+}
+
+#game-over h2 {
+margin-bottom: 20px;
+color: #ff4444;
+}
+
+#restart-btn {
+background: #4CAF50;
+color: white;
+border: none;
+padding: 10px 25px;
+font-size: 1.1rem;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 15px;
+}
+
+#restart-btn:hover {
+background: #45a049;
+}
+
+#score {
+position: absolute;
+top: 5px;
+left: 600px;
+font-size: 1.5rem;
+color: #000000;
+font-family: 'Jersey 10';
+font-size: 35px;
+}
+</style>
+</head>
+<body>
+<h1>404</h1>
+<p class="lead">A página que você está procurando não existe ou foi removida.</p>
+<div id="game">
+<div id="score">0</div>
+<div id="dino"></div>
+<div id="cactus"></div>
+
+<!-- Modal de Game Over -->
+<div id="game-over">
+<h2>Game Over!</h2>
+<button id="restart-btn">Jogar Novamente</button>
 </div>
+
+</div>
+<p>Aperte <strong>ESPAÇO</strong> para pular</p>
+<p>se apresentar algum bug nos avise</p>
+<a href="/" class="btn btn-primary">Voltar para a página inicial</a>
+<script>
+const dino = document.getElementById("dino");
+const cactus = document.getElementById("cactus");
+const gameOverDiv = document.getElementById("game-over");
+const restartBtn = document.getElementById("restart-btn");
+
+let isGameOver = false;
+
+document.addEventListener("keydown", function (event) {
+if (event.code === "Space") {
+jump();
+}
+});
+
+function jump() {
+if (!dino.classList.contains("jump") && !isGameOver) {
+dino.classList.add("jump");
+setTimeout(() => {
+dino.classList.remove("jump");
+}, 500);
+}
+}
+
+// Colisão
+setInterval(() => {
+if (isGameOver) return;
+
+const dinoBottom = parseInt(
+window.getComputedStyle(dino).getPropertyValue("bottom")
+);
+const cactusRight = parseInt(
+window.getComputedStyle(cactus).getPropertyValue("right")
+);
+if (cactusRight > 470 && cactusRight < 550 && dinoBottom < 55) {
+gameOver();
+}
+}, 10);
+
+function gameOver() {
+isGameOver = true;
+cactus.style.animationPlayState = 'paused';
+gameOverDiv.classList.add('show');
+score = 0;
+scoreDisplay.textContent = score;
+}
+
+function restart() {
+//renicia o jogo inteiro
+isGameOver = false;
+gameOverDiv.classList.remove('show');
+cactus.style.animation = 'none';
+cactus.style.animationPlayState = 'running';
+setTimeout(() => {
+cactus.style.animation = 'moveCactus 1.5s linear infinite';
+}, 10);
+}
+
+let score = 0;
+const scoreDisplay = document.getElementById('score');
+
+setInterval(() => {
+if (!isGameOver) {
+score++;
+scoreDisplay.textContent = score; 
+}
+}, 100);
+
+restartBtn.addEventListener('click', restart);
+</script>
+</body>
+</html>
