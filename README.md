@@ -666,6 +666,7 @@ ridemap/
 ├── 📄 routes.js            # Rotas atualizada para o novo BD 
 ├── 📄 server.js            
 ├── 📄 email.js                        
+├── 📄 .gitignore
 ├── 📄 package.json
 ├── 📄 README_EN.md        # (ATUALIZADO)
 └── 📄 README.md           # (ATUALIZADO)
@@ -718,8 +719,7 @@ O RideMap implementa múltiplas camadas de segurança:
 - [x] Sistema de notificações aprimorado 
 - [x] "Minhas Pistas" - ver pistas enviadas 
 - [x] Dark mode 
-- [x] Sistema de avisos com popup 
-- [x] Jogo na pagina 404 ✨ **NOVO**
+- [x] Sistema de avisos com popup✨ **NOVO**
 
 ### 🚧 Em Desenvolvimento
 
