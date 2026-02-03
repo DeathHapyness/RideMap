@@ -710,8 +710,12 @@ router.post('/api/admin/avisos', isAuthenticated, isAdmin, async (req, res) => {
     console.error('❌ Erro ao criar aviso:', error.message);
   }
 });
+
 // ============================================================
 // EXPORTS
 // ============================================================
+
+const chatbotRoutes = require('./routes/chatbotRoutes');
+router.use('/chatbot', chatbotRoutes);  
 
 module.exports = router;
