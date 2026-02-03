@@ -602,7 +602,8 @@ ridemap/
 │   ├── config.js                 # Conexão MySQL
 │   ├── initDatabase.js           # Novo arquivo de criacao de BD (NOVO)
 │   └── RideMap.sql               # Novo BD atualizado para postgreSQL (NOVO)
-│ 
+├── 📁 routes
+│    └── chatbotRoutes.js
 ├── 📁 static/
 │   ├── 📁 css/
 │   │   ├── style.css       # Estilo principal
@@ -661,7 +662,6 @@ ridemap/
 │   ├── error.hbs           # Página de erros inesperados
 │   └── admin-dashboard.hbs # Painel admin e administracao
 ├── 📄 .env                 # Arquivos sigilosos
-├── 📄 .gitignore
 ├── 📄 package.json
 ├── 📄 routes.js            # Rotas atualizada para o novo BD 
 ├── 📄 server.js            
@@ -726,6 +726,7 @@ O RideMap implementa múltiplas camadas de segurança:
 - [ ] Upload de múltiplas fotos por pista
 - [ ] Sistema de avaliações (estrelas/comentários)
 - [ ] Editar pista rejeitada
+- [ ] Chatbot
 
 ### 📋 Planejado
 
