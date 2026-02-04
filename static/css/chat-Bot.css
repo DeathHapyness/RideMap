@@ -82,6 +82,7 @@ button.close-chatBot:hover {
 }
 
 #chat-input {
+    margin-left: 20px;
     padding: 12px 15px;
     border: 1px solid #ddd;
     border-radius: 20px;
