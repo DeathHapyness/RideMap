@@ -1,0 +1,117 @@
+{
+  "fallback": "Não consegui entender 🤔\nPode explicar de outra forma?",
+  "faqs": [
+    {
+      "id": "redefinir_senha",
+      "keywords": ["senha", "redefinir", "esqueci", "recuperar"],
+      "respostas": [
+        "Esqueceu sua senha? 🔐\nVá até a tela de login\nToque em Esqueci minha senha\nSiga as instruções enviadas por email 📧"
+      ]
+    },
+    {
+      "id": "login",
+      "keywords": ["login", "entrar", "acessar", "não consigo entrar"],
+      "respostas": [
+        "Para entrar, informe email e senha 🔑\nConfira se os dados estão corretos\nSe não funcionar, redefina a senha"
+      ]
+    },
+    {
+      "id": "cadastro",
+      "keywords": ["cadastro", "criar conta", "registrar"],
+      "respostas": [
+        "Crie sua conta em poucos passos ✨\nAcesse a tela de cadastro\nPreencha seus dados\nConfirme pelo email 📧"
+      ]
+    },
+    {
+      "id": "adicionar_pista",
+      "keywords": ["adicionar pista", "nova pista", "novo spot"],
+      "respostas": [
+        "Quer adicionar uma pista? 🛹\nAbra o menu principal\nSelecione Adicionar Pista\nEnvie para análise 🔍"
+      ]
+    },
+    {
+      "id": "remover_pista",
+      "keywords": ["remover pista", "apagar pista", "excluir pista"],
+      "respostas": [
+        "Para remover uma pista 🗑️\nAcesse a pista desejada\nEntre em contato com o suporte"
+      ]
+    },
+    {
+      "id": "foto_perfil",
+      "keywords": ["foto de perfil", "mudar foto", "trocar foto"],
+      "respostas": [
+        "Quer mudar sua foto? 🖼️\nVá até seu perfil\nToque na foto atual\nEscolha uma nova imagem"
+      ]
+    },
+    {
+      "id": "filtrar",
+      "keywords": ["filtrar", "filtro", "tipo de pista"],
+      "respostas": [
+        "Use os filtros 🔍\nAbra a opção de filtros\nEscolha os tipos desejados\nAplique para ver o resultado"
+      ]
+    },
+    {
+      "id": "buscar",
+      "keywords": ["buscar", "pesquisar", "procurar pista"],
+      "respostas": [
+        "Procurando uma pista? 🔎\nUse a barra de busca\nDigite o nome ou cidade\nEM DESENVOLVIMENTO AINDA."
+      ]
+    },
+    {
+      "id": "favoritar",
+      "keywords": ["favoritar", "salvar pista", "curtir"],
+      "respostas": [
+        "Gostou da pista? ❤️\nToque no ícone de coração\nEla ficará salva nos favoritos.\nEM DESENVOLVIMENTO AINDA."
+      ]
+    },
+    {
+      "id": "avaliar",
+      "keywords": ["avaliar", "nota", "avaliacao"],
+      "respostas": [
+        "Avalie a pista ⭐\nEntre na página da pista\nEscolha uma nota\nEnvie sua avaliação"
+      ]
+    },
+    {
+      "id": "comentarios",
+      "keywords": ["comentario", "comentar", "mensagem"],
+      "respostas": [
+        "Quer comentar? 💬\nAcesse a pista\nEscreva seu comentário\nEnvie para outros usuários"
+      ]
+    },
+    {
+      "id": "notificacoes",
+      "keywords": ["notificação", "notificacoes", "aviso"],
+      "respostas": [
+        "Fique por dentro 🔔\nAs notificações ficam no sino\nE nos pop-up"
+      ]
+    },
+    {
+      "id": "premium",
+      "keywords": ["premium", "plano pago", "assinatura"],
+      "respostas": [
+        "Plano premium 💎\nAinda não disponível\nEstamos preparando novidades 🚀"
+      ]
+    },
+    {
+      "id": "suporte",
+      "keywords": ["suporte", "ajuda", "help"],
+      "respostas": [
+        "Precisa de ajuda? 🆘\nFale com nosso suporte\nEmail: henrique.dev2@proton.me ou Discord:DeathHapyness#2244"
+      ]
+    },
+    {
+      "id": "sugestao",
+      "keywords": ["sugestão", "ideia", "feedback"],
+      "respostas": [
+        "Tem uma ideia? 💡\nSua sugestão é importante\nEnvie por email ou Discord"
+      ]
+    },
+    {
+      "id": "logout",
+      "keywords": ["logout", "sair", "deslogar"],
+      "respostas": [
+        "Quer sair da conta? 🚪\nAbra o menu principal\nSelecione Sair"
+      ]
+    }
+  ]
+}
