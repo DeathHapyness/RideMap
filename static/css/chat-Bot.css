@@ -82,8 +82,8 @@ button.close-chatBot:hover {
 }
 
 #chat-input {
-    margin-left: 20px;
-    padding: 12px 15px;
+    margin-left: 5px;
+    padding: 12px 13px;
     border: 1px solid #ddd;
     border-radius: 20px;
     outline: none;
@@ -136,6 +136,29 @@ button.btn-enviar-chatbot:active {
     max-width: 75%;
     align-self: flex-start;
     word-wrap: break-word;
+}
+
+.btn-palette {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #666;
+  transition: color 0.3s;
+}
+
+.btn-palette:hover {
+  color: #0d6efd; /* muda cor ao passar mouse */
+}
+
+.menuCores{
+    z-index: 1000;
+}
+
+.resetarCores{
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
 }
 
 @keyframes fadeUp {
