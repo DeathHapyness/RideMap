@@ -596,6 +596,7 @@ http://localhost:3000
 ```
 ridemap/
 ├── 📁 config/
+│   ├── chatbot-faq.json
 │   ├── cloudinary.js       
 │   └── multer.js           
 ├── 📁 db/
@@ -610,6 +611,7 @@ ridemap/
 │   │   ├── sidebar.css     
 │   │   ├── profile.css     
 │   │   ├── profile.css     
+│   │   ├── chat-Bot.css 
 │   │   ├── admin-dashboard.css 
 │   │   ├── login.css       
 │   │   ├── dashboard.css   
@@ -619,7 +621,8 @@ ridemap/
 │   │   ├── dashboard.js    
 │   │   ├── admin.js        # Funcoes da interface de admin 
 │   │   ├── profile-view.js # Lógica do perfil 
-│   │   ├── avisos.js       # Lógica de avisos (em desenvolvimento)
+│   │   ├── avisos.js       # Lógica de avisos 
+│   │   ├── chat-Bot.js
 │   │   ├── script.js       # Lógica de animacoes basicas
 │   │   ├── recuperacao-senha.js # Lógica de recuperacao de senha com email 
 │   │   ├── darkmod.js      # Lógica do dark mod
@@ -719,14 +722,14 @@ O RideMap implementa múltiplas camadas de segurança:
 - [x] Sistema de notificações aprimorado 
 - [x] "Minhas Pistas" - ver pistas enviadas 
 - [x] Dark mode 
-- [x] Sistema de avisos com popup✨ **NOVO**
+- [x] Sistema de avisos com popup
+- [x] Chatbot com sistema de cores personalizadas ✨ **NOVO**
 
 ### 🚧 Em Desenvolvimento
 
 - [ ] Upload de múltiplas fotos por pista
 - [ ] Sistema de avaliações (estrelas/comentários)
 - [ ] Editar pista rejeitada
-- [ ] Chatbot
 
 ### 📋 Planejado
 
