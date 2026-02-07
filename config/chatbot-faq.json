@@ -112,6 +112,34 @@
       "respostas": [
         "Quer sair da conta? 🚪\nAbra o menu principal\nSelecione Sair"
       ]
+    },
+    {
+      "id": "oi",
+      "keywords": ["oi", "ola", "oii"],
+      "respostas": [
+        "Oi! 👋\nQue bom te ver por aqui. Como posso te ajudar hoje?"
+      ]
+    },
+    {
+      "id": "tudo bem?",
+      "keywords": ["Tudo bem?", "como voce esta?", "como voce esta", "tudo bem"],
+      "respostas": [
+        "Tudo bem sim 😄\nE você, como tá hoje?"
+      ]
+    },
+    {
+      "id": "nome",
+      "keywords": ["seu nome?", "como voce se chama?", "qual e seu nome", "seu nome e?"],
+      "respostas": [
+        "Eu sou o Ollie 😊."
+      ]
+    },
+     {
+      "id": "prazer",
+      "keywords": ["prazer em conhecelo", "prazer", "prazer em conhecer voce"],
+      "respostas": [
+        "Prazer! 😄\nFico feliz em te conhecer. Tamo junto — quando quiser, é só chamar 🛹✨."
+      ]
     }
   ]
 }
