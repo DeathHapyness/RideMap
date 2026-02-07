@@ -8,6 +8,17 @@
     <div class="chatBot-body">
       <div id="chat-messages"></div>
       <div class="chat-input-area"> 
+        <i class="fas fa-palette btn-palette" onclick="toggleMenuCores()"></i>
+        <div id="menuCores" style="display: none;" class="menuCores" >
+          <label style="font-size: 20px;" >Cor do Bot:</label>
+          <input type="color" id="corBot" value="#e9ecef" onchange="trocarCores()" >
+          
+          <label style="font-size: 20px;" >Minha Cor:</label>
+          <input type="color" id="corUsuario" value="#0d6efd" onchange="trocarCores()" >
+          
+          <button onclick="resetarCores()" class="resetarCores" > Resetar</button>
+        </div>
+        
         <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
         <button onclick="enviarMensagem()" class="btn-enviar-chatbot">Enviar</button>
       </div>
