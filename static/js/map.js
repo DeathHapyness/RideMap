@@ -143,12 +143,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p style="margin: 5px 0;"><strong>⭐Avaliação:</strong> ${pista.avaliacao || 'Sem avaliações'}</p>
                         <p style="margin: 5px 0;"><strong>Descrição:</strong> ${pista.descricao || 'Sem descrição'}</p>
                         <p style="margin: 5px 0;"><strong>Imagens:</strong></p>
-                        <p style="margin: 5px 0 5px 10px;">
+                        <div style="margin: 5px 0 5px 10px;">
                             ${pista.fotos_pistas && pista.fotos_pistas[0] 
-                            ? pista.fotos_pistas[0] 
-                            : 'Sem imagens'}
-                        </p>
-                    </div>
+                                ? `<img src="${pista.fotos_pistas[0]}" alt="Foto da pista" style="max-width: 100%; border-radius: 8px;">` 
+                                : '<p>Sem imagens</p>'}
+                        </div>
                 `;
                 
                 const marker = L.marker([lat, lng], { 
