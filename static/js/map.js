@@ -131,45 +131,100 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!pistas || pistas.length === 0) return;
             
             pistas.forEach((pista) => {
-                const lat = parseFloat(pista.latitude);
-                const lng = parseFloat(pista.longitude);
-                
-                const popupContent = `
-                    <div style="min-width: 200px;">
-                        <h5 style="color: #FF6B35; margin-bottom: 10px;">${pista.nome}</h5>
-                        <p style="margin: 5px 0;"><strong>📍Localizacao:</strong> ${pista.cidade}, ${pista.estado}</p>
-                        <p style="margin: 5px 0;"><strong>🎯Dificuldade:</strong> ${pista.tipo}</p>
-                        <p style="margin: 5px 0;"><strong>📊Dificuldade:</strong> ${pista.dificuldade}</p>
-                        <p style="margin: 5px 0;"><strong>⭐Avaliação:</strong> ${pista.avaliacao || 'Sem avaliações'}</p>
-                        <p style="margin: 5px 0;"><strong>Descrição:</strong> ${pista.descricao || 'Sem descrição'}</p>
-                        <p style="margin: 5px 0;"><strong>Imagens:</strong></p>
-                        <div style="margin: 5px 0 5px 10px;">
-                            ${pista.fotos_pistas && pista.fotos_pistas[0] 
-                                ? `<img src="${pista.fotos_pistas[0]}" alt="Foto da pista" style="max-width: 100%; border-radius: 8px;">` 
-                                : '<p>Sem imagens</p>'}
-                        </div>
-                `;
-                
-                const marker = L.marker([lat, lng], { 
-                    icon: meuIcone,
-                    zIndexOffset: 1000
-                })
-                .bindPopup(popupContent)
-                .addTo(map);
+    const lat = parseFloat(pista.latitude);
+    const lng = parseFloat(pista.longitude);
+    
+    const popupContent = `
+        <div style="min-width: 200px;">
+            <h5 style="color: #FF6B35; margin-bottom: 10px;">${pista.nome}</h5>
 
-                todosOsMarcadores.push(marker);
+            <p style="margin: 5px 0;"><strong>📍 Localização:</strong> ${pista.cidade}, ${pista.estado}</p>
+            <p style="margin: 5px 0;"><strong>🎯 Tipo:</strong> ${pista.tipo}</p>
+            <p style="margin: 5px 0;"><strong>📊 Dificuldade:</strong> ${pista.dificuldade}</p>
+
+            <div style="display: flex; align-items: center; gap: 8px; margin: 5px 0;">
+                <strong>⭐ Avaliação:</strong>
+                <div class="stars-raty" data-id="${pista.id}"></div>
+            </div>
+
+            <p style="margin: 5px 0;"><strong>Descrição:</strong> ${pista.descricao || 'Sem descrição'}</p>
+
+            <p style="margin: 5px 0;"><strong>Imagens:</strong></p>
+            <div style="margin: 5px 0 5px 10px;">
+                ${pista.fotos_pistas && pista.fotos_pistas[0]
+                    ? `<img src="${pista.fotos_pistas[0]}" alt="Foto da pista" style="max-width: 100%; border-radius: 8px;">`
+                    : '<p>Sem imagens</p>'}
+            </div>
+        </div>
+    `;
+
+    const marker = L.marker([lat, lng], { 
+        icon: meuIcone,
+        zIndexOffset: 1000
+    })
+    .bindPopup(popupContent)
+    .addTo(map);
+
+
+    function inicializarEstrelas(pistId, avaliacaoAtual) {
+    const container = document.querySelector(`.stars-raty[data-id="${pistId}"]`);
+    if (!container) return;
+
+    container.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+        const star = document.createElement('span');
+        star.textContent = '★';
+        star.dataset.valor = i;
+        star.style.cssText = `
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: ${i <= (avaliacaoAtual || 0) ? '#f5c518' : '#ccc'};
+            transition: color 0.1s;
+        `;
+
+        // Hover
+        star.addEventListener('mouseenter', () => {
+            container.querySelectorAll('span').forEach(s => {
+                s.style.color = s.dataset.valor <= i ? '#f5c518' : '#ccc';
             });
-        } catch (error) {
-            console.error('Erro ao carregar pistas:', error);
-        }
-    }
+        });
 
-    carregarPistas();
-});
+        // Mouse 
+        star.addEventListener('mouseleave', () => {
+            const selecionado = container.dataset.selecionado || avaliacaoAtual || 0;
+            container.querySelectorAll('span').forEach(s => {
+                s.style.color = s.dataset.valor <= selecionado ? '#f5c518' : '#ccc';
+            });
+        });
+
+        // Clique
+        star.addEventListener('click', () => {
+            container.dataset.selecionado = i;
+            container.querySelectorAll('span').forEach(s => {
+                s.style.color = s.dataset.valor <= i ? '#f5c518' : '#ccc';
+            });
+            console.log(`Pista ${pistId} avaliada com ${i} estrelas`);
+        });
+
+        container.appendChild(star);
+    }
+}
+    marker.on('popupopen', function() {
+        inicializarEstrelas(pista.id, pista.avaliacao);
+    });
+        todosOsMarcadores.push(marker);
+    });
+            } catch (error) {
+                console.error('Erro ao carregar pistas:', error);
+            }
+        }
+
+        carregarPistas();
+    });
 
 
 function criarModalPopup() {
-  //** Verifica se já existe (para não duplicar)
+  //** Verifica se já existe
   if (document.getElementById('modalPopupAviso')) {
     return;
   }
@@ -240,3 +295,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 function logout() {
     sessionStorage.clear();
 }
+
+ marker.on('popupopen', function() {
+    $('.stars-raty').raty({
+        score: pista.avaliacao || 0,
+        click: function(score) {
+            const pistId = $(this).data('id');
+            console.log(`Pista ${pistId} avaliada com ${score} estrelas`);
+            // salvarAvaliacao(pistId, score);
+        }
+    });
+});
