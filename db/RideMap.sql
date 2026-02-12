@@ -188,3 +188,14 @@ CREATE TABLE avisos (
     expira_em TIMESTAMP NULL
 );
 CREATE INDEX idx_avisos_ativos ON avisos(ativo, expira_em, data_criacao DESC);
+
+CREATE TABLE stars (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    quantidade_estrelas INT NOT NULL,
+    usuario_id INT NOT NULL,
+    pista_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (pista_id) REFERENCES pistas(id) ON DELETE CASCADE
+);
+
