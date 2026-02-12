@@ -18,3 +18,5 @@ uploads/
 *_backup.sql
 *.sql.bak
 db/backups/.env
+
+/Middleware
