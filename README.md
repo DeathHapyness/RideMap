@@ -6,7 +6,8 @@
 
 **Plataforma colaborativa para skatistas encontrarem e compartilharem pistas de skate pelo Brasil**
 
-[![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow?style=for-the-badge)](https://github.com/DeathHapyness/ridemap)
+[![Status](https://img.shields.io/badge/status-em%20hiato-lightgrey?style=for-the-badge)](https://github.com/DeathHapyness/ridemap)
+
 [![Node](https://img.shields.io/badge/node-16+-green?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/pt-br)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17+-blue?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
