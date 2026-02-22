@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <title>404 - Página não encontrada</title>
+<!-- ✅ CORRIGIDO -->
 <link
 href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 rel="stylesheet"
+/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
-/>
+
 <style>
 body {
 background: 
@@ -42,7 +44,7 @@ width: 650px;
 height: 250px;
 border: 2px solid #000;
 margin: 30px auto;
-background-image: url('/static/img/backgrounds/OIP-654551961.jpg');
+background-image: url('/static/img/backgrounds/8bit-city-city-gif.gif');
 background-position: center;
 background-size: cover; 
 background-repeat: no-repeat;
@@ -53,7 +55,7 @@ bottom: 0px;
 left: 40px;
 width: 80px;
 height: 80px;
-background-image: url('static/img/backgrounds/mario.gif');
+background-image: url('/static/img/backgrounds/ezgif-79618559b4f1e03c.gif');
 background-size: contain;
 background-repeat: no-repeat;
 background-position: center bottom;
@@ -64,7 +66,7 @@ bottom: 0;
 right: -30px;
 width: 45px;
 height: 50px;
-background-image: url('static/img/backgrounds/pipe.png');
+background-image: url('/static/img/backgrounds/cone-pixelart-removebg-preview.png');
 background-size: cover; 
 background-position: center;
 background-repeat: no-repeat;
@@ -93,21 +95,7 @@ bottom: 120px;
 bottom: 0;
 }
 }
-.clouds{
-position: absolute;
-width: 550px;
-animation: clouds-animation 20s infinite linear;
-}
-@keyframes clouds-animation{
-from{
-right: -550px;
-}
-to{
-right: 100%;
-}
-}
 
-/* Game Over Modal */
 #game-over {
 position: absolute;
 top: 50%;
@@ -164,16 +152,16 @@ font-size: 35px;
 <div id="dino"></div>
 <div id="cactus"></div>
 
-<!-- Modal de Game Over -->
 <div id="game-over">
 <h2>Game Over!</h2>
 <button id="restart-btn">Jogar Novamente</button>
 </div>
-
 </div>
+
 <p>Aperte <strong>ESPAÇO</strong> para pular</p>
 <p>se apresentar algum bug nos avise</p>
 <a href="/" class="btn btn-primary">Voltar para a página inicial</a>
+
 <script>
 const dino = document.getElementById("dino");
 const cactus = document.getElementById("cactus");
@@ -181,6 +169,8 @@ const gameOverDiv = document.getElementById("game-over");
 const restartBtn = document.getElementById("restart-btn");
 
 let isGameOver = false;
+let score = 0;
+const scoreDisplay = document.getElementById('score');
 
 document.addEventListener("keydown", function (event) {
 if (event.code === "Space") {
@@ -221,7 +211,6 @@ scoreDisplay.textContent = score;
 }
 
 function restart() {
-//renicia o jogo inteiro
 isGameOver = false;
 gameOverDiv.classList.remove('show');
 cactus.style.animation = 'none';
@@ -231,9 +220,10 @@ cactus.style.animation = 'moveCactus 1.5s linear infinite';
 }, 10);
 }
 
-let score = 0;
-const scoreDisplay = document.getElementById('score');
+// ✅ ADICIONAR EVENTO DE CLIQUE NO BOTÃO
+restartBtn.addEventListener('click', restart);
 
+// Contador de pontos
 setInterval(() => {
 if (!isGameOver) {
 score++;
