@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "none",
+    "moduleResolution": "node",
+    "lib": ["ES2020", "DOM"],
+    "strict": false,
+    "skipLibCheck": true,
+    "rootDir": ".",
+    "outDir": "."
+  },
+  "include": ["./public/js/**/*.ts"],
+  "exclude": []
+}

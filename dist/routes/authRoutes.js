@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const authController_1 = __importDefault(require("../controllers/authController"));
+const auth_1 = require("../middlewares/auth");
+const upload_1 = __importDefault(require("../middlewares/upload"));
+const router = express_1.default.Router();
+router.get('/', authController_1.default.home);
+router.get('/login', authController_1.default.loginPage);
+router.get('/register', authController_1.default.registerPage);
+router.post('/login', authController_1.default.login);
+router.post('/register', authController_1.default.register);
+router.get('/logout', authController_1.default.logout);
+router.post('/recuperar-senha', authController_1.default.forgotPassword);
+router.get('/dashboard', auth_1.isAuthenticated, authController_1.default.dashboard);
+router.post('/update-avatar', auth_1.isAuthenticated, upload_1.default.single('avatar'), authController_1.default.updateAvatar);
+router.post('/update-profile', auth_1.isAuthenticated, authController_1.default.updateProfile);
+exports.default = router;

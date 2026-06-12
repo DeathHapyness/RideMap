@@ -1,0 +1,5 @@
+{
+  "watch": ["server.ts", "routes", "controllers", "models", "middlewares", "services", "db", "config"],
+  "ext": "ts,hbs,json",
+  "exec": "node -r ts-node/register server.ts"
+}

@@ -4,10 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "node -r ts-node/register server.ts",
+    "dev": "nodemon",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.public.json",
+    "start:prod": "node dist/server.js",
     "db:setup": "./db/setup_mysql.sh",
-    "db:init": "node db/init.js"
+    "db:init": "node -r ts-node/register db/initDatabase.ts"
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,14 @@
     "resend": "^6.2.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "@types/cors": "^2.8.5",
+    "@types/express": "^5.0.0",
+    "@types/express-session": "^1.5.0",
+    "@types/multer": "^1.0.0",
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.11.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

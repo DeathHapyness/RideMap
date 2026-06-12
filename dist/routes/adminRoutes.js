@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const adminController_1 = __importDefault(require("../controllers/adminController"));
+const auth_1 = require("../middlewares/auth");
+const router = express_1.default.Router();
+router.get('/admin/dashboard', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.dashboard);
+router.get('/api/admin/', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.stats);
+router.get('/api/admin/pistas-ativas', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.stats);
+router.get('/api/admin/pistas-pendentes', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.pendingSpots);
+router.get('/api/admin/todas-pistas', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.allSpots);
+router.get('/api/admin/todos-usuarios', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.allUsers);
+router.post('/api/admin/desativar-usuario/:id', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.disableUser);
+router.post('/api/admin/ativar-usuario/:id', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.enableUser);
+router.post('/api/admin/aprovar-pista/:id', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.approveSpot);
+router.post('/api/admin/rejeitar-pista/:id', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.rejectSpot);
+router.get('/api/admin/avisos', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.listAnnouncements);
+router.post('/api/admin/avisos', auth_1.isAuthenticated, auth_1.isAdmin, adminController_1.default.createAnnouncement);
+exports.default = router;
