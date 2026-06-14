@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
                          <div style="min-width: 200px;">
                             <h5 style="color: #FF6B35; margin-bottom: 10px;">${pista.nome}</h5>
                             <p style="margin: 5px 0;"><strong>📍Localizacao:</strong> ${pista.cidade}, ${pista.estado}</p>
-                            <p style="margin: 5px 0;"><strong>🎯Localização:</strong> ${pista.tipo}</p>
+                            <p style="margin: 5px 0;"><strong>🎯Tipo:</strong> ${pista.tipo}</p>
                             <p style="margin: 5px 0;"><strong>📊Dificuldade:</strong> ${pista.dificuldade}</p>
                             <p style="margin: 5px 0;"><strong>⭐Avaliação:</strong> ${pista.avaliacao || 'Sem avaliações'}</p>
                             <p style="margin: 5px 0;"><strong>Descrição:</strong> ${pista.descricao || 'Sem descrição'}</p>
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div style="min-width: 200px;">
                         <h5 style="color: #FF6B35; margin-bottom: 10px;">${pista.nome}</h5>
                         <p style="margin: 5px 0;"><strong>📍Localizacao:</strong> ${pista.cidade}, ${pista.estado}</p>
-                        <p style="margin: 5px 0;"><strong>🎯Dificuldade:</strong> ${pista.tipo}</p>
+                        <p style="margin: 5px 0;"><strong>🎯Tipo:</strong> ${pista.tipo}</p>
                         <p style="margin: 5px 0;"><strong>📊Dificuldade:</strong> ${pista.dificuldade}</p>
                         <p style="margin: 5px 0;"><strong>⭐Avaliação:</strong> ${pista.avaliacao || 'Sem avaliações'}</p>
                         <p style="margin: 5px 0;"><strong>Descrição:</strong> ${pista.descricao || 'Sem descrição'}</p>
